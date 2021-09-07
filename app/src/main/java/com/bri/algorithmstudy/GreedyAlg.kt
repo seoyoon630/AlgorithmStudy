@@ -47,4 +47,20 @@ object GreedyAlg {
         count += (n - 1)
         return count
     }
+
+    /**
+     * 숫자로 이루어진 문자열 S가 주어졌을 때, X 혹은 + 연산자를 통해 만들어질 수 있는 가장 큰 수를 구하세요.
+     * 참고) 모든 연산은 왼쪽에서부터 순서대로 진행
+     */
+    fun _곱하기혹은더하기(S: String = "02984"): Int {
+        if (S.isEmpty()) return 0
+        // 처음 문자를 숫자로 변경하여 대입
+        val start = S[0].digitToInt()
+        return S.map { it.digitToInt() }.subList(1, S.length)
+            .fold(start) { left, right ->
+                // 두 수 모두 1보다 클 때, 곱하기 수행
+                if (left > 1 && right > 1) left * right
+                else left + right
+            }.also { println("_곱하기혹은더하기($S) = $it") }
+    }
 }
