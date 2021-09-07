@@ -63,4 +63,24 @@ object GreedyAlg {
                 else left + right
             }.also { println("_곱하기혹은더하기($S) = $it") }
     }
+
+    /**
+     * 공포도가 X인 모험가는 반드시 X명 이상으로 구성한 모험가 그룹에 참여해야할 때, 모험가 그룹의 최댓값을 구하세요.
+     * 참고) 모든 모험가를 참여시키지 않아도 됨
+     * 1. 오름차순 정렬 이후에 공포도가 가장 낮은 모험가부터 하나씩 확인
+     * 2. 공포도를 하나씩 확인하여 '현재 그룹에 포함된 모험가의 수' >= '현재 확인하고 있는 공포도' -> 그룹
+     * -> 공포도가 오름차순으로 정렬되어 있다는 점에서 그리디 알고리즘이 성립
+     */
+    fun _모험가길드(n: Int = 5, s: String = "2 3 1 2 2"): Int {
+        val scoreList = s.split(" ").map { it.toInt() }.sorted()
+        var result = 0
+        var number = 0
+        scoreList.forEach { score ->
+            if (++number >= score) {
+                result++
+                number = 0
+            }
+        }
+        return result
+    }
 }
