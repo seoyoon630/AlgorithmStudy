@@ -27,4 +27,32 @@ object ImplementationAlg {
             println("$y $x")
         }
     }
+
+    /**
+     * 정수 N이 입력되면 0시 0분 0초부터 N시 59분 59초까지의 모든 시각 중에서
+     * 3이 하나라도 포함되는 모든 경우의 수를 구하세요.
+     */
+    fun _시각(n: Int = 5): Int {
+        val timeWith3 = (0 until 60).count { it % 10 == 3 || it / 10 == 3 }
+        val timeWithOut3 = 60 - timeWith3
+        val hourWith3 = (n - 3 + 10) / 10
+        val hourWithOut3 = n + 1 - hourWith3
+
+        return (hourWith3 * 60 * 60 +
+                hourWithOut3 * timeWith3 * 60 +
+                hourWithOut3 * timeWithOut3 * timeWith3)
+    }
+
+    fun _시각완전탐색(n: Int = 5): Int {
+        var result = 0
+        for (i in 0..n) {
+            for (j in 0 until 60) {
+                for (k in 0 until 60) {
+                    if ("$i$j$k".contains("3"))
+                        result++
+                }
+            }
+        }
+        return result
+    }
 }
