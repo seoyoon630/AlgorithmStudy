@@ -15,8 +15,8 @@ object GreedyAlg {
      * -> 가지고 있는 동전 중에서 큰 단위가 항상 작은 단위의 배수이므로
      * 작은 단위의 동전들을 종합해 다른 해가 나올 수 없기 때문에 그리디 알고리즘이 성립
      */
-    fun 거스름돈(): Int {
-        var n = 1260
+    fun _거스름돈(_n: Int = 1260): Int {
+        var n = _n
         var count = 0
         val array = listOf(500, 100, 50, 10)
 
@@ -24,6 +24,27 @@ object GreedyAlg {
             count += n / coin
             n %= coin
         }
-        return count.also { println(it) }
+        return count.also { println("_거스름돈 = $it") }
+    }
+
+    /**
+     * N에서 1을 빼거나 N을 K로 나누는 과정을 반복하여 N을 1로 만드는 최소 횟수를 구하세요.
+     * 참고) 단, 나누어 떨어질 때에만 N을 K로 나눌 수 있음
+     */
+    fun _1이될때까지(_n: Int = 25, k: Int = 5): Int {
+        var n = _n
+        var count = 0
+        while (true) {
+            val target = (n / k) * k
+            count += n - target
+            n = target
+            if (n < k) {
+                break
+            }
+            count += 1
+            n /= k
+        }
+        count += (n - 1)
+        return count
     }
 }
