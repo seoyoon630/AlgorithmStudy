@@ -108,4 +108,12 @@ object GreedyAlg {
         val share = m / k
         return share * secondMax + (m - share) * max
     }
+
+    /**
+     * N X M 개의 숫자가 있을 때, 조건에 따라 뽑을 수 있는 숫자 중 제일 큰 숫자를 구하세요.
+     * 1. 행을 선택한다.
+     * 2. 선택한 행에 포함된 숫자 중 가장 작은 숫자를 선택한다.
+     */
+    fun _숫자카드게임(vararg array: IntArray): Int = array.map { it.minOrNull() ?: 0 }.maxOrNull() ?: 0
+
 }
