@@ -83,4 +83,29 @@ object GreedyAlg {
         }
         return result
     }
+
+    /**
+     * 주어진 N개의 숫자를 골라 M번 더하여 가장 큰 수를 만드세요.
+     * 단, 같은 인덱스의 숫자는 K번을 초과하여 더할 수 없습니다.
+     * 참고) N은 2 이상
+     *
+     * 풀이)
+     * 가장 큰 두 숫자를 고른다.
+     * 가장 큰 수가 제일 많이 나올 수 있는 방법은 K개씩 계속 더해가는 방법.
+     * -> 2번째로 큰 숫자를 (M / k)번 더하고, 그 외에는 가장 큰 수를 더하는 것이 가장 큰 수를 만드는 방법
+     * 666 5 666 5
+     */
+    fun _큰수의법칙(
+        n: Int = 5,
+        m: Int = 8,
+        k: Int = 3,
+        array: IntArray = intArrayOf(2, 4, 5, 4, 6)
+    ): Int {
+        val sorted = array.sortedDescending()
+        val max = sorted[0]
+        val secondMax = sorted[1]
+        if (max == secondMax) return m * max
+        val share = m / k
+        return share * secondMax + (m - share) * max
+    }
 }

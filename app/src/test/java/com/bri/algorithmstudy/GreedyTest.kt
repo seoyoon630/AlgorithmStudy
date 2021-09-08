@@ -12,6 +12,8 @@ class GreedyTest {
 //        assert(GreedyAlg._곱하기혹은더하기() == 576)
 //        assert(GreedyAlg._곱하기혹은더하기("567") == 210)
 //        assert(GreedyAlg._곱하기혹은더하기("5671") == 211)
-        assert(GreedyAlg._모험가길드() == 2)
+//        assert(GreedyAlg._모험가길드() == 2)
+        assertThat({ GreedyAlg._큰수의법칙() },46,"_큰수의법칙")
+        assertThat({ GreedyAlg._큰수의법칙(5, 7,2, intArrayOf(3,4,3,4,3)) },28,"_큰수의법칙")
     }
 }
