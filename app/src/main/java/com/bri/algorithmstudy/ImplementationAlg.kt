@@ -55,4 +55,27 @@ object ImplementationAlg {
         }
         return result
     }
+
+    /**
+     * 8 X 8 좌표 평면이 주어졌을 때, 나이트가 이동할 수 있는 경우의 수를 출력하세요.
+     * 이동 방식은 아래와 같습니다.
+     * 수평으로 2칸 이동 후 수직 1칸 이동
+     * 수직으로 2칸 이동 후 수평 1칸 이동
+     */
+    fun _왕실의나이트(p: String = "a1"): Int {
+        var result = 0
+        val max = 8
+        val x = p[0] - 'a'
+        val y = p[1].digitToInt() - 1
+        val distance = listOf(2, 1)
+        for (d1 in listOf(-1, 1)) {
+            for (d2 in listOf(-1, 1)) {
+                val distance1 = d1 * distance[0]
+                val distance2 = d2 * distance[1]
+                if ((x + distance1) in 0 until max && (y + distance2) in 0 until max) result++
+                if ((y + distance1) in 0 until max && (x + distance2) in 0 until max) result++
+            }
+        }
+        return result
+    }
 }
