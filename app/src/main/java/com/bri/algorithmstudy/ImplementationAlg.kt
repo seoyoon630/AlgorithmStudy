@@ -78,4 +78,10 @@ object ImplementationAlg {
         }
         return result
     }
+
+    fun _문자열재정렬(s: String = "K1KA5CB7"): String {
+        val alphabets = s.toCharArray().filter { c -> c in 'A'..'Z' }.sorted()
+        val sum = s.filter { c -> c in '0'..'9' }.map { it.digitToInt() }.sum()
+        return "${alphabets.joinToString("")}$sum"
+    }
 }
