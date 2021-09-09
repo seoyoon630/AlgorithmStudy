@@ -116,4 +116,20 @@ object GreedyAlg {
      */
     fun _숫자카드게임(vararg array: IntArray): Int = array.map { it.minOrNull() ?: 0 }.maxOrNull() ?: 0
 
+    /**
+     * 0과 1로만 이루어진 문자열 s가 주어질 때, 모든 숫자를 전부 같도록 뒤집는 최소 횟수를 구하세요.
+     * 연속된 숫자는 한 번에 뒤집을 수 있습니다.
+     */
+    fun _문자열뒤집기(s: String = "0001100"): Int {
+        val array = s.toCharArray()
+        // 1. 연속된 숫자를 압축한다. -> 010
+        val result = array.filterIndexed { index, c ->
+            if (index == 0) true
+            else array[index - 1] != c
+        }
+        // 2. 0과 1의 개수를 각각 구해 가장 적은 개수를 리턴 -> 0 : 2개, 1 : 1개 return 1
+        val countOf0 = result.count { it == '0' }
+        val countOf1 = result.size - countOf0
+        return Math.min(countOf0, countOf1)
+    }
 }
