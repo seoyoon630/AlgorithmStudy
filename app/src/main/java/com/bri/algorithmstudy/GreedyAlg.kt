@@ -153,4 +153,37 @@ object GreedyAlg {
         }
         return target
     }
+
+    /**
+     * 1. 무게별로 공의 인덱스를 그룹핑한다.
+     * 2. 볼링공을 하나씩 꺼낸다.
+     * 3. 꺼낸 볼링공의 무게와 일치하지 않는 인덱스 목록을 가져온다.
+     * 4. 그 중 현재 선택한 볼링공의 인덱스보다 큰 공의 개수를 결과에 더한 뒤 2번부터 반복
+     * 5. 모두 더한 결과를 리턴한다.
+     */
+    fun _볼링공고르기(m: Int = 5, balls: IntArray = intArrayOf(1, 3, 2, 3, 2)): Int {
+        val groups = balls.indices.groupBy { balls[it] }
+        val results = balls.mapIndexed { index, ball ->
+            groups.filter { it.key != ball }.values.flatten().count { it > index }
+        }
+        return results.sum()
+    }
+
+    /**
+     * 볼링공 고르기 시간 복잡도 개선
+     * AS-IS : for문을 돌면서 매번 선택한 볼링공의 무게와 일치하지 않는 인덱스를 구함
+     * 결국 구해야 하는 것은 같은 무게를 제외한 나머지 공의 인덱스 목록
+     * 1. key = 1~m, value = 0~balls.lastIndex 가진 맵을 미리 생성
+     * 2. 볼링공 for문을 돌면서 value에서 해당 인덱스를 삭제
+     * 3. 남은 인덱스는 그 무게가 아닌 인덱스만 남으므로 이중 반복문이 없어 n*n-> 3n의 시간복잡도로 개선
+     */
+    fun _볼링공고르기2(m: Int = 5, balls: IntArray = intArrayOf(1, 3, 2, 3, 2)): Int {
+        val map = HashMap<Int, ArrayList<Int>>()
+        for (i in 1..m) {
+            map[i] = ArrayList(balls.indices.toList())
+        }
+        balls.forEachIndexed { index, ball -> map[ball]?.remove(index) }
+
+        return balls.mapIndexed { index, ball -> map[ball]?.count { it > index } ?: 0 }.sum()
+    }
 }

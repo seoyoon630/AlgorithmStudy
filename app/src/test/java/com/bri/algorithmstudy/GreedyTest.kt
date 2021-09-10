@@ -29,5 +29,7 @@ class GreedyTest {
 //        )
 //        assertThat({ GreedyAlg._문자열뒤집기() }, 1, "_문자열뒤집기")
 //        assertThat({ GreedyAlg._만들수없는금액() }, 8, "_만들수없는금액")
+//        assertThat({ GreedyAlg._볼링공고르기() }, 8, "_볼링공고르기")
+//        assertThat({ GreedyAlg._볼링공고르기2() }, 8, "_볼링공고르기2")
     }
 }
