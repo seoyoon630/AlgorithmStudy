@@ -28,5 +28,6 @@ class GreedyTest {
 //            "_숫자카드게임"
 //        )
 //        assertThat({ GreedyAlg._문자열뒤집기() }, 1, "_문자열뒤집기")
+//        assertThat({ GreedyAlg._만들수없는금액() }, 8, "_만들수없는금액")
     }
 }

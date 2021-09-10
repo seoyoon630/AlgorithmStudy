@@ -132,4 +132,25 @@ object GreedyAlg {
         val countOf1 = result.size - countOf0
         return Math.min(countOf0, countOf1)
     }
+
+    /**
+     *  풀이 참고했음!
+     * 만들 수 없는 금액의 조건
+     *  - 가장 작은 동전보다 작은 금액
+     *  - 모든 동전을 더한 것보다 큰 금액
+     *
+     * 1. 1로 초기금액을 설정한다.
+     * 2. 주어진 동전을 오름차순으로 정렬한다.
+     * 3. 동전을 하나씩 꺼낸다.
+     * 4. 금액이 동전보다 작으면 STOP
+     * 5. 금액이 동전보다 크면 금액에 동전값을 더한다.
+     */
+    fun _만들수없는금액(coins: IntArray = intArrayOf(1, 1, 2, 3, 9)): Int {
+        var target = 1
+        coins.sorted().forEach { coin ->
+            if (coin <= target) target += coin
+            else return@forEach
+        }
+        return target
+    }
 }
