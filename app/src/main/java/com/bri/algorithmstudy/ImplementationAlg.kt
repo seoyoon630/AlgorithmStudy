@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName", "NonAsciiCharacters", "unused")
+
 package com.bri.algorithmstudy
 
 /**

@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName", "NonAsciiCharacters", "unused")
+
 package com.bri.algorithmstudy
 
 /**
@@ -71,7 +73,7 @@ object GreedyAlg {
      * 2. 공포도를 하나씩 확인하여 '현재 그룹에 포함된 모험가의 수' >= '현재 확인하고 있는 공포도' -> 그룹
      * -> 공포도가 오름차순으로 정렬되어 있다는 점에서 그리디 알고리즘이 성립
      */
-    fun _모험가길드(n: Int = 5, s: String = "2 3 1 2 2"): Int {
+    fun _모험가길드(s: String = "2 3 1 2 2"): Int {
         val scoreList = s.split(" ").map { it.toInt() }.sorted()
         var result = 0
         var number = 0
@@ -96,7 +98,6 @@ object GreedyAlg {
      * 666 5 666 5
      */
     fun _큰수의법칙(
-        n: Int = 5,
         m: Int = 8,
         k: Int = 3,
         array: IntArray = intArrayOf(2, 4, 5, 4, 6)
@@ -161,7 +162,7 @@ object GreedyAlg {
      * 4. 그 중 현재 선택한 볼링공의 인덱스보다 큰 공의 개수를 결과에 더한 뒤 2번부터 반복
      * 5. 모두 더한 결과를 리턴한다.
      */
-    fun _볼링공고르기(m: Int = 5, balls: IntArray = intArrayOf(1, 3, 2, 3, 2)): Int {
+    fun _볼링공고르기(balls: IntArray = intArrayOf(1, 3, 2, 3, 2)): Int {
         val groups = balls.indices.groupBy { balls[it] }
         val results = balls.mapIndexed { index, ball ->
             groups.filter { it.key != ball }.values.flatten().count { it > index }
