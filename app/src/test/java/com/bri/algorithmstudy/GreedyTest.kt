@@ -31,5 +31,7 @@ class GreedyTest {
 //        assertThat({ GreedyAlg._만들수없는금액() }, 8, "_만들수없는금액")
 //        assertThat({ GreedyAlg._볼링공고르기() }, 8, "_볼링공고르기")
 //        assertThat({ GreedyAlg._볼링공고르기2() }, 8, "_볼링공고르기2")
+//        assertThat({ GreedyAlg._무지의먹방라이브() }, 1, "_무지의먹방라이브")
+//        assertThat({ GreedyAlg._무지의먹방라이브(intArrayOf(3, 5, 6), 12) }, 3, "_무지의먹방라이브")
     }
 }

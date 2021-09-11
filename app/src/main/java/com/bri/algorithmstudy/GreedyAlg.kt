@@ -186,4 +186,39 @@ object GreedyAlg {
 
         return balls.mapIndexed { index, ball -> map[ball]?.count { it > index } ?: 0 }.sum()
     }
+
+    /**
+     * 1. 현재 남은 음식을 모두 먹을 수 있는 최소 회전수를 구한다.
+     * 2. if 남은 음식 수 * 최소 회전수 < 장애까지 남은 초라면
+     *   모든 음식 남은 양 -= 최소 회전수, 장애까지 남은 초 -= 남은음식수 * 최소 회전수
+     *   1부터 반복한다.
+     * 3. else 장애까지 남은 초 안에서 가능한 최대 회전수를 구한다.
+     *   모든 음식 남은 양 -= 최대 회전수, 장애까지 남은 초 -= 남은음식수 * 최대 회전수
+     *   이제 남은 음식 중 나머지 시간번쨰 인덱스를 구해 리턴한다.
+     */
+    fun _무지의먹방라이브(foodTimes: IntArray = intArrayOf(3, 1, 2), k: Int = 5): Int {
+        if (foodTimes.sum() <= k) return -1
+        val map = HashMap<Int, Int>()
+        foodTimes.forEachIndexed { index, i -> map[index + 1] = i }
+        var left = k
+        while (left > 0) {
+            val minCount = map.values.minOrNull() ?: 0
+            val minFoodCount = minCount * map.size
+            val removeIndex = ArrayList<Int>()
+            if (minFoodCount < left) {
+                map.keys.forEach {
+                    if (map[it] == minCount) removeIndex.add(it)
+                    else map[it] = (map[it] ?: 0) - minCount
+                }
+                removeIndex.forEach { map.remove(it) }
+                left -= minFoodCount
+            } else {
+                val maxCount = left / map.size
+                map.keys.forEach { map[it] = (map[it] ?: 0) - maxCount }
+                left -= maxCount * map.size
+                return map.keys.sorted()[left]
+            }
+        }
+        return -1
+    }
 }
