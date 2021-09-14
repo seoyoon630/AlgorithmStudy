@@ -2,6 +2,8 @@
 
 package com.bri.algorithmstudy
 
+import java.lang.StringBuilder
+
 /**
  * 구현 알고리즘
  * = 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정
@@ -151,4 +153,39 @@ object ImplementationAlg {
         }.sum()
         return if (first == second) "LUCKY" else "READY"
     }
+
+    /**
+     * 1~문자열/2까지만 압축 가능
+     * 정해진 길이만큼 쪼갠다.
+     * 이전 문구, 이전 개수 변수를 선언한다.
+     * 쪼갠 목록들을 돌면서 문자열을 압축하고 그 길이를 비교한다.
+     */
+    fun _문자열압축(s: String = "aabbaccc"): Int {
+        return (1..s.length / 2).map { i ->
+            val splitsCount = s.length / i
+            val splits = Array(splitsCount) { "" }
+            for (j in 0 until splitsCount) {
+                splits[j] = s.substring(j * i, (j + 1) * i)
+            }
+            var lastSplit = splits[0]
+            var repeatCount = 0
+            val sb = StringBuilder()
+            splits.forEach {
+                if (lastSplit == it) {
+                    repeatCount++
+                } else {
+                    if (repeatCount > 1) sb.append(repeatCount)
+                    sb.append(lastSplit)
+                    lastSplit = it
+                    repeatCount = 1
+                }
+            }
+            if (repeatCount > 1) sb.append(repeatCount)
+            sb.append(lastSplit)
+
+            val left = s.length % i
+            sb.length + left
+        }.minOrNull() ?: s.length
+    }
+
 }

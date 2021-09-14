@@ -38,5 +38,9 @@ class ImplementationTest {
 //        }, 9, "게임개발")
 //        assertThat({ ImplementationAlg._럭키스트레이트()}, "LUCKY", "럭키스트레이트")
 //        assertThat({ ImplementationAlg._럭키스트레이트(7755)}, "READY", "럭키스트레이트")
+//        assertThat({ ImplementationAlg._문자열압축() }, 7, "문자열압축")
+//        assertThat({ ImplementationAlg._문자열압축("ababcdcdababcdcd") }, 9, "문자열압축")
+//        assertThat({ ImplementationAlg._문자열압축("abcabcdede") }, 8, "문자열압축")
+//        assertThat({ ImplementationAlg._문자열압축("abcabcabcabcdededededede") }, 14, "문자열압축")
     }
 }
