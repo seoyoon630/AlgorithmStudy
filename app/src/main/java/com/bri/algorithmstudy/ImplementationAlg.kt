@@ -140,4 +140,15 @@ object ImplementationAlg {
         }
         return visitedCount
     }
+
+    fun _럭키스트레이트(score: Int = 123402): String {
+        val s = score.toString()
+        val first = s.substring(0, s.length / 2).toCharArray().map {
+            it.digitToIntOrNull() ?: 0
+        }.sum()
+        val second = s.substring(s.length / 2, s.length).toCharArray().map {
+            it.digitToIntOrNull() ?: 0
+        }.sum()
+        return if (first == second) "LUCKY" else "READY"
+    }
 }

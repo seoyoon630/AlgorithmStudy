@@ -36,5 +36,7 @@ class ImplementationTest {
 //                ), _d = 3
 //            )
 //        }, 9, "게임개발")
+//        assertThat({ ImplementationAlg._럭키스트레이트()}, "LUCKY", "럭키스트레이트")
+//        assertThat({ ImplementationAlg._럭키스트레이트(7755)}, "READY", "럭키스트레이트")
     }
 }
