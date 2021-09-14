@@ -6,6 +6,8 @@ package com.bri.algorithmstudy
  * 구현 알고리즘
  * = 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정
  * = 풀이를 떠올리는 것은 쉽지만 소스코드로 옮기기 어려운 문제
+ * 완전탐색 = 모든 경우의 수를 주저 없이 다 계산하는 해결 방법
+ * 시뮬레이션 = 문제에서 제시한 알고리즘을 한 단계씩 차례대로 직접 수행
  */
 object ImplementationAlg {
     /**
@@ -85,5 +87,57 @@ object ImplementationAlg {
         val alphabets = s.toCharArray().filter { c -> c in 'A'..'Z' }.sorted()
         val sum = s.filter { c -> c in '0'..'9' }.map { it.digitToInt() }.sum()
         return "${alphabets.joinToString("")}$sum"
+    }
+
+    /**
+     * 방향 [0 : 북쪽, 1 : 동쪽, 2 : 남쪽, 3: 서쪽]
+     * 1. 방향에 따라 이동할 x, y를 미리 선언한다.
+     * 2. 현재 있는 위치를 1로 바꾼다.
+     * 3. 현재 위치에서 갈 수 있는 가장 빠른 곳을 찾아 이동한다.
+     * 4. 모든 방향이 갈 수 없을 때까지 반복한다.
+     */
+    fun _게임개발(
+        n: Int = 4,
+        m: Int = 4,
+        _y: Int = 1,
+        _x: Int = 1,
+        _d: Int = 0,
+        area: Array<IntArray> = arrayOf(
+            intArrayOf(1, 1, 1, 1),
+            intArrayOf(1, 0, 0, 1),
+            intArrayOf(1, 1, 0, 1),
+            intArrayOf(1, 1, 1, 1)
+        )
+    ): Int {
+        val yList = intArrayOf(-1, 0, 1, 0)
+        val xList = intArrayOf(0, -1, 0, 1)
+
+        var y = _y
+        var x = _x
+        var d = when (_d) {
+            1 -> 3
+            3 -> 1
+            else -> _d
+        }
+        area[y][x] = 1
+        var visitedCount = 1
+        println("[$y][$x] 방문")
+        var countOfRotate = 0
+        while (countOfRotate != 4) {
+            d = (d + 1) % 4
+            val nextY = y + yList[d]
+            val nextX = x + xList[d]
+            if (nextY in 0 until m && nextX in 0 until n && area[nextY][nextX] == 0) {
+                visitedCount++
+                area[nextY][nextX] = 1
+                countOfRotate = 0
+                y = nextY
+                x = nextX
+                println("[$y][$x] 방문")
+            } else {
+                countOfRotate++
+            }
+        }
+        return visitedCount
     }
 }
