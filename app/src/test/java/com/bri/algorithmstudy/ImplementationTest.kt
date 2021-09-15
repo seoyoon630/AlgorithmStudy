@@ -42,5 +42,6 @@ class ImplementationTest {
 //        assertThat({ ImplementationAlg._문자열압축("ababcdcdababcdcd") }, 9, "문자열압축")
 //        assertThat({ ImplementationAlg._문자열압축("abcabcdede") }, 8, "문자열압축")
 //        assertThat({ ImplementationAlg._문자열압축("abcabcabcabcdededededede") }, 14, "문자열압축")
+//        assertThat({ ImplementationAlg._자물쇠와열쇠() }, true, "자물쇠와열쇠")
     }
 }

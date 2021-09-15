@@ -2,8 +2,6 @@
 
 package com.bri.algorithmstudy
 
-import java.lang.StringBuilder
-
 /**
  * 구현 알고리즘
  * = 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정
@@ -186,6 +184,83 @@ object ImplementationAlg {
             val left = s.length % i
             sb.length + left
         }.minOrNull() ?: s.length
+    }
+
+    /**
+     * 자물쇠+(열쇠-1)*2 크기의 자물쇠판 생성
+     * 자물쇠판 0으로 초기화 후 열쇠-1부터 채우기
+     * 열쇠에서 튀어나온부분 최소xy 최대xy구함
+     * for i in 0..자물쇠판크기-열쇠크기
+     *  최소y 최대y가 열쇠-1..자물쇠판-(열쇠-1) 안에없으면
+     *  continue
+     *  for j in 0..자물쇠판크기-열쇠크기
+     *      최소x 최대x가 열쇠-1..자물쇠판-(열쇠-1) 안에없으면
+     *      continue
+     *  회전수 = 0
+     * while(회전! =4)
+     * 자물쇠판에 현재의값을 더한것중에 2가없으면 true
+     */
+    fun _자물쇠와열쇠(
+        key: Array<IntArray> = arrayOf(
+            intArrayOf(0, 0, 0),
+            intArrayOf(1, 0, 0),
+            intArrayOf(0, 1, 1)
+        ), lock: Array<IntArray> = arrayOf(
+            intArrayOf(1, 1, 1),
+            intArrayOf(1, 1, 0),
+            intArrayOf(1, 0, 1)
+        )
+    ): Boolean {
+        // 자물쇠 판 준비
+        val lockBoardSize = lock.size + (key.size - 1) * 2
+        val lockBoard = Array(lockBoardSize) { IntArray(lockBoardSize) { -1 } }
+
+        for (y in lock.indices) {
+            for (x in lock.indices) {
+                lockBoard[y + key.size - 1][x + key.size - 1] = lock[y][x]
+            }
+        }
+        println(lockBoard.joinToString("\n") { it.joinToString("\t") })
+
+//        // 자물쇠 필요 최소 범위 구하기
+//        val minY = lock.indices.first { lock[it].contains(0) }
+//        val maxY = lock.indices.last { lock[it].contains(0) }
+//        println("minY = $minY, maxY = $maxY")
+//        val xLock = Array(lock.size) { IntArray(lock.size) }
+//        for (y in lock.indices) {
+//            for (x in lock.indices) {
+//                xLock[y][x] = lock[x][y]
+//            }
+//        }
+//        val minX = xLock.indices.first { xLock[it].contains(0) }
+//        val maxX = xLock.indices.last { xLock[it].contains(0) }
+//        println("minX = $minX, maxX = $maxX")
+
+        // 열쇠 이동
+        val moveRange = 0 until lockBoardSize - (key.size - 1)
+        println("열쇠 이동 범위 = $moveRange")
+        for (y in moveRange) {
+            for (x in moveRange) {
+                println("==================================================================")
+                println("$y,$x")
+                val after = Array(lockBoardSize) { IntArray(lockBoardSize) { -1 } }
+                for (y2 in key.indices) {
+                    for (x2 in key.indices) {
+                        if (key[y2][x2] == 1) {
+                            println("after[${y + y2}][${x + x2}]++ = ${after[y + y2][x + x2]}")
+                        }
+                        after[y + y2][x + x2] = lockBoard[y + y2][x + x2] + key[y2][x2]
+                        if (key[y2][x2] == 1) {
+                            println("after = ${after[y + y2][x + x2]}")
+                        }
+                    }
+                }
+                println(after.joinToString("\n") { it.joinToString("\t") })
+                println("========")
+                println(lockBoard.joinToString("\n") { it.joinToString("\t") })
+            }
+        }
+        return false
     }
 
 }
