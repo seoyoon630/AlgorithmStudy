@@ -4,6 +4,7 @@ package com.bri.algorithmstudy
 
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.absoluteValue
 
 /**
  * 구현 알고리즘
@@ -431,5 +432,49 @@ object ImplementationAlg {
         }
         println(result.joinToString("\n") { it.joinToString() })
         return result.toTypedArray()
+    }
+
+    /**
+     * 남길 수 있는 치킨집 조합의 수를 구한다.
+     * 모든 조합의 수의 거리를 모두 구해 비교한다.
+     */
+    fun _치킨배달(
+        n: Int = 5, m: Int = 3, city: Array<IntArray> = arrayOf(
+            intArrayOf(0, 0, 1, 0, 0),
+            intArrayOf(0, 0, 2, 0, 1),
+            intArrayOf(0, 1, 2, 0, 0),
+            intArrayOf(0, 0, 1, 0, 0),
+            intArrayOf(0, 0, 0, 0, 2)
+        )
+    ): Int {
+        val stores = ArrayList<Pair<Int, Int>>()
+        val houses = ArrayList<Pair<Int, Int>>()
+        var totalMinDistance = Int.MAX_VALUE
+        // 2차원 배열 -> 1차원 배열로 변경
+        city.forEachIndexed { y, row ->
+            row.forEachIndexed { x, it ->
+                when (it) {
+                    1 -> houses.add(Pair(y, x))
+                    2 -> stores.add(Pair(y, x))
+                }
+            }
+        }
+        // 조합 구하기
+        val cases = CombinationAlg.combination(IntArray(stores.size) { it }, m)
+        cases.forEach { case ->
+            val storesInCase = stores.filterIndexed { index, _ -> case.contains(index) }
+            val distance = houses.map { house ->
+                var minDistance = 2 * n
+                for (store in storesInCase) {
+                    val distance = (house.first - store.first).absoluteValue +
+                            (house.second - store.second).absoluteValue
+                    minDistance = Math.min(minDistance, distance)
+                }
+                minDistance
+            }.sum()
+            println("${case.joinToString()}를 선택한 최소 거리 = $distance")
+            totalMinDistance = Math.min(totalMinDistance, distance)
+        }
+        return totalMinDistance
     }
 }

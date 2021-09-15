@@ -67,5 +67,28 @@ class ImplementationTest {
 //        )
 //        CombinationAlg.combination(intArrayOf(1,2,3),2)
 //        CombinationAlg.combination(intArrayOf(1,2,3,4),2)
+//        assertThat({ ImplementationAlg._치킨배달() }, 5, "_치킨배달")
+//        assertThat({
+//            ImplementationAlg._치킨배달(
+//                5, 2, arrayOf(
+//                    intArrayOf(0, 2, 0, 1, 0),
+//                    intArrayOf(1, 0, 1, 0, 0),
+//                    intArrayOf(0, 0, 0, 0, 0),
+//                    intArrayOf(2, 0, 0, 1, 1),
+//                    intArrayOf(2, 2, 0, 1, 2)
+//                )
+//            )
+//        }, 10, "_치킨배달")
+//        assertThat({
+//            ImplementationAlg._치킨배달(
+//                5, 1, arrayOf(
+//                    intArrayOf(1, 2, 0, 0, 0),
+//                    intArrayOf(1, 2, 0, 0, 0),
+//                    intArrayOf(1, 2, 0, 0, 0),
+//                    intArrayOf(1, 2, 0, 0, 0),
+//                    intArrayOf(1, 2, 0, 0, 0)
+//                )
+//            )
+//        }, 11, "_치킨배달")
     }
 }
