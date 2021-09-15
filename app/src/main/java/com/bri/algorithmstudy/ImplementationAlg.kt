@@ -2,6 +2,8 @@
 
 package com.bri.algorithmstudy
 
+import java.util.*
+
 /**
  * 구현 알고리즘
  * = 머릿속에 있는 알고리즘을 소스코드로 바꾸는 과정
@@ -263,4 +265,91 @@ object ImplementationAlg {
         return false
     }
 
+    /**
+     * (n+2 * n+2)보드를 생성
+     * 테두리를 모두 -1, 안은 0
+     * 사과가 있는 곳은 1
+     * 뱀몸통을 stack으로 관리한다
+     * stack에 쌓을 때 해당 좌표는 -1로 바뀌고
+     * stack에서 뺄 때에는 해당 좌표를 1로 바꾼다
+     * 방향 dx, dy 목록을 선언한다.
+     *
+     * 뱀이 이동하는 대로 한칸씩 이동한다.
+     */
+    fun _뱀(
+        n: Int = 6,
+        k: Int = 3,
+        apples: Array<String> = arrayOf("3 4", "2 5", "5 3"),
+        l: Array<String> = arrayOf("3 D", "15 L", "17 D")
+    ): Int {
+//        val n = readLine()?.toInt() ?: 0
+//        val k = readLine()?.toInt() ?: 0
+//        val apples = Array(k) { "" }
+//        val m = readLine()?.toInt() ?: 0
+//        val l = Array(m) { "" }
+        // 기본 보드 형태
+        val board = Array(n + 2) { y ->
+            IntArray(n + 2) { x -> if (y in listOf(0, n + 1) || x in listOf(0, n + 1)) -1 else 0 }
+        }
+        // 사과 추가
+        apples.forEach {
+            val coordinates = it.split(" ").map { it.toInt() }
+            board[coordinates[0]][coordinates[1]] = 1
+        }
+
+        // 방향 북 = 0, 서 = 1, 남 = 2, 동 = 3
+        val dx = listOf(0, -1, 0, 1)
+        val dy = listOf(-1, 0, 1, 0)
+
+        // 이동경로 파싱
+        val times = Array(l.size) { 0 }
+        val changes = Array(l.size) { 0 }
+        l.mapIndexed { index, it ->
+            val splits = it.split(" ")
+            times[index] = splits[0].toInt()
+            changes[index] = if (splits[1] == "L") 1 else -1
+        }
+
+        // 뱀 몸통 히스토리 큐
+        val snake: Queue<Pair<Int, Int>> = LinkedList()
+        var y = 1
+        var x = 1
+        snake.offer(Pair(y, x))
+
+        // 초기화
+        board[y][x] = -1
+        var direction = 3
+        var totalTime = 0
+        var index = 0
+        println(board.joinToString("\n") { it.joinToString("\t") })
+
+        while (true) {
+            while (times.lastIndex < index || totalTime < times[index]) {
+                totalTime++
+                y += dy[direction]
+                x += dx[direction]
+                snake.offer(Pair(y, x))
+                println("현재시간 : $totalTime [$y,$x]")
+                when (board[y][x]) {
+                    -1 -> {
+                        println("========================================")
+                        println("충돌!!!!!!")
+                        val tail = snake.poll()
+                        tail?.let { board[it.first][it.second] = 0 }
+                        board[y][x] = -2
+                        println(board.joinToString("\n") { it.joinToString("\t") })
+                        return totalTime
+                    }
+                    0 -> {
+                        val tail = snake.poll()
+                        tail?.let { board[it.first][it.second] = 0 }
+                    }
+                }
+                board[y][x] = -1
+                println("========================================")
+                println(board.joinToString("\n") { it.joinToString("\t") })
+            }
+            direction += changes[index++]
+        }
+    }
 }
