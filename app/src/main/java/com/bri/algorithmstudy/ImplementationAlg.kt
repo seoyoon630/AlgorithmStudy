@@ -3,6 +3,7 @@
 package com.bri.algorithmstudy
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 구현 알고리즘
@@ -351,5 +352,84 @@ object ImplementationAlg {
             }
             direction += changes[index++]
         }
+    }
+
+    /**
+     * 기둥이 설치될 수 있는 조건
+     * y == 0 || [y-1][x] == 기둥존재 || [y][x-1] == 보존재 || [y][x] == 보존재
+     * 보가 설치될 수 있는 조건
+     * [y][x] == 기둥존재 || [y][x+1] == 기둥존재  || ([y][x-1] == 보존재 && [y][x+1] == 보존재)
+     *
+     * 기둥이 삭제될 수 있는 조건
+     * [y+1][x] != 보존재 && [y+1][x] != 보존재 &&
+     *
+     */
+    fun _기둥과보(
+        n: Int = 5, build_frame: Array<IntArray> = arrayOf(
+            intArrayOf(1, 0, 0, 1),
+            intArrayOf(1, 1, 1, 1),
+            intArrayOf(2, 1, 0, 1),
+            intArrayOf(2, 2, 1, 1),
+            intArrayOf(5, 0, 0, 1),
+            intArrayOf(5, 1, 0, 1),
+            intArrayOf(4, 2, 1, 1),
+            intArrayOf(3, 2, 1, 1)
+        )
+    ): Array<IntArray> {
+        val horizontalList = Array(n + 1) { BooleanArray(n + 1) { false } }
+        val verticalList = Array(n + 1) { BooleanArray(n + 1) { false } }
+
+        build_frame.forEach {
+            val x = it[0]
+            val y = it[1]
+            val isVertical = it[2] == 0
+            val isBuild = it[3] == 1
+
+            println("==================================")
+            println("[$y,$x]에 ${if (isVertical) "기둥" else "보"} ${if (isBuild) "설치" else "삭제"}")
+            if (isBuild) {
+                if (isVertical) {
+                    if (y == 0 ||
+                        verticalList[y - 1][x] ||
+                        (x > 0 && horizontalList[y][x - 1]) ||
+                        horizontalList[y][x]
+                    ) {
+                        verticalList[y][x] = true
+                        println("성공")
+                    }
+                } else {
+                    if ((y > 0 && verticalList[y - 1][x] && !verticalList[y][x]) ||
+                        (y > 0 && x < n && verticalList[y - 1][x + 1] && !verticalList[y][x + 1]) ||
+                        (x in (1 until n) && horizontalList[y][x - 1] && horizontalList[y][x + 1])
+                    ) {
+                        horizontalList[y][x] = true
+                        println("성공")
+                    }
+                }
+            } else {
+//                if (isVertical) {
+//                    if()
+//                } else {
+//                    if()
+//                }
+            }
+            val log = StringBuilder()
+            (n downTo 0).map { logY ->
+                (0..n).map { logX ->
+                    log.append(if (verticalList[logY][logX] || horizontalList[logY][logX]) "1 " else "0 ")
+                }
+                log.append("\n")
+            }
+            println(log)
+        }
+        val result = ArrayList<IntArray>()
+        for (x in 0..n) {
+            for (y in 0..n) {
+                if (verticalList[y][x]) result.add(intArrayOf(x, y, 0))
+                if (horizontalList[y][x]) result.add(intArrayOf(x, y, 1))
+            }
+        }
+        println(result.joinToString("\n") { it.joinToString() })
+        return result.toTypedArray()
     }
 }

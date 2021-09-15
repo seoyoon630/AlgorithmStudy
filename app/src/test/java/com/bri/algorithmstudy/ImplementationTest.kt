@@ -53,5 +53,17 @@ class ImplementationTest {
 //                l = arrayOf("1 D", "2 D", "3 D", "4 D")
 //            )
 //        }, 4, "뱀")
+//        assertThat(
+//            { ImplementationAlg._기둥과보() }, arrayOf(
+//                intArrayOf(1, 0, 0),
+//                intArrayOf(1, 1, 1),
+//                intArrayOf(2, 1, 0),
+//                intArrayOf(2, 2, 1),
+//                intArrayOf(3, 2, 1),
+//                intArrayOf(4, 2, 1),
+//                intArrayOf(5, 0, 0),
+//                intArrayOf(5, 1, 0)
+//            ), "_기둥과보"
+//        )
     }
 }
