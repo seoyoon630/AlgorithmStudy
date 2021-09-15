@@ -65,5 +65,7 @@ class ImplementationTest {
 //                intArrayOf(5, 1, 0)
 //            ), "_기둥과보"
 //        )
+//        CombinationAlg.combination(intArrayOf(1,2,3),2)
+//        CombinationAlg.combination(intArrayOf(1,2,3,4),2)
     }
 }
