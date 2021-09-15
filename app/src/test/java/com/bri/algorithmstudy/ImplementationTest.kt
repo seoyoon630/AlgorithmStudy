@@ -47,11 +47,11 @@ class ImplementationTest {
         // 주어진 방향지시를 다 소모하고 남은 시간 계산 되는지
 //        assertThat({ ImplementationAlg._뱀(l = arrayOf("1 D")) }, 7, "뱀")
         // 뱀의 몸통에 부딪혔을 때
-        assertThat({
-            ImplementationAlg._뱀(
-                apples = arrayOf("1 2", "2 2", "2 1"),
-                l = arrayOf("1 D", "2 D", "3 D", "4 D")
-            )
-        }, 4, "뱀")
+//        assertThat({
+//            ImplementationAlg._뱀(
+//                apples = arrayOf("1 2", "2 2", "2 1"),
+//                l = arrayOf("1 D", "2 D", "3 D", "4 D")
+//            )
+//        }, 4, "뱀")
     }
 }
