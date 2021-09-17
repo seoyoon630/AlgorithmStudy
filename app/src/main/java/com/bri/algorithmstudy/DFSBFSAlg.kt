@@ -1,0 +1,100 @@
+package com.bri.algorithmstudy
+
+import java.util.*
+
+object DFSBFSAlg {
+    /**
+     * 스택 : 선입후출
+     * 삽입 = push / 삭제 = pop / 참조 = peek
+     * val stack = Stack<Any>()
+     * 큐 : 선입선출
+     * 삽입 = offer / 삭제 = poll / 참조 = peek
+     * val queue : Queue<Any> = LinkedList()
+     * 재귀함수 : 자기자신을 다시 호출하는 함수, 종료 조건을 반드시 명시해야 한다.
+     */
+
+    fun factorial(n: Int = 5): Double {
+        if (n <= 1) return 1.toDouble()
+        return n * factorial(n - 1)
+    }
+
+    /**
+     * 유클리드 호제법
+     * 두 자연수 A, B에 대해서 (A>B) A를 B로 나눈 나머지를 R이라고 할 때,
+     * A와 B의 최대공약수는 B와 R의 최대공약수와 같다.
+     */
+    fun _유클리드호제법(a: Int = 192, b: Int = 162): Int {
+        println("_유클리드호제법 $a, $b")
+        if (a % b == 0) return b
+        val rest = a % b
+        return _유클리드호제법(b, rest)
+    }
+
+    fun dfs(
+        graph: Array<IntArray> = arrayOf(
+            intArrayOf(),
+            intArrayOf(2, 3, 8),
+            intArrayOf(1, 7),
+            intArrayOf(1, 4, 5),
+            intArrayOf(3, 5),
+            intArrayOf(3, 4),
+            intArrayOf(7),
+            intArrayOf(2, 6, 8),
+            intArrayOf(1, 8)
+        ), start: Int = 1
+    ) {
+        val visited = BooleanArray(graph.size) { false }
+        dfsRecursive(graph, start, visited)
+    }
+
+    /** DFS(깊이 우선 탐색)
+     * = 스택을 사용
+     * 1. 탐색 시작 노드에 스택을 삽입하고 방문처리 한다.
+     * 2. 스택의 최상단 노드에 방문하지 않은 인접한 노드가 하나라도 있으면, 그 노드에 스택을 넣고 방문처리 한다.
+     * 방문하지 않은 인접 노드가 없으면 스택에서 최상단 노드를 꺼낸다.
+     * 3. 2번의 과정을 수행할 수 없을 때까지 반복한다.
+     */
+    fun dfsRecursive(graph: Array<IntArray>, current: Int, visited: BooleanArray) {
+        println(current)
+        visited[current] = true
+        for (node in graph[current]) {
+            if (!visited[node]) dfsRecursive(graph, node, visited)
+        }
+    }
+
+    /** BFS(너비 우선 탐색)
+     * = 큐를 사용
+     * 1. 탐색 시작 노드를 큐에 삽입하고 방문처리 한다.
+     * 2. 큐에서 노드를 꺼낸 뒤에 해당 노드의 인접 노드 중에서 방문하지 않은 노드를 모두 큐에 삽입하고 방문처리 한다.
+     * 3. 2번의 과정을 수행할 수 없을 때까지 반복한다.
+     * 각 간선의 길이가 동일하다는 조건에서 최단거리를 구하는 문제에서 사용됨
+     */
+    fun bfs(
+        graph: Array<IntArray> = arrayOf(
+            intArrayOf(),
+            intArrayOf(2, 3, 8),
+            intArrayOf(1, 7),
+            intArrayOf(1, 4, 5),
+            intArrayOf(3, 5),
+            intArrayOf(3, 4),
+            intArrayOf(7),
+            intArrayOf(2, 6, 8),
+            intArrayOf(1, 8)
+        ), start: Int = 1
+    ) {
+        val visited = BooleanArray(graph.size) { false }
+        val queue: Queue<Int> = LinkedList()
+        var node: Int? = start
+        visited[start] = true
+        while (node != null) {
+            println(node)
+            for (next in graph[node]) {
+                if (!visited[next]) {
+                    queue.offer(next)
+                    visited[next] = true
+                }
+            }
+            node = queue.poll()
+        }
+    }
+}
