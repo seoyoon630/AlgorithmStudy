@@ -42,5 +42,25 @@ class DFSBFSTest {
 //                )
 //            )
 //        }, 5, "미로찾기")
+        assertThat({ DFSBFSAlg._특정거리의도시찾기() }, listOf(4), "특정거리의도시찾기")
+        assertThat({
+            DFSBFSAlg._특정거리의도시찾기(
+                4, 2, 1, arrayOf(
+                    intArrayOf(1, 2),
+                    intArrayOf(1, 3),
+                    intArrayOf(1, 4)
+                )
+            )
+        }, listOf(-1), "특정거리의도시찾기")
+        assertThat({
+            DFSBFSAlg._특정거리의도시찾기(
+                4, 1, 1, arrayOf(
+                    intArrayOf(1, 2),
+                    intArrayOf(1, 3),
+                    intArrayOf(2, 3),
+                    intArrayOf(2, 4)
+                )
+            )
+        }, listOf(2, 3), "특정거리의도시찾기")
     }
 }

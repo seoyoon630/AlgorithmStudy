@@ -1,6 +1,12 @@
+@file:Suppress("FunctionName", "NonAsciiCharacters", "unused")
+
 package com.bri.algorithmstudy
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 object DFSBFSAlg {
     /**
@@ -13,7 +19,7 @@ object DFSBFSAlg {
      * 재귀함수 : 자기자신을 다시 호출하는 함수, 종료 조건을 반드시 명시해야 한다.
      */
 
-    fun factorial(n: Int = 5): Double {
+    private fun factorial(n: Int = 5): Double {
         if (n <= 1) return 1.toDouble()
         return n * factorial(n - 1)
     }
@@ -54,7 +60,7 @@ object DFSBFSAlg {
      * 방문하지 않은 인접 노드가 없으면 스택에서 최상단 노드를 꺼낸다.
      * 3. 2번의 과정을 수행할 수 없을 때까지 반복한다.
      */
-    fun dfsRecursive(graph: Array<IntArray>, current: Int, visited: BooleanArray) {
+    private fun dfsRecursive(graph: Array<IntArray>, current: Int, visited: BooleanArray) {
         println(current)
         visited[current] = true
         for (node in graph[current]) {
@@ -124,7 +130,7 @@ object DFSBFSAlg {
         return result
     }
 
-    fun recursiveDFS1(
+    private fun recursiveDFS1(
         arr: Array<IntArray>,
         visited: Array<BooleanArray>,
         y: Int,
@@ -185,5 +191,49 @@ object DFSBFSAlg {
             }
         }
         return -1
+    }
+
+    /**
+     * @param n : 도시 개수
+     * @param k : 특정 거리
+     * @param x : 시작 도시
+     * @param arr : 간선 목록
+     *
+     * 특정 depth까지만 가면 되기 때문에 BFS로 풀이
+     * -> 모든 도시의 거리가 1이라는 가정때문에 가능
+     * 1. arr을 첫번째 도시를 기준으로 map으로 변경
+     * 2. 거리값을 넣을 IntArray(n) 생성 후 Int.MAX_VALUE로 초기화
+     * 3. 시작도시까지의 거리는 0으로 시작
+     * 4. 시작도시를 key로 가진 map을 꺼내서 해당 도시들의 값 + 1 해준다
+     * 5. 특정거리에 도달하면 해당 도시의 개수를 카운트하여 리턴
+     */
+    fun _특정거리의도시찾기(
+        n: Int = 4, k: Int = 2, x: Int = 1, arr: Array<IntArray> = arrayOf(
+            intArrayOf(1, 2),
+            intArrayOf(1, 3),
+            intArrayOf(2, 4)
+        )
+    ): List<Int> {
+        val map = HashMap<Int, ArrayList<Int>>().also {
+            repeat(n) { i -> it[i] = ArrayList() }
+        }
+        arr.forEach { map[it[0]]?.add(it[1]) }
+
+        val distance = Array(n + 1) { Int.MAX_VALUE }
+        val queue: Queue<Int> = LinkedList()
+        queue.offer(x)
+        distance[x] = 0
+        while (queue.isNotEmpty()) {
+            val node = queue.poll() ?: break
+            if (distance[node] == k) break
+            map[node]?.forEach {
+                if (distance[it] == Int.MAX_VALUE) {
+                    distance[it] = distance[node] + 1
+                    queue.offer(it)
+                }
+            }
+        }
+        val result = distance.indices.filter { distance[it] == k }.sorted()
+        return if (result.isEmpty()) listOf(-1) else result
     }
 }
