@@ -32,5 +32,15 @@ class DFSBFSTest {
 //                )
 //            )
 //        }, 8, "음료수얼려먹기")
+//        assertThat({ DFSBFSAlg._미로찾기()}, 10, "미로찾기")
+//        assertThat({
+//            DFSBFSAlg._미로찾기(
+//                arrayOf(
+//                    intArrayOf(1, 1, 0),
+//                    intArrayOf(0, 1, 0),
+//                    intArrayOf(0, 1, 1)
+//                )
+//            )
+//        }, 5, "미로찾기")
     }
 }

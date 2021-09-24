@@ -116,7 +116,7 @@ object DFSBFSAlg {
 
         for (y in arr.indices) {
             for (x in arr[y].indices) {
-                if(recursiveDFS1(arr, visited, y, x)){
+                if (recursiveDFS1(arr, visited, y, x)) {
                     result++
                 }
             }
@@ -140,5 +140,50 @@ object DFSBFSAlg {
             return true
         }
         return false
+    }
+
+    /**
+     * 최솟값을 찾을 때에는 BFS가 효율적
+     * 1. 현재 위치에서 갈 수 있는 곳을 Queue에 쌓는다.
+     * 2. 이동할 위치의 값을 현재 노드의 값 + 1로 변경한다.
+     * 3. 출구 지점에 도달했을 때 현재 노드의 값을 리턴한다.
+     */
+    fun _미로찾기(
+        arr: Array<IntArray> = arrayOf(
+            intArrayOf(1, 0, 1, 0, 1, 0),
+            intArrayOf(1, 1, 1, 1, 1, 1),
+            intArrayOf(0, 0, 0, 0, 0, 1),
+            intArrayOf(1, 1, 1, 1, 1, 1),
+            intArrayOf(1, 1, 1, 1, 1, 1)
+        )
+    ): Int {
+        val dy = listOf(-1, 0, 1, 0)
+        val dx = listOf(0, -1, 0, 1)
+        val queue: Queue<Pair<Int, Int>> = LinkedList()
+        queue.offer(Pair(0, 0))
+        while (queue.isNotEmpty()) {
+            val current = queue.poll() ?: continue
+            val y = current.first
+            val x = current.second
+            if (y == arr.lastIndex && x == arr[0].lastIndex)
+                return arr[y][x]
+//            println("현재위치 $y,$x = ${arr[y][x]}")
+//            arr.forEach {
+//                println(it.joinToString())
+//            }
+//            println("=========================================================")
+            for (i in dy.indices) {
+                val nextY = y + dy[i]
+                val nextX = x + dx[i]
+                if (nextY in arr.indices &&
+                    nextX in arr[0].indices &&
+                    arr[nextY][nextX] == 1
+                ) {
+                    arr[nextY][nextX] = arr[y][x] + 1
+                    queue.offer(Pair(nextY, nextX))
+                }
+            }
+        }
+        return -1
     }
 }
