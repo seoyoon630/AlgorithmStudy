@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun assertThat(function: () -> Any, answer: Any, tag: String) {
-    println("===============================================================")
+    drawLine()
     val start = System.currentTimeMillis()
     println("$tag 예상값 = $answer")
     val result = function()
@@ -18,5 +18,9 @@ fun assertThat(function: () -> Any, answer: Any, tag: String) {
     }
     val end = System.currentTimeMillis()
     println("시간 = ${SimpleDateFormat("mm:ss.SSS", Locale.getDefault()).format(end - start)}")
+    drawLine()
+}
+
+fun drawLine(){
     println("===============================================================")
 }

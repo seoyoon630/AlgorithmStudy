@@ -2,8 +2,6 @@
 
 package com.bri.algorithmstudy
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -19,7 +17,7 @@ object DFSBFSAlg {
      * 재귀함수 : 자기자신을 다시 호출하는 함수, 종료 조건을 반드시 명시해야 한다.
      */
 
-    private fun factorial(n: Int = 5): Double {
+    fun factorial(n: Int = 5): Double {
         if (n <= 1) return 1.toDouble()
         return n * factorial(n - 1)
     }
@@ -235,5 +233,76 @@ object DFSBFSAlg {
         }
         val result = distance.indices.filter { distance[it] == k }.sorted()
         return if (result.isEmpty()) listOf(-1) else result
+    }
+
+    /**
+     * 2에 근접한 빈 공간을 막은 뒤 가능한 모든 경우를 DFS로 구해서 안전 구역 최대값을 구해야 한다.
+     * 0. 바이러스가 위치한 좌표를 미리 구한다.
+     * 1. 2에 상하좌우로 맞닿은 좌표를 모두 구한다.
+     * 2. n개 중 3개를 구하는 모든 경우의 수를 구한다.
+     * 3. 모든 경우의 수에 대해 안전구역 최대값을 구한다.
+     */
+    fun _연구소(
+        arr: Array<IntArray> = arrayOf(
+            intArrayOf(2, 0, 0, 0, 1, 1, 0),
+            intArrayOf(0, 0, 1, 0, 1, 2, 0),
+            intArrayOf(0, 1, 1, 0, 1, 0, 0),
+            intArrayOf(0, 1, 0, 0, 0, 0, 0),
+            intArrayOf(0, 0, 0, 0, 0, 1, 1),
+            intArrayOf(0, 1, 0, 0, 0, 0, 0),
+            intArrayOf(0, 1, 0, 0, 0, 0, 0),
+        )
+    ): Int {
+        val viruses = arr.mapIndexed { y, row ->
+            row.indices.filter { row[it] == 2 }.map { Pair(y, it) }
+        }.flatten()
+        println("바이러스 위치 = ${viruses.joinToString()}")
+        val canMakeWall = ArrayList<Pair<Int, Int>>()
+        arr.forEachIndexed { y, row ->
+            row.forEachIndexed { x, v -> if (v == 0) canMakeWall.add(Pair(y, x)) }
+        }
+        println("벽 생성 가능 위치 = ${canMakeWall.joinToString()}")
+        // todo 0인 모든 곳에 세울 필요가 있을까? 더 줄일 수 있을 것 같음
+        drawLine()
+        val cases = CombinationAlg.combination(canMakeWall.size, 3)
+        var maxArea = 0
+        for (case in cases) {
+            val result = Array(arr.size) { arr[it].clone() }
+            case.forEach { result[canMakeWall[it].first][canMakeWall[it].second] = 3 }
+            val area = spreadVirus(result, viruses)
+            if (maxArea < area) {
+                maxArea = area
+                println(case.joinToString { "[${canMakeWall[it].first}, ${canMakeWall[it].second}]" } + "에 벽을 세웁니다.")
+                println("현재 최대값 = $area")
+                drawLine()
+            }
+        }
+        return maxArea
+    }
+
+    /**
+     * 바이러스를 퍼뜨린 뒤 안전지역의 갯수를 구하는 함수
+     */
+    private fun spreadVirus(arr: Array<IntArray>, viruses: List<Pair<Int, Int>>): Int {
+        val dy = listOf(-1, 0, 1, 0)
+        val dx = listOf(0, -1, 0, 1)
+        val queue: Queue<Pair<Int, Int>> = LinkedList()
+        viruses.forEach { queue.offer(it) }
+        while (queue.isNotEmpty()) {
+            val node = queue.poll() ?: break
+            val y = node.first
+            val x = node.second
+            repeat(4) {
+                val nextY = y + dy[it]
+                val nextX = x + dx[it]
+                if (nextY in arr.indices && nextX in arr[0].indices &&
+                    arr[nextY][nextX] == 0
+                ) {
+                    arr[nextY][nextX] = 2
+                    queue.offer(Pair(nextY, nextX))
+                }
+            }
+        }
+        return arr.map { it.count { it == 0 } }.sum()
     }
 }

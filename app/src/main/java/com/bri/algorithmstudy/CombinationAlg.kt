@@ -6,15 +6,19 @@ object CombinationAlg {
     private lateinit var visited: BooleanArray
     private var size: Int = 0
 
+    fun combination(num: Int, r: Int, start: Int = 0): ArrayList<IntArray> {
+        return combination(IntArray(num) { it + start }, r)
+    }
+
     fun combination(arr: IntArray, r: Int): ArrayList<IntArray> {
         result.clear()
         size = r
         current = IntArray(r) { -1 }
         visited = BooleanArray(arr.size) { false }
         _combination(arr, visited, 0, r)
-        println("=================================================")
-        println("${arr.size}에서 ${r}개를 뽑는 경우의 수 = ${result.size}개")
-        println(result.joinToString("\t") { it.joinToString() })
+//        drawLine()
+//        println("${arr.size}개에서 ${r}개를 뽑는 경우의 수 = ${result.size}개")
+//        println(result.joinToString("\n") { it.joinToString() })
         return result
     }
 
