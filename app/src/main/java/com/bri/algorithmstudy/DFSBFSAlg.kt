@@ -97,4 +97,47 @@ object DFSBFSAlg {
             node = queue.poll()
         }
     }
+
+    /**
+     * 1. y, x 로 이루어진 2중 for문 작성
+     * 2. 현재 값이 0인지 확인
+     * 3. 0이면 상하좌우에 있는 모든 값에 대해 재귀 호출
+     */
+    var result1 = 0
+    fun _음료수얼려먹기(
+        arr: Array<IntArray> = arrayOf(
+            intArrayOf(0, 0, 1, 1, 0),
+            intArrayOf(0, 0, 0, 1, 1),
+            intArrayOf(1, 1, 1, 1, 1),
+            intArrayOf(0, 0, 0, 0, 0)
+        )
+    ): Int {
+        result1 = 0
+        val visited = Array(arr.size) { BooleanArray(arr[0].size) { false } }
+
+        for (y in arr.indices) {
+            for (x in arr[y].indices) {
+                recursiveDFS1(arr, visited, y, x, false)
+            }
+        }
+        return result1
+    }
+
+    fun recursiveDFS1(
+        arr: Array<IntArray>,
+        visited: Array<BooleanArray>,
+        y: Int,
+        x: Int,
+        isConnected: Boolean
+    ) {
+        if (visited[y][x]) return
+        visited[y][x] = true
+        if (arr[y][x] == 0) {
+            if (!isConnected) result1++
+            if (y != 0) recursiveDFS1(arr, visited, y - 1, x, true)
+            if (x != 0) recursiveDFS1(arr, visited, y, x - 1, true)
+            if (y != arr.lastIndex) recursiveDFS1(arr, visited, y + 1, x, true)
+            if (x != arr[0].lastIndex) recursiveDFS1(arr, visited, y, x + 1, true)
+        }
+    }
 }
