@@ -34,19 +34,4 @@ object CombinationAlg {
             }
         }
     }
-
-//    private fun _combination(num: IntArray, count: BooleanArray) {
-//        if (num == 0) {
-//            return
-//        }
-//        if (current.count { it > -1 } == current.size) {
-//            result.add(current)
-//            println(current.joinToString())
-//        } else {
-//            _combination(num - 1, count)
-//            current[size - count] = num
-//            _combination(num - 1, count - 1)
-//        }
-//    }
-
 }
