@@ -5,6 +5,7 @@ package com.bri.algorithmstudy
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 object DFSBFSAlg {
     /**
@@ -305,4 +306,60 @@ object DFSBFSAlg {
         }
         return arr.map { it.count { it == 0 } }.sum()
     }
+
+    /**
+     * BFS
+     * 1. k개의 queue 생성
+     * 2. arr에서 바이러스가 있는 위치를 queue에 삽입
+     * 3. s초가 될 때까지 반복
+     * 4. queue에서 꺼내서 상하좌우 좌표 추가 및 해당 값 변경
+     */
+    fun _경쟁적전염(
+        n: Int = 3,
+        k: Int = 3,
+        s: Int = 2,
+        targetY: Int = 3,
+        targetX: Int = 2,
+        arr: Array<IntArray> = arrayOf(
+            intArrayOf(1, 0, 2),
+            intArrayOf(0, 0, 0),
+            intArrayOf(3, 0, 0)
+        )
+    ): Int {
+        val dy = listOf(-1, 0, 1, 0)
+        val dx = listOf(0, -1, 0, 1)
+        val map = HashMap<Int, HashSet<Coordinate>>().apply {
+            repeat(k + 1) {
+                this[it] = hashSetOf()
+            }
+        }
+        // arr에서 바이러스가 있는 위치를 map에 삽입
+        arr.forEachIndexed { y, row ->
+            row.forEachIndexed { x, v -> if (v > 0) map[v]?.add(Coordinate(y, x)) }
+        }
+        val queue: Queue<Coordinate> = LinkedList()
+        map.flatMap { it.value }.forEach { queue.offer(it) }
+
+        // s초동안 반복
+        repeat(s) {
+            // 만약 바이러스가 모두 찼다면 반복문을 빠져 나옴
+            if (arr.map { it.count { it == 0 } }.sum() == 0) return@repeat
+            // 1~k 까지의 queue를
+            repeat(queue.size) {
+                val coordinate = queue.poll() ?: return -1
+                // 상하좌우 값 변경 및 queue에 삽입
+                repeat(4) { i ->
+                    val nextY = coordinate.y + dy[i]
+                    val nextX = coordinate.x + dx[i]
+                    if (nextY in 0 until n && nextX in 0 until n && arr[nextY][nextX] == 0) {
+                        arr[nextY][nextX] = arr[coordinate.y][coordinate.x]
+                        queue.offer(Coordinate(nextY, nextX))
+                    }
+                }
+            }
+        }
+        return arr[targetY - 1][targetX - 1]
+    }
 }
+
+data class Coordinate(val x: Int, val y: Int)

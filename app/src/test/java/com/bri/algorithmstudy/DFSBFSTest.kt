@@ -63,5 +63,7 @@ class DFSBFSTest {
 //            )
 //        }, listOf(2, 3), "특정거리의도시찾기")
 //        assertThat({ DFSBFSAlg._연구소() }, 27, "연구소")
+//        assertThat({ DFSBFSAlg._경쟁적전염() }, 3, "경쟁적전염")
+//        assertThat({ DFSBFSAlg._경쟁적전염(s = 1, targetY = 2, targetX = 2) }, 0, "경쟁적전염")
     }
 }
