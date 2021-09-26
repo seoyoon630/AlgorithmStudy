@@ -376,7 +376,7 @@ object DFSBFSAlg {
             put('(', 1)
             put(')', -1)
         }
-        return recursiveDFS2(s, map,"")
+        return recursiveDFS2(s, map, "")
     }
 
     private fun recursiveDFS2(
@@ -390,7 +390,8 @@ object DFSBFSAlg {
         val v = uv.second
         return if (isCorrect(u, map)) recursiveDFS2(v, map, result + u)
         else {
-            val reversed = u.substring(1, u.lastIndex).map { if (it == '(') ')' else '(' }.joinToString("")
+            val reversed =
+                u.substring(1, u.lastIndex).map { if (it == '(') ')' else '(' }.joinToString("")
             "$result(${recursiveDFS2(v, map, "")})$reversed"
         }
     }
@@ -413,6 +414,48 @@ object DFSBFSAlg {
             if (sum < 0) return false
         }
         return true
+    }
+
+    /**
+     * 순열(DFS)
+     * 연산자 목록을 만들어서 DFS로 최솟값과 최댓값을 구한다.
+     * + - * /
+     */
+    fun _연산자끼워넣기(
+        numbers: IntArray = intArrayOf(5, 6),
+        o: IntArray = intArrayOf(0, 0, 1, 0)
+    ): IntArray {
+        val result = intArrayOf(Int.MIN_VALUE, Int.MAX_VALUE)
+        val operators = IntArray(numbers.size - 1) {
+            val index = o.indices.first { o[it] != 0 }
+            o[index] -= 1
+            index
+        }
+        val cases = PermutationAlg.permutation(operators)
+        for (case in cases) {
+            var sum = numbers[0]
+            case.forEachIndexed { i, v ->
+//                println(
+//                    when (v) {
+//                        0 -> "$sum + ${numbers[i+1]} = ${sum + numbers[i+1]}"
+//                        1 -> "$sum - ${numbers[i+1]} = ${sum - numbers[i+1]}"
+//                        2 -> "$sum * ${numbers[i+1]} = ${sum * numbers[i+1]}"
+//                        else -> "$sum / ${numbers[i+1]} = ${sum / numbers[i+1]}"
+//                    }
+//                )
+                when (v) {
+                    0 -> sum += numbers[i+1]
+                    1 -> sum -= numbers[i+1]
+                    2 -> sum *= numbers[i+1]
+                    3 -> sum /= numbers[i+1]
+                }
+
+            }
+            drawLine()
+            if (sum > result[0]) result[0] = sum
+            if (sum < result[1]) result[1] = sum
+        }
+        return result
     }
 }
 

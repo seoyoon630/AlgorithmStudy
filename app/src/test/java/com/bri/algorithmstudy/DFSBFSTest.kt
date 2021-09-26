@@ -68,5 +68,21 @@ class DFSBFSTest {
 //        assertThat({ DFSBFSAlg._괄호변환() }, "(()())()", "괄호변환")
 //        assertThat({ DFSBFSAlg._괄호변환(")(") }, "()", "괄호변환")
 //        assertThat({ DFSBFSAlg._괄호변환("()))((()") }, "()(())()", "괄호변환")
+//        assertThat({ DFSBFSAlg._연산자끼워넣기() }, intArrayOf(30, 30), "연산자끼워넣기")
+//        assertThat(
+//            { DFSBFSAlg._연산자끼워넣기(intArrayOf(3, 4, 5), intArrayOf(1, 0, 1, 0)) },
+//            intArrayOf(35, 17),
+//            "연산자끼워넣기"
+//        )
+//        assertThat(
+//            { DFSBFSAlg._연산자끼워넣기(intArrayOf(3, 4, 5, 6), intArrayOf(2, 0, 1, 0)) },
+//            intArrayOf(72, 23),
+//            "연산자끼워넣기"
+//        )
+//        assertThat(
+//            { DFSBFSAlg._연산자끼워넣기(intArrayOf(1, 2, 3, 4, 5, 6), intArrayOf(2, 1, 1, 1)) },
+//            intArrayOf(54, -24),
+//            "연산자끼워넣기"
+//        )
     }
 }
