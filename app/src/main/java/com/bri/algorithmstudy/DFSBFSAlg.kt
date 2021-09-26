@@ -6,6 +6,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.collections.HashSet
+import kotlin.math.absoluteValue
 
 object DFSBFSAlg {
     /**
@@ -444,10 +445,10 @@ object DFSBFSAlg {
 //                    }
 //                )
                 when (v) {
-                    0 -> sum += numbers[i+1]
-                    1 -> sum -= numbers[i+1]
-                    2 -> sum *= numbers[i+1]
-                    3 -> sum /= numbers[i+1]
+                    0 -> sum += numbers[i + 1]
+                    1 -> sum -= numbers[i + 1]
+                    2 -> sum *= numbers[i + 1]
+                    3 -> sum /= numbers[i + 1]
                 }
 
             }
@@ -456,6 +457,106 @@ object DFSBFSAlg {
             if (sum < result[1]) result[1] = sum
         }
         return result
+    }
+
+    /**
+     * 순서 중요 X -> 조합(DFS)
+     * 모든 학생의 상하좌우를 확인한다.
+     * 해당 방향에 선생님이 있다면 사이에 있는 위치를 모두 set에 넣는다.
+     * set에 들어간 모든 경우를 확인하고, 모두 막은 케이스가 나오면 바로 return
+     */
+    fun _감시피하기(
+        n: Int = 5, arr: Array<CharArray> = arrayOf(
+            charArrayOf('X', 'S', 'X', 'X', 'T'),
+            charArrayOf('T', 'X', 'S', 'X', 'X'),
+            charArrayOf('X', 'X', 'X', 'X', 'X'),
+            charArrayOf('X', 'T', 'X', 'X', 'X'),
+            charArrayOf('X', 'X', 'T', 'X', 'X'),
+        )
+    ): String {
+        val dy = listOf(-1, 0, 1, 0)
+        val dx = listOf(0, -1, 0, 1)
+        val students = hashSetOf<Coordinate>()
+        val set = hashSetOf<Coordinate>()
+
+        arr.forEachIndexed { y, row ->
+            row.forEachIndexed { x, v ->
+                if (v == 'S') {
+                    students.add(Coordinate(x, y))
+                    repeat(4) {
+                        var nextY = y + dy[it]
+                        var nextX = x + dx[it]
+                        while (nextY in arr.indices && nextX in arr.indices) {
+                            if (arr[nextY][nextX] == 'T') {
+                                // 선생님과 학생이 붙어있을 경우 불가능
+                                if ((nextY - y).absoluteValue == 1 || (nextX - x).absoluteValue == 1)
+                                    return "NO"
+                                val start = when (it) {
+                                    0 -> nextY + 1
+                                    1 -> nextX + 1
+                                    2 -> y + 1
+                                    else -> x + 1
+                                }
+                                val end = when (it) {
+                                    0 -> y
+                                    1 -> x
+                                    2 -> nextY
+                                    else -> nextX
+                                }
+                                if (it % 2 == 0) {
+                                    for (i in start until end) {
+                                        set.add(Coordinate(x, i))
+                                    }
+                                } else {
+                                    for (i in start until end) {
+                                        set.add(Coordinate(i, y))
+                                    }
+                                }
+                                break
+                            } else {
+                                nextY += dy[it]
+                                nextX += dx[it]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        val list = set.toTypedArray()
+        val cases = CombinationAlg.combination(list.size, 3)
+        for (case in cases) {
+            var nextCase = false
+            val copied = Array(arr.size) { arr[it].clone() }
+            repeat(3) {
+                copied[list[case[it]].y][list[case[it]].x] = 'O'
+            }
+            copied.forEach { println(it.joinToString()) }
+            drawLine()
+            for (student in students) {
+                repeat(4) {
+                    var nextY = student.y + dy[it]
+                    var nextX = student.x + dx[it]
+                    while (nextY in arr.indices && nextX in arr.indices) {
+                        when (copied[nextY][nextX]) {
+                            'T' -> {
+                                nextCase = true
+                                break
+                            }
+                            'O' -> break
+                            else -> {
+                                nextY += dy[it]
+                                nextX += dx[it]
+                            }
+                        }
+                    }
+                    if (student == students.last() && it == 3) return "YES"
+                    if (nextCase) return@repeat
+                }
+                if (nextCase) break
+            }
+        }
+
+        return "NO"
     }
 }
 

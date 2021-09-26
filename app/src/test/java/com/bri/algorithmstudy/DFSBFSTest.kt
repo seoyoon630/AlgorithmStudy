@@ -84,5 +84,12 @@ class DFSBFSTest {
 //            intArrayOf(54, -24),
 //            "연산자끼워넣기"
 //        )
+//        assertThat({ DFSBFSAlg._감시피하기() }, "YES", "감시피하기")
+//        assertThat({ DFSBFSAlg._감시피하기(4, arrayOf(
+//            charArrayOf('S','S','S','T'),
+//            charArrayOf('X','X','X','X'),
+//            charArrayOf('X','X','X','X'),
+//            charArrayOf('T','T','T','X'),
+//        )) }, "NO", "감시피하기")
     }
 }
