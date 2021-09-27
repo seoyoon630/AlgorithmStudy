@@ -91,5 +91,36 @@ class DFSBFSTest {
 //            charArrayOf('X','X','X','X'),
 //            charArrayOf('T','T','T','X'),
 //        )) }, "NO", "감시피하기")
+//        assertThat({ DFSBFSAlg._인구이동() }, 1, "인구이동")
+//        assertThat(
+//            { DFSBFSAlg._인구이동(2, 40, 50, arrayOf(intArrayOf(50, 30), intArrayOf(20, 40))) },
+//            0, "인구이동"
+//        )
+//        assertThat(
+//            { DFSBFSAlg._인구이동(2, 20, 50, arrayOf(intArrayOf(50, 30), intArrayOf(30, 40))) },
+//            1, "인구이동"
+//        )
+//        assertThat(
+//            {
+//                DFSBFSAlg._인구이동(
+//                    3,
+//                    5,
+//                    10,
+//                    arrayOf(intArrayOf(10, 15, 20), intArrayOf(20, 30, 25), intArrayOf(40, 22, 10))
+//                )
+//            }, 2, "인구이동"
+//        )
+//        assertThat(
+//            {
+//                DFSBFSAlg._인구이동(
+//                    4, 10, 50, arrayOf(
+//                        intArrayOf(10, 100, 20, 90),
+//                        intArrayOf(80, 100, 60, 70),
+//                        intArrayOf(70, 20, 30, 40),
+//                        intArrayOf(50, 20, 100, 10)
+//                    )
+//                )
+//            }, 3, "인구이동"
+//        )
     }
 }

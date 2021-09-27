@@ -5,7 +5,6 @@ package com.bri.algorithmstudy
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.collections.HashSet
 import kotlin.math.absoluteValue
 
 object DFSBFSAlg {
@@ -558,6 +557,68 @@ object DFSBFSAlg {
 
         return "NO"
     }
+
+    /**
+     * BFS로 풀이
+     */
+    fun _인구이동(
+        n: Int = 2, l: Int = 20, r: Int = 50, arr: Array<IntArray> = arrayOf(
+            intArrayOf(50, 30),
+            intArrayOf(20, 40)
+        )
+    ): Int {
+        var result = 0
+        while (true) {
+            val queue: Queue<Coordinate> = LinkedList()
+            val visited = Array(n) { BooleanArray(n) { false } }
+            var index = 0
+            val map = HashMap<Int, ArrayList<Coordinate>>()
+            for (y in 0 until n) {
+                for (x in 0 until n) {
+                    if (!visited[y][x]) {
+                        queue.offer(Coordinate(y, x))
+                        map[++index] = ArrayList()
+                        while (queue.isNotEmpty()) {
+                            val c = queue.poll() ?: return result
+                            if (visited[c.y][c.x]) continue
+                            visited[c.y][c.x] = true
+                            map[index]?.add(c)
+                            if (c.y > 0 && !visited[c.y - 1][c.x] &&
+                                (arr[c.y][c.x] - arr[c.y - 1][c.x]).absoluteValue in l..r
+                            )
+                                queue.offer(Coordinate(c.y - 1, c.x))
+                            if (c.x > 0 && !visited[c.y][c.x - 1] &&
+                                (arr[c.y][c.x] - arr[c.y][c.x - 1]).absoluteValue in l..r
+                            )
+                                queue.offer(Coordinate(c.y, c.x - 1))
+                            if (c.y < n - 1 && !visited[c.y + 1][c.x] &&
+                                (arr[c.y][c.x] - arr[c.y + 1][c.x]).absoluteValue in l..r
+                            )
+                                queue.offer(Coordinate(c.y + 1, c.x))
+                            if (c.x < n - 1 && !visited[c.y][c.x + 1] &&
+                                (arr[c.y][c.x] - arr[c.y][c.x + 1]).absoluteValue in l..r
+                            )
+                                queue.offer(Coordinate(c.y, c.x + 1))
+                        }
+                    }
+                }
+            }
+            if (map.values.count { it.size > 1 } == 0) {
+                break
+            } else {
+                result++
+                map.filter { it.value.size > 1 }.forEach { (key, value) ->
+                    println("$key = ${value.joinToString()}")
+                    val count = value.size
+                    val sum = value.map { arr[it.y][it.x] }.sum()
+                    val population = sum / count
+                    value.map { arr[it.y][it.x] = population }
+                }
+                map.clear()
+            }
+        }
+        return result
+    }
 }
 
-data class Coordinate(val x: Int, val y: Int)
+data class Coordinate(val y: Int, val x: Int)
