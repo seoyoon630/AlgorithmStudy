@@ -15,6 +15,6 @@ class SortingUnitTest {
 //            intArrayOf(0, 0, 1, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9),
 //            "계수정렬"
 //        )
-//        assertThat({ SortingAlg._두배열의원소교체() }, 26, "두배열의원소교체")
+        assertThat({ SortingAlg._두배열의원소교체() }, 26, "두배열의원소교체")
     }
 }

@@ -120,7 +120,13 @@ object SortingAlg {
         b: IntArray = intArrayOf(5, 5, 6, 6, 5),
         k: Int = 3
     ): Int {
-        return (a.sortedDescending().subList(0, a.size - k) +
-                b.sortedDescending().subList(0, k)).sum()
+        val a2 = a.sorted().toIntArray()
+        val b2 = b.sortedDescending()
+        repeat(k){
+            if(a2[it] < b2[it]) {
+                a2[it] = b2[it]
+            }
+        }
+        return a2.sum()
     }
 }
