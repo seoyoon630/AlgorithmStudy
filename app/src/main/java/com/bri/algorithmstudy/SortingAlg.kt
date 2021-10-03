@@ -114,4 +114,13 @@ object SortingAlg {
         }
         return result
     }
+
+    fun _두배열의원소교체(
+        a: IntArray = intArrayOf(1, 2, 5, 4, 3),
+        b: IntArray = intArrayOf(5, 5, 6, 6, 5),
+        k: Int = 3
+    ): Int {
+        return (a.sortedDescending().subList(0, a.size - k) +
+                b.sortedDescending().subList(0, k)).sum()
+    }
 }
