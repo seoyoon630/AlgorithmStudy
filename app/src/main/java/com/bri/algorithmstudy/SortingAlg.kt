@@ -181,4 +181,17 @@ object SortingAlg {
     fun _안테나(n: IntArray = intArrayOf(5, 1, 7, 9)): Int {
         return n.sortedBy { current -> n.sumOf { target -> (target - current).absoluteValue } }[0]
     }
+
+    fun _실패율(N: Int = 5, stages: IntArray = intArrayOf(2, 1, 2, 6, 2, 4, 3, 3)): IntArray {
+        val map = hashMapOf<Int, Int>()
+        var players = stages.size
+        stages.forEach { map[it] = (map[it] ?: 0) + 1 }
+        val rates = (1..N).map {
+            val fails = map[it] ?: 0
+            val rate = fails / players.coerceAtLeast(1).toDouble()
+            players -= fails
+            rate
+        }
+        return rates.indices.sortedByDescending { rates[it] }.map { it + 1 }.toIntArray()
+    }
 }

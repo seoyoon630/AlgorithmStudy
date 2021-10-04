@@ -24,5 +24,7 @@ class SortingUnitTest {
 //            "국영수"
 //        )
 //        assertThat({ SortingAlg._안테나() }, 5, "안테나")
+//        assertThat({ SortingAlg._실패율() }, intArrayOf(3,4,2,1,5), "실패율")
+//        assertThat({ SortingAlg._실패율(4,  intArrayOf(4,4,4,4,4)) }, intArrayOf(4,1,2,3), "실패율")
     }
 }
