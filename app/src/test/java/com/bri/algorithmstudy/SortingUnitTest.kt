@@ -23,5 +23,6 @@ class SortingUnitTest {
 //            "Donghyuk, Sangkeun, Sunyoung, nsj, Wonseob, Sanghyun, Sei, Kangsoo, Haebin, Junkyu, Soong, Taewhan",
 //            "국영수"
 //        )
+//        assertThat({ SortingAlg._안테나() }, 5, "안테나")
     }
 }

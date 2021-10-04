@@ -1,5 +1,7 @@
 package com.bri.algorithmstudy
 
+import kotlin.math.absoluteValue
+
 object SortingAlg {
     /**
      * 정렬 = 데이터를 특정한 기준에 따라 순서대로 나열하는 것
@@ -174,5 +176,9 @@ object SortingAlg {
                 ?: (o2[3] - o1[3]).takeIf { it != 0 }
                 ?: (names[o1[0]].compareTo(names[o2[0]]))
         }.joinToString { names[it[0]] }
+    }
+
+    fun _안테나(n: IntArray = intArrayOf(5, 1, 7, 9)): Int {
+        return n.sortedBy { current -> n.sumOf { target -> (target - current).absoluteValue } }[0]
     }
 }
