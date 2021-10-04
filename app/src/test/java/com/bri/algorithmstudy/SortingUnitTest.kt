@@ -15,6 +15,8 @@ class SortingUnitTest {
 //            intArrayOf(0, 0, 1, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9),
 //            "계수정렬"
 //        )
-        assertThat({ SortingAlg._두배열의원소교체() }, 26, "두배열의원소교체")
+//        assertThat({ SortingAlg._두배열의원소교체() }, 26, "두배열의원소교체")
+//        assertThat({ SortingAlg._위에서아래로() }, listOf(27, 15, 12), "위에서아래로")
+//        assertThat({ SortingAlg._성적이낮은순서로학생출력하기() }, "이순신, 홍길동", "_성적이낮은순서로학생출력하기")
     }
 }

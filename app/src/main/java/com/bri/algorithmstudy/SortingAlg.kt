@@ -122,11 +122,22 @@ object SortingAlg {
     ): Int {
         val a2 = a.sorted().toIntArray()
         val b2 = b.sortedDescending()
-        repeat(k){
-            if(a2[it] < b2[it]) {
+        repeat(k) {
+            if (a2[it] < b2[it]) {
                 a2[it] = b2[it]
             }
         }
         return a2.sum()
+    }
+
+    fun _위에서아래로(nums: IntArray = intArrayOf(15, 27, 12)): List<Int> {
+        return nums.sortedDescending()
+    }
+
+    fun _성적이낮은순서로학생출력하기(
+        s: Array<String> = arrayOf("홍길동", "이순신"),
+        scores: IntArray = intArrayOf(95, 77)
+    ): String {
+        return scores.indices.sortedBy { scores[it] }.map { s[it] }.joinToString()
     }
 }
