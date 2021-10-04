@@ -17,6 +17,11 @@ class SortingUnitTest {
 //        )
 //        assertThat({ SortingAlg._두배열의원소교체() }, 26, "두배열의원소교체")
 //        assertThat({ SortingAlg._위에서아래로() }, listOf(27, 15, 12), "위에서아래로")
-//        assertThat({ SortingAlg._성적이낮은순서로학생출력하기() }, "이순신, 홍길동", "_성적이낮은순서로학생출력하기")
+//        assertThat({ SortingAlg._성적이낮은순서로학생출력하기() }, "이순신, 홍길동", "성적이낮은순서로학생출력하기")
+//        assertThat(
+//            { SortingAlg._국영수() },
+//            "Donghyuk, Sangkeun, Sunyoung, nsj, Wonseob, Sanghyun, Sei, Kangsoo, Haebin, Junkyu, Soong, Taewhan",
+//            "국영수"
+//        )
     }
 }

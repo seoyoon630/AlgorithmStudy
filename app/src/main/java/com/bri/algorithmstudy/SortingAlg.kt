@@ -140,4 +140,39 @@ object SortingAlg {
     ): String {
         return scores.indices.sortedBy { scores[it] }.map { s[it] }.joinToString()
     }
+
+    /**
+     * 1. 국어 점수 내림차순
+     * 2. 영어 점수 올림차순
+     * 3. 수학 점수 내림차순
+     * 4. 이름 올림차순
+     */
+    fun _국영수(
+        s: Array<String> = arrayOf(
+            "Junkyu 50 60 100",
+            "Sangkeun 80 60 50",
+            "Sunyoung 80 70 100",
+            "Soong 50 60 90",
+            "Haebin 50 60 100",
+            "Kangsoo 60 80 100",
+            "Donghyuk 80 60 100",
+            "Sei 70 70 70",
+            "Wonseob 70 70 90",
+            "Sanghyun 70 70 80",
+            "nsj 80 80 80",
+            "Taewhan 50 60 90"
+        )
+    ): String {
+        val names = Array(s.size) { "" }
+        return s.mapIndexed { index, it ->
+            val splits = it.split(" ")
+            names[index] = splits[0]
+            intArrayOf(index, splits[1].toInt(), splits[2].toInt(), splits[3].toInt())
+        }.sortedWith { o1, o2 ->
+            return@sortedWith (o2[1] - o1[1]).takeIf { it != 0 }
+                ?: (o1[2] - o2[2]).takeIf { it != 0 }
+                ?: (o2[3] - o1[3]).takeIf { it != 0 }
+                ?: (names[o1[0]].compareTo(names[o2[0]]))
+        }.joinToString { names[it[0]] }
+    }
 }
