@@ -619,6 +619,159 @@ object DFSBFSAlg {
         }
         return result
     }
+
+    fun _블록이동하기(
+        arr: Array<IntArray> = arrayOf(
+            intArrayOf(0, 0, 0, 1, 1),
+            intArrayOf(0, 0, 0, 1, 0),
+            intArrayOf(0, 1, 0, 1, 1),
+            intArrayOf(1, 1, 0, 0, 1),
+            intArrayOf(0, 0, 0, 0, 0)
+        )
+    ) {
+        val n = arr.size
+        val max = n*n
+        // visited 배열 추가
+        val visited = HashMap<String, Boolean>()
+        arr.forEachIndexed { y, row ->
+            row.forEachIndexed { x, v ->
+                if (v == 1) {
+                    arr[y][x] = -1
+                } else {
+                    if ((y == 0 && x == 0) || (y == 0 && x == 1)) {
+                        arr[y][x] = 0
+                    } else arr[y][x] = max
+                }
+                if (x < n - 1) {
+                    visited[intArrayOf(y, x, y, x + 1).joinToString()] = false
+                }
+                if (y < n - 1) {
+                    visited[intArrayOf(y, x, y + 1, x).joinToString()] = false
+                }
+            }
+        }
+        println(arr.joinToString("\n") { it.joinToString("\t") })
+        drawLine()
+        // queue 추가
+        val queue: Queue<IntArray> = LinkedList()
+        queue.add(intArrayOf(0, 0, 0, 1))
+        while (queue.isNotEmpty()) {
+            val current = queue.poll() ?: return
+            if (visited[current.joinToString()] == true) continue
+            visited[current.joinToString()] = true
+            // 상하좌우 이동
+            val y1 = current[0]
+            val x1 = current[1]
+            val y2 = current[2]
+            val x2 = current[3]
+            if (y1 > 0 && visited[intArrayOf(y1 - 1, x1, y2 - 1, x2).joinToString()] == false) {
+                queue.offer(intArrayOf(y1 - 1, x1, y2 - 1, x2))
+                println("상")
+                if (arr[y1 - 1][x1] == max) {
+                    arr[y1 - 1][x1] = arr[y1][x1] + 1
+                }
+                if (arr[y2 - 1][x2] == max) {
+                    arr[y2 - 1][x2] = arr[y2][x2] + 1
+                }
+            }
+            if (x1 > 0 && visited[intArrayOf(y1, x1 - 1, y2, x2 - 1).joinToString()] == false) {
+                queue.offer(intArrayOf(y1, x1 - 1, y2, x2 - 1))
+                println("좌")
+                if (arr[y1][x1 - 1] == max) {
+                    arr[y1][x1 - 1] = arr[y1][x1] + 1
+                }
+                if (arr[y2][x2 - 1] == max) {
+                    arr[y2][x2 - 1] = arr[y2][x2] + 1
+                }
+            }
+            if (y2 < n - 1 && visited[intArrayOf(y1 + 1, x1, y2 + 1, x2).joinToString()] == false) {
+                queue.offer(intArrayOf(y1 + 1, x1, y2 + 1, x2))
+                println("하")
+                if (arr[y1 + 1][x1] == max) {
+                    arr[y1 + 1][x1] = arr[y1][x1] + 1
+                }
+                if (arr[y2 + 1][x2] == max) {
+                    arr[y2 + 1][x2] = arr[y2][x2] + 1
+                }
+            }
+            if (x2 < n - 1 && visited[intArrayOf(y1 , x1+1, y2 , x2+1).joinToString()] == false) {
+                queue.offer(intArrayOf(y1, x1 + 1, y2, x2 + 1))
+                println("우")
+                if (arr[y1][x1 + 1] == max) {
+                    arr[y1][x1 + 1] = arr[y1][x1] + 1
+                }
+                if (arr[y2][x2 + 1] == max) {
+                    arr[y2][x2 + 1] = arr[y2][x2] + 1
+                }
+            }
+            // 가로 -> 세로 회전
+            if (x2 - x1 == 1) {
+                if (y1 > 0 && arr[y1 - 1][x1] != -1 && arr[y2 - 1][x2] != -1) {
+                    if (arr[y1 - 1][x1] == max &&
+                        visited[intArrayOf(y1 - 1, x1, y1, x1).joinToString()] == false
+                    ) {
+                        println("가로 1")
+                        arr[y1 - 1][x1] = arr[y1][x1] + 1
+                        queue.offer(intArrayOf(y1 - 1, x1, y1, x1))
+                    }
+                    if (arr[y2 - 1][x2] == max &&
+                        visited[intArrayOf(y2 - 1, x2, y2, x2).joinToString()] == false
+                    ) {
+                        println("가로 2")
+                        arr[y2 - 1][x2] = arr[y2][x2] + 1
+                        queue.offer(intArrayOf(y2 - 1, x2, y2, x2))
+                    }
+                }
+                if (y1 < n - 1 && arr[y1 + 1][x1] != -1 && arr[y2 + 1][x2] != -1) {
+                    if (arr[y1 + 1][x1] == max &&
+                        visited[intArrayOf(y1, x1, y1 + 1, x1).joinToString()] == false
+                    ) {
+                        println("가로 3")
+                        arr[y1 + 1][x1] = arr[y1][x1] + 1
+                        queue.add(intArrayOf(y1, x1, y1 + 1, x1))
+                    }
+                    if (arr[y2 + 1][x2] == max &&
+                        visited[intArrayOf(y2, x2, y2 + 1, x2).joinToString()] == false
+                    ) {
+                        println("가로 4")
+                        arr[y2 + 1][x2] = arr[y2][x2] + 1
+                        queue.add(intArrayOf(y2, x2, y2 + 1, x2))
+                    }
+                }
+            }
+            // 세로 -> 가로 회전
+            else {
+                if (x1 > 0 && arr[y1][x1 - 1] != -1 && arr[y2][x2 - 1] != -1 &&
+                    visited[intArrayOf(y1, x1 - 1, y2, x2 - 1).joinToString()] == false
+                ) {
+                    if (arr[y1][x1 - 1] == max) {
+                        println("세로 1")
+                        arr[y1][x1 - 1] = arr[y1][x1] + 1
+                    }
+                    if (arr[y2][x2 - 1] == max) {
+                        println("세로 2")
+                        arr[y2][x2 - 1] = arr[y2][x2] + 1
+                    }
+                }
+                if (x1 < n - 1 && arr[y1][x1 + 1] != -1 && arr[y2][x2 + 1] != -1 &&
+                    visited[intArrayOf(y1, x1 + 1, y2, x2 + 1).joinToString()] == false
+                ) {
+                    if (arr[y1][x1 + 1] == max) {
+                        println("세로 3")
+                        arr[y1][x1 + 1] = arr[y1][x1] + 1
+                    }
+                    if (arr[y2][x2 + 1] == max) {
+                        println("세로 4")
+                        arr[y2][x2 + 1] = arr[y2][x2] + 1
+
+                    }
+                }
+            }
+            println("[$y1, $x1], [$y2, $x2]")
+            println(arr.joinToString("\n") { it.joinToString("\t") })
+            drawLine()
+        }
+    }
 }
 
 data class Coordinate(val y: Int, val x: Int)

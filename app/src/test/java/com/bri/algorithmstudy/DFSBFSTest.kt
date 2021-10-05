@@ -122,5 +122,7 @@ class DFSBFSTest {
 //                )
 //            }, 3, "인구이동"
 //        )
+
+        assertThat({ DFSBFSAlg._블록이동하기() }, 7, "블록이동하기")
     }
 }
