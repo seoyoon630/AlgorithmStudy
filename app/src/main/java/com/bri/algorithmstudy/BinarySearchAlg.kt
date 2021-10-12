@@ -113,5 +113,18 @@ object BinarySearchAlg {
         return arr.count { it == x }.takeIf { it > 0 } ?: -1
     }
 
-
+    // 이진탐색으로 인덱스와 값을 비교하여 찾음
+    fun _고정점찾기(arr: IntArray = intArrayOf(-15, -6, 1, 3, 7)): Int {
+        var start = 0
+        var end = arr.lastIndex
+        while (start <= end) {
+            val mid = (start + end) / 2
+            when {
+                mid == arr[mid] -> return mid
+                mid < arr[mid] -> end = mid - 1
+                mid > arr[mid] -> start = mid + 1
+            }
+        }
+        return -1
+    }
 }

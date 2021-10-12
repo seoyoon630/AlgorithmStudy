@@ -14,5 +14,8 @@ class BinarySearchTest {
 //        val sizeTest = IntArray(1000000) { it }
 //        assertThat({ BinarySearchAlg._정렬된배열에서특정수의개수구하기(arr = sizeTest) }, 1, "정렬된배열에서특정수의개수구하기")
 //        assertThat({ BinarySearchAlg._정렬된배열에서특정수의개수구하기2(arr = sizeTest) }, 1, "정렬된배열에서특정수의개수구하기")
+//        assertThat({ BinarySearchAlg._고정점찾기() }, 3, "고정점찾기")
+//        assertThat({ BinarySearchAlg._고정점찾기(intArrayOf(-15, -4, 2, 8, 9, 13, 15)) }, 2, "고정점찾기")
+//        assertThat({ BinarySearchAlg._고정점찾기(intArrayOf(-15, -4, 3, 8, 9, 13, 15)) }, -1, "고정점찾기")
     }
 }
