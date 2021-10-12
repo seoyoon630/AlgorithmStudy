@@ -1,8 +1,7 @@
+@file:Suppress("FunctionName", "NonAsciiCharacters", "unused")
 package com.bri.algorithmstudy
 
 object BinarySearchAlg {
-    fun init(){}
-
     fun _부품찾기(
         arr: IntArray = intArrayOf(8, 3, 7, 9, 2),
         targets: IntArray = intArrayOf(5, 7, 9)
@@ -38,5 +37,28 @@ object BinarySearchAlg {
         set.addAll(arr.toList())
         return targets.map { set.contains(it) }
             .joinToString(" ") { if (it) "yes" else "no" }
+    }
+
+    fun _떡볶이떡만들기(m: Int = 6, arr: IntArray = intArrayOf(19, 15, 10, 17)): Int {
+        // 1~arr의 최대 높이 이진탐색 시작
+        // 자른 길이의 합을 구해 비교한다.
+        val max = arr.maxOrNull() ?: m
+        var start = 0
+        var end = max
+        var result = start
+        while (start <= end) {
+            val mid = (start + end) / 2
+            val sum = arr.sumOf { (it - mid).coerceAtLeast(0) }
+            println("mid = $mid / sum = $sum")
+            when {
+                sum == m -> return mid
+                sum < m -> end = mid - 1
+                sum > m -> {
+                    result = mid
+                    start = mid + 1
+                }
+            }
+        }
+        return result
     }
 }
