@@ -127,4 +127,37 @@ object BinarySearchAlg {
         }
         return -1
     }
+
+    /**
+     * 거리를 기준으로 이진탐색 (최소거리~최대거리)
+     * mid(거리) 이상일 때 공유기를 설치하고, 공유기 개수가 부족하면 거리를 줄여서 재검색
+     * 공유기 개수가 많으면 거리를 늘려서 재검색
+     */
+    fun _공유기설치(n: Int = 3, arr: IntArray = intArrayOf(1, 2, 8, 4, 9)): Int {
+        arr.sort()
+        var result = -1
+        var start = arr.first()
+        var end = arr.last() - arr.first()
+        while (start <= end) {
+            val mid = (start + end) / 2
+            var prev = arr.first()
+            var count = 1
+            // 이전 공유기 위치와 비교하여 mid 거리 이상일 때 공유기 설치
+            for (home in arr) {
+                if (home - prev >= mid) {
+                    prev = home
+                    count++
+                }
+            }
+            // 공유기 개수에 따라 거리를 줄이거나 늘려서 재검색
+            when {
+                count < n -> end = mid - 1
+                else -> {
+                    result = mid
+                    start = mid + 1
+                }
+            }
+        }
+        return result
+    }
 }

@@ -17,5 +17,7 @@ class BinarySearchTest {
 //        assertThat({ BinarySearchAlg._고정점찾기() }, 3, "고정점찾기")
 //        assertThat({ BinarySearchAlg._고정점찾기(intArrayOf(-15, -4, 2, 8, 9, 13, 15)) }, 2, "고정점찾기")
 //        assertThat({ BinarySearchAlg._고정점찾기(intArrayOf(-15, -4, 3, 8, 9, 13, 15)) }, -1, "고정점찾기")
+//        assertThat({ BinarySearchAlg._공유기설치() }, 3, "공유기설치")
+//        assertThat({ BinarySearchAlg._공유기설치(n = 2) }, 8, "공유기설치")
     }
 }
