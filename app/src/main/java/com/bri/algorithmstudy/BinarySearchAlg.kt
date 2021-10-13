@@ -160,4 +160,145 @@ object BinarySearchAlg {
         }
         return result
     }
+
+    // query, word 순차탐색 -> TimeOut
+    fun _가사검색(
+        words: Array<String> = arrayOf("frodo", "front", "frost", "frozen", "frame", "kakao"),
+        queries: Array<String> = arrayOf("fro??", "????o", "fr???", "fro???", "pro?")
+    ): IntArray {
+        return queries.map { query ->
+            words.count { word ->
+                if (query.length != word.length) return@count false
+                if (query.startsWith("?")) {
+                    word.endsWith(query.filter { it in 'a'..'z' })
+                } else {
+                    word.startsWith(query.filter { it in 'a'..'z' })
+                }
+            }
+        }.toIntArray()
+    }
+
+    // 예전에 풀었던 방식
+    // words를 미리 map으로 생성
+    fun _가사검색2(
+        words: Array<String> = arrayOf("frodo", "front", "frost", "frozen", "frame", "kakao"),
+        queries: Array<String> = arrayOf("fro??", "????o", "fr???", "fro???", "pro?")
+    ): IntArray {
+        val lengthMap = HashMap<Int, Int>()
+        val map = HashMap<String, Int>()
+        val reverseMap = HashMap<String, Int>()
+        words.forEach { word ->
+            for (i in word.indices) {
+                val target = word.substring(0, i + 1)
+                map["${word.length}$target"] = map["${word.length}$target"]?.plus(1) ?: 1
+            }
+            lengthMap[word.length] = (lengthMap[word.length] ?: 0) + 1
+        }
+        words.map { it.reversed() }.forEach { word ->
+            for (i in word.indices) {
+                val target = word.substring(0, i + 1)
+                reverseMap["${word.length}$target"] = reverseMap["${word.length}$target"]?.plus(1)
+                    ?: 1
+            }
+        }
+
+        val result = IntArray(queries.size)
+        queries.forEachIndexed { index, query ->
+            if (query.endsWith("?")) {
+                //모두물음표
+                if (query.startsWith("?")) {
+                    result[index] = lengthMap[query.length] ?: 0
+                }
+                //시작이정해져있을때
+                else {
+                    result[index] = map[query.length.toString() + query.replace("?", "")] ?: 0
+                }
+            }
+            //끝이정해져있을때
+            else {
+                result[index] =
+                    reverseMap[query.length.toString() + query.reversed().replace("?", "")]
+                        ?: 0
+            }
+        }
+        return result
+    }
+
+    /** 이진탐색으로 풀려면
+     * words 길이+알파벳 정렬
+     * words 역순 길이+알파벳 정렬
+     * queries를 이진탐색
+     * 시작 위치와 종료 위치를 찾아 개수를 확인한다.
+     */
+    val test = arrayOf("zafdz", "frodo", "front", "frost", "frozen", "frame", "kakao")
+    fun _가사검색3(
+        words: Array<String> = test,
+        queries: Array<String> = arrayOf("fro??", "????o", "fr???", "fro???", "pro?")
+    ): IntArray {
+        val list: List<String> = words.sortedWith(object : Comparator<String> {
+            override fun compare(o1: String, o2: String): Int {
+                return (o1.length - o2.length).takeIf { it != 0 } ?: o1.compareTo(o2)
+            }
+        })
+        val reversedList: List<String> =
+            words.map { it.reversed() }.sortedWith(object : Comparator<String> {
+                override fun compare(o1: String, o2: String): Int {
+                    return (o1.length - o2.length).takeIf { it != 0 } ?: o1.compareTo(o2)
+                }
+            })
+
+        return queries.map { query ->
+            val filteredQuery = query.filter { it != '?' }
+            if (query.startsWith("?")) {
+                querySearch(reversedList, filteredQuery.reversed(), query.length)
+            } else {
+                querySearch(list, filteredQuery, query.length)
+            }
+        }.toIntArray()
+    }
+
+    private fun querySearch(array: List<String>, query: String, length: Int): Int {
+        var start = 0
+        var end = array.lastIndex
+        var left = end
+        var right = start
+        while (start <= end) {
+            val mid = (start + end) / 2
+            if(array[mid].length < length) {
+                start = mid + 1
+                continue
+            }
+            val target = array[mid].substring(0, query.length)
+            when {
+                array[mid].length > length -> end = mid - 1
+                target == query -> {
+                    left = mid
+                    end = mid - 1
+                }
+                target < query -> start = mid + 1
+                target > query -> end = mid - 1
+            }
+        }
+
+        start = 0
+        end = array.lastIndex
+        while (start <= end) {
+            val mid = (start + end) / 2
+            if(array[mid].length < length) {
+                start = mid + 1
+                continue
+            }
+            val target = array[mid].substring(0, query.length)
+            when {
+                array[mid].length > length -> end = mid - 1
+                target == query -> {
+                    right = mid
+                    start = mid + 1
+                }
+                target < query -> start = mid + 1
+                target > query -> end = mid - 1
+            }
+        }
+        return (right - left + 1).coerceAtLeast(0)
+    }
 }
