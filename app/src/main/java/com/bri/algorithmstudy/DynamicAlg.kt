@@ -2,6 +2,8 @@
 
 package com.bri.algorithmstudy
 
+import java.util.*
+
 /**
  * 다이나믹 프로그래밍(동적 계획법) = 메모리를 적절히 사용하여 수행 시간 효율성을 비약적으로 향상시키는 방법
  * 이미 계산된 결과(작은 문제)는 별도의 메모리 영역에 저장하여 다시 계산하지 않는다.
@@ -11,6 +13,10 @@ package com.bri.algorithmstudy
  * -> 큰 문제를 작은 문제로 나눌 수 있으며, 작은 문제의 답을 모아 큰 문제를 해결할 수 있고,
  * 동일한 작은 문제를 반복적으로 해결해야 함
  * ex) 피보나치 수열
+ *
+ * 다이나믹 프로그래밍 VS 분할 정복
+ * 공통점 : 둘 다 최적 부분 구조일 때 사용 가능
+ * 차이점 : 부분 문제의 중복
  */
 object DynamicAlg {
     fun _피보나치수열(n: Int = 99) {
@@ -33,4 +39,39 @@ object DynamicAlg {
         println(dp.joinToString())
     }
 
+    /**
+     * 최소 횟수를 구해야 하므로 BFS로 풀이
+     */
+    fun _1로만들기(x: Int = 26): Int {
+        val queue: Queue<Pair<Int, Int>> = LinkedList()
+        queue.offer(Pair(x, 0))
+        while (queue.isNotEmpty()) {
+            val node = queue.poll() ?: break
+//            println("${node.second} : ${node.first}")
+            val n = node.first
+            if (n == 1) return node.second
+            if (n % 5 == 0) queue.offer(Pair(n / 5, node.second + 1))
+            if (n % 3 == 0) queue.offer(Pair(n / 3, node.second + 1))
+            if (n % 2 == 0) queue.offer(Pair(n / 2, node.second + 1))
+            queue.offer(Pair(n - 1, node.second + 1))
+
+        }
+        return -1
+    }
+
+    /**
+     * dynamic Programming으로 풀이
+     * 시간복잡도, 공간복잡도 모두 BFS보다 유리
+     */
+    fun _1로만들기2(x: Int = 26): Int {
+        val dp = IntArray(x + 1) { if (it == 1) 0 else Int.MAX_VALUE }
+        for (i in 2..x) {
+            dp[i] = dp[i - 1] + 1
+            if (i % 2 == 0) dp[i] = (dp[i / 2] + 1).coerceAtMost(dp[i])
+            if (i % 3 == 0) dp[i] = (dp[i / 3] + 1).coerceAtMost(dp[i])
+            if (i % 5 == 0) dp[i] = (dp[i / 5] + 1).coerceAtMost(dp[i])
+        }
+//        println(dp.joinToString())
+        return dp[x]
+    }
 }
