@@ -14,19 +14,19 @@ package com.bri.algorithmstudy
  */
 object DynamicAlg {
     fun _피보나치수열(n: Int = 99) {
-        val dp = DoubleArray(n + 1) { if (it <= 2) 1.0 else -1.0 }
+        val dp = LongArray(n + 1) { if (it <= 2) 1 else -1 }
         _피보나치수열재귀(n, dp)
         println(dp.joinToString())
     }
 
-    private fun _피보나치수열재귀(n: Int, array: DoubleArray): Double {
-        if (array[n] != -1.0) return array[n]
+    private fun _피보나치수열재귀(n: Int, array: LongArray): Long {
+        if (array[n] != (-1).toLong()) return array[n]
         array[n] = _피보나치수열재귀(n - 2, array) + _피보나치수열재귀(n - 1, array)
         return array[n]
     }
 
     fun _피보나치수열반복(n: Int = 99) {
-        val dp = DoubleArray(n + 1) { if (it <= 2) 1.0 else -1.0 }
+        val dp = LongArray(n + 1) { if (it <= 2) 1 else -1 }
         for (i in 3..n) {
             dp[i] = dp[i - 2] + dp[i - 1]
         }
