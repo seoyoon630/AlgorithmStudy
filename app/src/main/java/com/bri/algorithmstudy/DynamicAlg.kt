@@ -74,4 +74,16 @@ object DynamicAlg {
 //        println(dp.joinToString())
         return dp[x]
     }
+
+    fun _개미전사(array: IntArray = intArrayOf(1, 3, 1, 5)): Int {
+        val dp = IntArray(array.size) { -1 }
+        dp[0] = array[0]
+        dp[1] = Math.max(array[0], array[1])
+
+        for (i in 2..array.lastIndex) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + array[i])
+        }
+        println(dp.joinToString())
+        return Math.max(dp[array.lastIndex - 1], dp[array.lastIndex])
+    }
 }
