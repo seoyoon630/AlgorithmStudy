@@ -96,4 +96,19 @@ object DynamicAlg {
         }
         return dp[n]
     }
+
+    fun _효율적인화폐구성(coins: IntArray = intArrayOf(2, 3), n: Int = 15): Int {
+        val dp = IntArray(n + 1) { if (coins.contains(it)) 1 else -1 }
+        for (i in 1..n) {
+            // 이전 금액이 존재하는 경우
+            val availableCoins = coins.filter { it < i && dp[i - it] >= 0 }
+//            println("$i -> ${availableCoins.joinToString()}")
+            if (dp[i] == -1 && availableCoins.isNotEmpty())
+                dp[i] = availableCoins.minOf { coin -> dp[i - coin] + 1 }
+        }
+//        println(dp.joinToString())
+        return dp[n]
+    }
+
+
 }
