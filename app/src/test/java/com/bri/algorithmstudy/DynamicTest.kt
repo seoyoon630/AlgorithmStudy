@@ -12,6 +12,6 @@ class DynamicTest {
 //        assertThat({ DynamicAlg._1로만들기2() }, 3, "1로만들기")
 //        assertThat({ DynamicAlg._1로만들기(3887999) }, 27, "1로만들기")
 //        assertThat({ DynamicAlg._1로만들기2(3887999) }, 27, "1로만들기")
-        assertThat({ DynamicAlg._개미전사() }, 8, "개미전사")
+//        assertThat({ DynamicAlg._개미전사() }, 8, "개미전사")
     }
 }

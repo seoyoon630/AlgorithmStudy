@@ -83,7 +83,6 @@ object DynamicAlg {
         for (i in 2..array.lastIndex) {
             dp[i] = Math.max(dp[i - 1], dp[i - 2] + array[i])
         }
-        println(dp.joinToString())
-        return Math.max(dp[array.lastIndex - 1], dp[array.lastIndex])
+        return dp[array.lastIndex]
     }
 }
