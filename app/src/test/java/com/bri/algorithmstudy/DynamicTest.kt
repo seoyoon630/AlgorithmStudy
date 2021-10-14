@@ -1,4 +1,5 @@
 @file:Suppress("FunctionName", "NonAsciiCharacters")
+
 package com.bri.algorithmstudy
 
 import org.junit.Test
@@ -17,5 +18,6 @@ class DynamicTest {
 //         DynamicAlg._바닥공사(50000)
 //        assertThat({ DynamicAlg._효율적인화폐구성() }, 5, "효율적인화폐구성")
 //        assertThat({ DynamicAlg._효율적인화폐구성(intArrayOf(3, 5, 7), 4) }, -1, "효율적인화폐구성")
+//        assertThat({ DynamicAlg._금광() }, intArrayOf(19, 16), "금광")
     }
 }

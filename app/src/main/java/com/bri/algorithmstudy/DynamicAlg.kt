@@ -3,6 +3,7 @@
 package com.bri.algorithmstudy
 
 import java.util.*
+import kotlin.collections.HashSet
 
 /**
  * 다이나믹 프로그래밍(동적 계획법) = 메모리를 적절히 사용하여 수행 시간 효율성을 비약적으로 향상시키는 방법
@@ -110,5 +111,41 @@ object DynamicAlg {
         return dp[n]
     }
 
+    fun _금광(
+        testCases: Array<Array<IntArray>> = arrayOf(
+            arrayOf(
+                intArrayOf(1, 3, 3, 2),
+                intArrayOf(2, 1, 4, 1),
+                intArrayOf(0, 6, 4, 7)
+            ), arrayOf(
+                intArrayOf(1, 3, 1, 5),
+                intArrayOf(2, 2, 4, 1),
+                intArrayOf(5, 0, 2, 3),
+                intArrayOf(0, 6, 1, 2)
+            )
+        )
+    ): IntArray {
+        val answer = IntArray(testCases.size) { 0 }
+        testCases.forEachIndexed { index, array ->
+            val y = array.size
+            val x = array[0].size
+            val result = Array(y) { IntArray(x) { 0 } }
+            for (i in 0 until x) {
+                for (j in 0 until y) {
+                    if (i == 0) {
+                        result[j][i] = array[j][i]
+                    } else {
+                        val candidates = HashSet<Int>()
+                        if (j > 0) candidates.add(result[j - 1][i - 1] + array[j][i])
+                        candidates.add(result[j][i - 1] + array[j][i])
+                        if (j < y - 1) candidates.add(result[j + 1][i - 1] + array[j][i])
+                        result[j][i] = candidates.maxOrNull() ?: 0
+                    }
+                }
+            }
+            answer[index] = (0 until y).map { result[it][x - 1] }.maxOrNull() ?: 0
+        }
+        return answer
+    }
 
 }
