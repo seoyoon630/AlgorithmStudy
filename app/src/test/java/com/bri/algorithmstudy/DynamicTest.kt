@@ -20,5 +20,16 @@ class DynamicTest {
 //        assertThat({ DynamicAlg._효율적인화폐구성(intArrayOf(3, 5, 7), 4) }, -1, "효율적인화폐구성")
 //        assertThat({ DynamicAlg._금광() }, intArrayOf(19, 16), "금광")
 //        assertThat({ DynamicAlg._정수삼각형() }, 30, "정수삼각형")
+        assertThat({ DynamicAlg._퇴사() }, 45, "퇴사")
+        assertThat({
+            DynamicAlg._퇴사(
+                10, arrayOf(
+                    intArrayOf(1, 1), intArrayOf(1, 2), intArrayOf(1, 3),
+                    intArrayOf(1, 4), intArrayOf(1, 5), intArrayOf(1, 6),
+                    intArrayOf(1, 7), intArrayOf(1, 8), intArrayOf(1, 9),
+                    intArrayOf(1, 10)
+                )
+            )
+        }, 55, "퇴사")
     }
 }

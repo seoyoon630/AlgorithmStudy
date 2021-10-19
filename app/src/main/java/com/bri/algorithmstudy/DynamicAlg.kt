@@ -168,7 +168,44 @@ object DynamicAlg {
             }
         }
         println(dp.joinToString("\n") { it.joinToString("\t") })
-        return dp[size-1].maxOrNull()?: 0
+        return dp[size - 1].maxOrNull() ?: 0
     }
 
+    /**
+     * 시작시간, 종료시간, 금액을 가진 배열로 변경한다.
+     * 종료시간을 기준을 (시작시간, 금액)의 HashSet을 생성한다.
+     * dp[n] = 정확히 n일에 끝나는 일 중 가장 큰 금액 or n-1일까지 끝나는 일 중 가장 큰 금액
+     */
+    fun _퇴사(
+        n: Int = 7,
+        array: Array<IntArray> = arrayOf(
+            intArrayOf(3, 10),
+            intArrayOf(5, 20),
+            intArrayOf(1, 10),
+            intArrayOf(1, 20),
+            intArrayOf(2, 15),
+            intArrayOf(4, 40),
+            intArrayOf(2, 200)
+        )
+    ): Int {
+        val sets = Array(n + 1) { hashSetOf<IntArray>() }
+        array.forEachIndexed { index, _ ->
+            val end = index + array[index][0]
+            if (end <= n) {
+                sets[end].add(intArrayOf(index, array[index][1]))
+            }
+        }
+        sets.forEachIndexed { index, it ->
+            println("$index = ${it.joinToString(" | ") { it.joinToString() }}")
+        }
+        val dp = IntArray(n + 1) { 0 }
+        for (i in 1 until dp.size) {
+            // n일에 끝나는 일 중 가장 큰 금액
+            val current = sets[i].map { it[1] + dp[it[0]] }.maxOrNull() ?: 0
+            // n일까지 끝나는 일과 n-1일까지 끝나는 일 중 최댓값 구하여 넣음
+            dp[i] = Math.max(current, dp[i - 1])
+        }
+        println(dp.joinToString())
+        return dp[n]
+    }
 }
