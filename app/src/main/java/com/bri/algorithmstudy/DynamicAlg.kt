@@ -208,4 +208,25 @@ object DynamicAlg {
         println(dp.joinToString())
         return dp[n]
     }
+
+    /**
+     * 풀이 참고
+     * 가장 긴 증가하는 부분 수열(LIS) 알고리즘 사용
+     *
+     */
+    fun _병사배치하기(array: IntArray = intArrayOf(15, 11, 4, 8, 5, 2, 4)): Int {
+        array.reverse()
+        val n = array.size
+        val dp = IntArray(n) { 1 }
+        println(array.joinToString())
+        for (i in 1 until n) {
+            for (j in 0 until i) {
+                if (array[j] < array[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1)
+                }
+            }
+            println(dp.joinToString())
+        }
+        return n - (dp.maxOrNull() ?: 0)
+    }
 }
