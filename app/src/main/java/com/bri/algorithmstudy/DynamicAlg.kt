@@ -148,4 +148,27 @@ object DynamicAlg {
         return answer
     }
 
+    fun _정수삼각형(
+        n: Array<IntArray> = arrayOf(
+            intArrayOf(7),
+            intArrayOf(3, 8),
+            intArrayOf(8, 1, 0),
+            intArrayOf(2, 7, 4, 4),
+            intArrayOf(4, 5, 2, 6, 5)
+        )
+    ): Int {
+        // 현재까지의 값을 더할 곳
+        val size = n.size
+        val dp = Array(size) { IntArray(size) { 0 } }
+        dp[0][0] = n[0][0]
+        for (y in 1 until size) {
+            dp[y][0] = dp[y - 1][0] + n[y][0]
+            for (x in 1..y) {
+                dp[y][x] = Math.max(dp[y - 1][x], dp[y - 1][x - 1]) + n[y][x]
+            }
+        }
+        println(dp.joinToString("\n") { it.joinToString("\t") })
+        return dp[size-1].maxOrNull()?: 0
+    }
+
 }
