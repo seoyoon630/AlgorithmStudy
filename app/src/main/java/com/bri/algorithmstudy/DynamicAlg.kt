@@ -255,4 +255,35 @@ object DynamicAlg {
         println(dp.joinToString())
         return dp[n - 1]
     }
+
+    /**
+     * 삽입, 삭제, 변경 최소로 하는 횟수 구하기 -> Levenshtein Algorithm
+     * 2차원 배열 생성
+     * char 끼리 비교해서 같으면, answer[i][j] = answer[i-1][j-1]
+     * 같지 않으면 answer[i-1][j]+deleteCost, answer[i][j-1]+addCost, answer[i-1][j-1]+replaceCost
+     * 중 제일 작은 값으로 설정
+     */
+    fun _편집거리(array: Array<String> = arrayOf("cat", "cut")): Int {
+        // 2차원 배열 생성
+        val length = array[0].length
+        val width = array[1].length
+        val answer = Array(length + 1) { IntArray(width + 1) { 0 } }
+        for (y in 0..length) {
+            for (x in 0..width) {
+                if (y == 0) answer[y][x] = x
+                else if (x == 0) answer[y][x] = y
+                else if (array[0][y - 1] == array[1][x - 1]) {
+                    answer[y][x] = answer[y - 1][x - 1]
+                } else {
+                    answer[y][x] = (listOf(
+                        answer[y - 1][x],
+                        answer[y][x - 1],
+                        answer[y - 1][x - 1]
+                    ).minOrNull() ?: break) + 1
+                }
+            }
+        }
+        println(answer.joinToString("\n") { it.joinToString("\t") })
+        return answer[length][width]
+    }
 }

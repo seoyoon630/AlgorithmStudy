@@ -47,5 +47,7 @@ class DynamicTest {
 //        assertThat({ DynamicAlg._못생긴수(4)}, 4, "못생긴수")
 //        assertThat({ DynamicAlg._못생긴수(100)}, 1536, "못생긴수")
 //        assertThat({ DynamicAlg._못생긴수(1000)}, 51200000, "못생긴수")
+//        assertThat({ DynamicAlg._편집거리()}, 1, "편집거리")
+//        assertThat({ DynamicAlg._편집거리(arrayOf("sunday", "saturday"))}, 3, "편집거리")
     }
 }
