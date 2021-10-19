@@ -43,5 +43,9 @@ class DynamicTest {
 //            2,
 //            "병사배치하기 - 14, 13 지우기"
 //        )
+//        assertThat({ DynamicAlg._못생긴수()}, 12, "못생긴수")
+//        assertThat({ DynamicAlg._못생긴수(4)}, 4, "못생긴수")
+//        assertThat({ DynamicAlg._못생긴수(100)}, 1536, "못생긴수")
+//        assertThat({ DynamicAlg._못생긴수(1000)}, 51200000, "못생긴수")
     }
 }

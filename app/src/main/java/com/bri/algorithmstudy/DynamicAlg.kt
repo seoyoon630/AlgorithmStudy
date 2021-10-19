@@ -229,4 +229,30 @@ object DynamicAlg {
         }
         return n - (dp.maxOrNull() ?: 0)
     }
+
+    /**
+     * 2,3,5 만을 약수로 가진 수
+     */
+    fun _못생긴수(n: Int = 10): Int {
+        val dp = IntArray(Math.max(n, 5)) { 0 }
+        dp[0] = 1
+        dp[1] = 2
+        dp[2] = 3
+        dp[3] = 4
+        dp[4] = 5
+        var count = 5
+        var target = 6
+        while (count < n) {
+            if (target % 2 == 0 && dp.contains(target / 2)) {
+                dp[count++] = target
+            } else if (target % 3 == 0 && dp.contains(target / 3)) {
+                dp[count++] = target
+            } else if (target % 5 == 0 && dp.contains(target / 5)) {
+                dp[count++] = target
+            }
+            target++
+        }
+        println(dp.joinToString())
+        return dp[n - 1]
+    }
 }
