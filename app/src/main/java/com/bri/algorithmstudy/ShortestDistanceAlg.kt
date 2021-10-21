@@ -152,6 +152,50 @@ object ShortestDistanceAlg {
         println(result.joinToString())
         return intArrayOf(visited.count { it } - 1, max)
     }
+
+    fun _미래도시(
+        n: Int = 5, x: Int = 4, k: Int = 5, d: Array<IntArray> = arrayOf(
+            intArrayOf(1, 2),
+            intArrayOf(1, 3),
+            intArrayOf(1, 4),
+            intArrayOf(2, 4),
+            intArrayOf(3, 4),
+            intArrayOf(3, 5),
+            intArrayOf(4, 5)
+        )
+    ): Int {
+        val roads = Array(n + 1) { ArrayList<Int>() }
+        d.forEach {
+            roads[it[0]].add(it[1])
+            roads[it[1]].add(it[0])
+        }
+
+        val d1 = dijkstra(n, 1, k, roads)
+        val d2 = dijkstra(n, k, x, roads)
+        return if (d1 == null || d2 == null) -1 else d1 + d2
+    }
+
+    private fun dijkstra(n: Int, i: Int, k: Int, roads: Array<java.util.ArrayList<Int>>): Int? {
+        val visited = BooleanArray(n + 1) { false }
+        val distance = IntArray(n + 1) { Int.MAX_VALUE }
+        distance[i] = 0
+        val queue: Queue<Int> = LinkedList()
+        queue.add(i)
+        while (queue.isNotEmpty()) {
+            val node = queue.poll() ?: break
+            if (visited[node]) continue
+            visited[node] = true
+            roads[node].forEach {
+                val cost = distance[node] + 1
+                if (cost < distance[it]) {
+                    distance[it] = cost
+                    queue.add(it)
+                }
+            }
+        }
+        if (distance[k] == Int.MAX_VALUE) return null
+        return distance[k]
+    }
 }
 
 data class Node(val distance: Int, val index: Int)
