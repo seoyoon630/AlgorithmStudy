@@ -71,6 +71,53 @@ object ShortestDistanceAlg {
         println(result.joinToString())
         return result[to]
     }
+
+    /**
+     * 플로이드 워셜 알고리즘
+     * 단계별로 거쳐 가는 노드를 기준으로 알고리즘을 수행
+     * 매 단계마다 방문하지 않은 노드 중에 최단 거리를 갖는 노드를 찾는 과정이 필요 없음
+     * 2차원 테이블에 최단 거리 정보를 저장
+     * 다이나믹 프로그래밍 유형
+     * ab최단거리 = min(ak최단거리 + kb최단거리, ab최단거리)
+     */
+    fun _플로이드워셜(
+        n: Int = 4,
+        from: Int = 1, to: Int = 4, distances: Array<IntArray> = arrayOf(
+            intArrayOf(1, 2, 4),
+            intArrayOf(1, 4, 6),
+            intArrayOf(2, 1, 3),
+            intArrayOf(2, 3, 7),
+            intArrayOf(3, 1, 5),
+            intArrayOf(3, 4, 4),
+            intArrayOf(4, 3, 2)
+        )
+    ): Int {
+        val d = Array(n) { y ->
+            IntArray(n) { x ->
+                if (y == x) 0
+                else Int.MAX_VALUE
+            }
+        }
+        distances.forEach {
+            d[it[0] - 1][it[1] - 1] = it[2]
+        }
+        println(d.joinToString("\n") { it.joinToString() })
+        drawLine()
+        for (i in 0 until n) {
+            for (j in 0 until n) {
+                if (j == i) continue
+                for (k in 0 until n) {
+                    if (k == j || k == i) continue
+                    if (d[j][i] == Int.MAX_VALUE || d[i][k] == Int.MAX_VALUE) continue
+                    d[j][k] = Math.min(d[j][k], d[j][i] + d[i][k])
+                }
+            }
+            println(d.joinToString("\n") { it.joinToString() })
+            drawLine()
+        }
+        println(d.joinToString("\n") { it.joinToString() })
+        return d[from - 1][to - 1]
+    }
 }
 
 data class Node(val distance: Int, val to: Int)
