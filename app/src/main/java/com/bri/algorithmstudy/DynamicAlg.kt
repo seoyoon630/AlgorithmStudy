@@ -286,4 +286,27 @@ object DynamicAlg {
         println(answer.joinToString("\n") { it.joinToString("\t") })
         return answer[length][width]
     }
+
+    fun _N으로표현(N: Int, number: Int): Int {
+        if(N == number) return 1
+        val dp = Array(9) { hashSetOf<Double>() }
+        dp[1].add(N.toDouble())
+        for (i in 2..dp.lastIndex) {
+            dp[i].add(dp[i - 1].elementAt(0) * 10 + N)
+        }
+        for (i in 2..dp.lastIndex) {
+            for (j in 1..i) {
+                dp[j].forEach { n ->
+                    dp[i - j].forEach { m ->
+                        dp[i].add(n + m)
+                        dp[i].add(n - m)
+                        dp[i].add(n * m)
+                        dp[i].add(n / m)
+                    }
+                }
+            }
+            if (dp[i].contains(number.toDouble())) return i
+        }
+        return -1
+    }
 }
