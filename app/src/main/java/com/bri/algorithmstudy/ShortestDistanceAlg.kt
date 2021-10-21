@@ -57,14 +57,14 @@ object ShortestDistanceAlg {
 
         while (queue.isNotEmpty()) {
             val current = queue.poll() ?: break
-            if (visited[current.to]) continue
-            visited[current.to] = true
-            d[current.to].forEach {
-                val d1 = it.distance + result[current.to]
-                val d2 = result[it.to]
+            if (visited[current.index]) continue
+            visited[current.index] = true
+            d[current.index].forEach {
+                val d1 = it.distance + result[current.index]
+                val d2 = result[it.index]
                 if (d1 < d2) {
                     queue.add(it)
-                    result[it.to] = d1
+                    result[it.index] = d1
                 }
             }
         }
@@ -76,6 +76,7 @@ object ShortestDistanceAlg {
      * 플로이드 워셜 알고리즘
      * 단계별로 거쳐 가는 노드를 기준으로 알고리즘을 수행
      * 매 단계마다 방문하지 않은 노드 중에 최단 거리를 갖는 노드를 찾는 과정이 필요 없음
+     * 시간 복잡도 = O(N^3)
      * 2차원 테이블에 최단 거리 정보를 저장
      * 다이나믹 프로그래밍 유형
      * ab최단거리 = min(ak최단거리 + kb최단거리, ab최단거리)
@@ -118,9 +119,42 @@ object ShortestDistanceAlg {
         println(d.joinToString("\n") { it.joinToString() })
         return d[from - 1][to - 1]
     }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun _전보(
+        n: Int = 3,
+        c: Int = 1,
+        m: Array<IntArray> = arrayOf(intArrayOf(1, 2, 4), intArrayOf(1, 3, 2))
+    ): IntArray {
+        val d = Array(n + 1) { ArrayList<Node>() }
+        m.forEach { d[it[0]].add(Node(it[2], it[1])) }
+        val visited = BooleanArray(n + 1) { false }
+        val result = Array(n + 1) { Int.MAX_VALUE }
+        val queue = PriorityQueue(NodeComparator())
+        var max = 0
+
+        // 시작점
+        queue.add(Node(0, c))
+        result[c] = 0
+        while (queue.isNotEmpty()) {
+            val current = queue.poll() ?: break
+            if (visited[current.index]) continue
+            visited[current.index] = true
+            d[current.index].forEach {
+                val cost = current.distance + it.distance
+                if (cost < result[it.index]) {
+                    result[it.index] = cost
+                    queue.add(Node(cost, it.index))
+                    if (max < cost) max = cost
+                }
+            }
+        }
+        println(result.joinToString())
+        return intArrayOf(visited.count { it } - 1, max)
+    }
 }
 
-data class Node(val distance: Int, val to: Int)
+data class Node(val distance: Int, val index: Int)
 
 class NodeComparator : Comparator<Node> {
     override fun compare(o1: Node, o2: Node): Int {
