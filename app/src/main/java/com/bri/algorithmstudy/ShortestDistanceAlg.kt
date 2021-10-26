@@ -244,6 +244,45 @@ object ShortestDistanceAlg {
         println(floyd.joinToString("\n") { it -> it.joinToString("\t") { if (it == 100000) "${-1}" else "$it" } })
         return ""
     }
+
+    fun _정확한순위(
+        n: Int = 6, arr: Array<IntArray> = arrayOf(
+            intArrayOf(1, 5),
+            intArrayOf(3, 4),
+            intArrayOf(4, 2),
+            intArrayOf(4, 6),
+            intArrayOf(5, 2),
+            intArrayOf(5, 4)
+        )
+    ): Int {
+        val floyd = Array(n + 1) { i -> IntArray(n + 1) { j -> if (i == j) 0 else -1 } }
+        arr.forEach {
+            floyd[it[0]][it[1]] = 1
+        }
+
+        // 자신보다 높은 순위를 가진 배열
+        for (i in 1..n) {
+            for (j in 0..n) {
+                if (i == j) continue
+                for (k in 0..n) {
+                    if (i == k || j == k) continue
+                    if (floyd[j][i] == -1 || floyd[i][k] == -1) continue
+                    floyd[j][k] = Math.max(floyd[j][k], floyd[j][i] + floyd[i][k])
+                }
+            }
+        }
+        // 자신이 이긴 횟수 + 자신이 진 횟수를 더하여 n - 1 개가 나오면 정확한 순위를 구할 수 있음
+        val result = IntArray(n + 1) { 0 }
+        floyd.forEachIndexed { y, array ->
+            array.forEachIndexed { x, v ->
+                if (v > 0) {
+                    result[y] = result[y] + 1
+                    result[x] = result[x] + 1
+                }
+            }
+        }
+        return result.count { it == n - 1 }
+    }
 }
 
 data class Node(val distance: Int, val index: Int)
