@@ -196,6 +196,54 @@ object ShortestDistanceAlg {
         if (distance[k] == Int.MAX_VALUE) return null
         return distance[k]
     }
+
+    fun _플로이드(
+        n: Int = 5, d: Array<IntArray> = arrayOf(
+            intArrayOf(1, 2, 2),
+            intArrayOf(1, 3, 3),
+            intArrayOf(1, 4, 1),
+            intArrayOf(1, 5, 10),
+            intArrayOf(2, 4, 2),
+            intArrayOf(3, 4, 1),
+            intArrayOf(3, 5, 1),
+            intArrayOf(4, 5, 3),
+            intArrayOf(3, 5, 10),
+            intArrayOf(3, 1, 8),
+            intArrayOf(1, 4, 2),
+            intArrayOf(5, 1, 7),
+            intArrayOf(3, 4, 2),
+            intArrayOf(5, 2, 4)
+        )
+    ): String {
+        val floyd = Array(n) { IntArray(n) { 100000 } }
+
+        // 모든 노선을 입력
+        // n^3
+        // a -> b + b -> c , a -> c를 비교
+        repeat(n) {
+            floyd[it][it] = 0
+        }
+        d.forEach {
+            val y = it[0] - 1
+            val x = it[1] - 1
+            val distance = it[2]
+            floyd[y][x] = Math.min(distance, floyd[y][x])
+        }
+        println(floyd.joinToString("\n") { it -> it.joinToString("\t") { if (it == 100000) "${-1}" else "$it" } })
+        drawLine()
+
+        repeat(n) { i ->
+            for (j in 0 until n) {
+                if (i == j) continue
+                for (k in 0 until n) {
+                    if (i == k || j == k) continue
+                    floyd[j][k] = Math.min(floyd[j][k], floyd[j][i] + floyd[i][k])
+                }
+            }
+        }
+        println(floyd.joinToString("\n") { it -> it.joinToString("\t") { if (it == 100000) "${-1}" else "$it" } })
+        return ""
+    }
 }
 
 data class Node(val distance: Int, val index: Int)
