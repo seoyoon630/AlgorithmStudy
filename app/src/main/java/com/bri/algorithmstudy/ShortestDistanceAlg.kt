@@ -434,6 +434,49 @@ object ShortestDistanceAlg {
             distance[n - 1][n - 1]
         }.toIntArray()
     }
+
+    fun _숨바꼭질(
+        n: Int = 6,
+        passages: Array<IntArray> = arrayOf(
+            intArrayOf(3, 6),
+            intArrayOf(4, 3),
+            intArrayOf(3, 2),
+            intArrayOf(1, 3),
+            intArrayOf(1, 2),
+            intArrayOf(2, 4),
+            intArrayOf(5, 2)
+        )
+    ): IntArray {
+        val d = Array(n + 1) { ArrayList<Int>() }
+        passages.forEach {
+            d[it[0]].add(it[1])
+            d[it[1]].add(it[0])
+        }
+        val distances = Array(n + 1) { 20001 }
+        val visited = BooleanArray(n + 1) { false }
+        val start = 1
+        distances[0] = 0
+        distances[start] = 0
+        val queue: Queue<Int> = LinkedList()
+        queue.add(start)
+        while (queue.isNotEmpty()) {
+            val next = queue.poll() ?: break
+            if (visited[next]) continue
+            visited[next] = true
+            d[next].forEach {
+                val newDistance = distances[next] + 1
+                val oldDistance = distances[it]
+                if (newDistance < oldDistance) {
+                    queue.add(it)
+                    distances[it] = newDistance
+                }
+            }
+        }
+        println(distances.joinToString("\t"))
+        val max = distances.maxOrNull() ?: 0
+        val homes = distances.indices.filter { distances[it] == max }
+        return intArrayOf(homes[0], max, homes.size)
+    }
 }
 
 data class Node(val distance: Int, val index: Int)

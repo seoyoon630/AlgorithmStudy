@@ -20,5 +20,6 @@ class ShortestDistanceTest {
 //                intArrayOf(4, 7, 7)
 //            )
 //        assertThat({ ShortestDistanceAlg._화성탐사2() }, intArrayOf(22), "화성탐사2")
+        assertThat({ ShortestDistanceAlg._숨바꼭질() }, intArrayOf(4,2,3), "숨바꼭질")
     }
 }
