@@ -13,5 +13,12 @@ class ShortestDistanceTest {
 //        assertThat({ShortestDistanceAlg._미래도시()}, 3, "미래도시")
 //        ShortestDistanceAlg._플로이드()
 //        assertThat({ ShortestDistanceAlg._정확한순위() }, 1, "정확한순위")
+//        assertThat({ ShortestDistanceAlg._화성탐사2() }, intArrayOf(20, 19, 36), "화성탐사2")
+//        arrayOf(
+//                intArrayOf(5, 8, 1),
+//                intArrayOf(4, 8, 1),
+//                intArrayOf(4, 7, 7)
+//            )
+//        assertThat({ ShortestDistanceAlg._화성탐사2() }, intArrayOf(22), "화성탐사2")
     }
 }

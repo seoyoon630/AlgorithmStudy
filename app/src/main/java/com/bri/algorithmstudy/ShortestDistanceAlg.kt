@@ -47,24 +47,30 @@ object ShortestDistanceAlg {
         val queue = PriorityQueue(NodeComparator())
         val d = Array(n + 1) { ArrayList<Node>() }
         distances.forEach { d[it[0]].add(Node(it[2], it[1])) }
-        val result = Array(n + 1) { Int.MAX_VALUE }
+        val result = Array(n + 1) { 100 }
         val visited = Array(n + 1) { false }
 
         println(d.joinToString("\n") { it.joinToString() })
         // 시작점 설정
-        result[from] = 0
+        result[from] = 5
         queue.add(Node(result[from], from))
 
         while (queue.isNotEmpty()) {
             val current = queue.poll() ?: break
             if (visited[current.index]) continue
             visited[current.index] = true
+            println("${current.index} 연결 도시 갱신")
             d[current.index].forEach {
                 val d1 = it.distance + result[current.index]
                 val d2 = result[it.index]
                 if (d1 < d2) {
                     queue.add(it)
                     result[it.index] = d1
+                    println("${it.index} 갱신! $d1")
+                    for (i in 0 until 3) {
+                        println("" + result[i * 3 + 1] + "\t" + result[i * 3 + 2] + "\t" + result[i * 3 + 3] + "\t")
+                    }
+                    drawLine()
                 }
             }
         }
@@ -175,7 +181,7 @@ object ShortestDistanceAlg {
         return if (d1 == null || d2 == null) -1 else d1 + d2
     }
 
-    private fun dijkstra(n: Int, i: Int, k: Int, roads: Array<java.util.ArrayList<Int>>): Int? {
+    private fun dijkstra(n: Int, i: Int, k: Int, roads: Array<ArrayList<Int>>): Int? {
         val visited = BooleanArray(n + 1) { false }
         val distance = IntArray(n + 1) { Int.MAX_VALUE }
         distance[i] = 0
@@ -283,12 +289,165 @@ object ShortestDistanceAlg {
         }
         return result.count { it == n - 1 }
     }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun _화성탐사(
+        cases: Array<Array<IntArray>> = arrayOf(
+            arrayOf(
+                intArrayOf(5, 5, 4),
+                intArrayOf(3, 9, 1),
+                intArrayOf(3, 2, 7)
+            ),
+            arrayOf(
+                intArrayOf(3, 7, 2, 0, 1),
+                intArrayOf(2, 8, 0, 9, 1),
+                intArrayOf(1, 2, 1, 8, 1),
+                intArrayOf(9, 8, 9, 2, 0),
+                intArrayOf(3, 6, 5, 1, 5)
+            ),
+            arrayOf(
+                intArrayOf(9, 0, 5, 1, 1, 5, 3),
+                intArrayOf(4, 1, 2, 1, 6, 5, 3),
+                intArrayOf(0, 7, 6, 1, 6, 8, 5),
+                intArrayOf(1, 1, 7, 8, 3, 2, 3),
+                intArrayOf(9, 4, 0, 7, 6, 4, 1),
+                intArrayOf(5, 8, 3, 2, 4, 8, 3),
+                intArrayOf(7, 4, 8, 4, 8, 3, 4)
+            )
+        )
+    ): IntArray {
+        val dx = intArrayOf(0, -1, 0, 1)
+        val dy = intArrayOf(-1, 0, 1, 0)
+        return cases.map { case ->
+            val queue = PriorityQueue(NodeComparator())
+            val length = case.size * case.size
+            val costs = IntArray(length) { Int.MAX_VALUE }
+            val visited = BooleanArray(length) { false }
+            costs[0] = case[0][0]
+            queue.add(Node(case[0][0], 0))
+            while (queue.isNotEmpty()) {
+                val node = queue.poll() ?: break
+                if (visited[node.index]) continue
+                visited[node.index] = true
+                val y = node.index / case.size
+                val x = node.index % case.size
+                val min = (0 until 4).map {
+                    val nextY = dy[it] + y
+                    val nextX = dx[it] + x
+                    val index = nextY + nextX
+                    if (nextX in case.indices && nextY in case.indices) {
+                        queue.add(Node(case[nextY][nextX], index))
+                        case[nextY][nextX]
+                    } else Int.MAX_VALUE
+                }.minOrNull()
+                min?.takeIf { it != Int.MAX_VALUE }?.let {
+                    costs[node.index] = Math.min(costs[node.index], it + case[y][x])
+                }
+            }
+            costs.last()
+        }.toIntArray()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun _화성탐사2(
+        cases: Array<Array<IntArray>> = arrayOf(
+//            arrayOf(
+//                intArrayOf(5, 5, 4),
+//                intArrayOf(3, 9, 1),
+//                intArrayOf(3, 2, 7)
+//            ),
+            arrayOf(
+                intArrayOf(5, 8, 1),
+                intArrayOf(4, 8, 1),
+                intArrayOf(4, 7, 7)
+            )
+//            arrayOf(
+//                intArrayOf(3, 7, 2, 0, 1),
+//                intArrayOf(2, 8, 0, 9, 1),
+//                intArrayOf(1, 2, 1, 8, 1),
+//                intArrayOf(9, 8, 9, 2, 0),
+//                intArrayOf(3, 6, 5, 1, 5)
+//            ),
+//            arrayOf(
+//                intArrayOf(9, 0, 5, 1, 1, 5, 3),
+//                intArrayOf(4, 1, 2, 1, 6, 5, 3),
+//                intArrayOf(0, 7, 6, 1, 6, 8, 5),
+//                intArrayOf(1, 1, 7, 8, 3, 2, 3),
+//                intArrayOf(9, 4, 0, 7, 6, 4, 1),
+//                intArrayOf(5, 8, 3, 2, 4, 8, 3),
+//                intArrayOf(7, 4, 8, 4, 8, 3, 4)
+//            )
+        )
+    ): IntArray {
+        val dx = intArrayOf(0, -1, 0, 1)
+        val dy = intArrayOf(-1, 0, 1, 0)
+        return cases.map { case ->
+            val n = case.size
+            // 연결된 그래프 목록을 구함
+            val graph = Array(n) { Array(n) { ArrayList<Node2>() } }
+            case.forEachIndexed { y, arr ->
+                arr.forEachIndexed { x, _ ->
+                    repeat(4) {
+                        val nextY = y + dy[it]
+                        val nextX = x + dx[it]
+                        if (nextY in case.indices && nextX in case.indices) {
+                            graph[y][x].add(Node2(case[nextY][nextX], nextY, nextX))
+                        }
+                    }
+                }
+            }
+
+            println(case.joinToString("\n") { it.joinToString("\t") })
+            val distance = Array(n) { IntArray(n) { 100 } }
+            distance[0][0] = case[0][0]
+            val queue = PriorityQueue(Node2Comparator())
+            val visited = Array(n) { BooleanArray(n) { false } }
+            queue.add(Node2(case[0][0], 0, 0))
+            while (queue.isNotEmpty()) {
+                val node = queue.poll() ?: break
+                val y = node.y
+                val x = node.x
+                if (visited[y][x]) continue
+                visited[y][x] = true
+                println("$y , $x 연결 도시 갱신")
+                graph[y][x].forEach {
+//                    if(distance[it.y][it.x] < distance[y][x])
+                    queue.add(it)
+                    val d1 = distance[y][x] + it.distance
+                    val d2 = distance[it.y][it.x]
+                    if (d1 < d2) {
+                        distance[it.y][it.x] = d1
+                        println("$y, $x -> ${it.y}, ${it.x} 갱신! $d1")
+                        println(distance.joinToString("\n") { it.joinToString("\t") })
+                        drawLine()
+                    }
+                }
+//                val distances = graph[node.y][node.x].map { distance[it.y][it.x] }
+//                distances.minOrNull()?.takeIf { it != Int.MAX_VALUE }?.let {
+//                    distance[node.y][node.x] =
+//                        Math.min(distance[node.y][node.x], it + case[node.y][node.x])
+//                }
+//                graph[node.y][node.x].forEach {
+//                    queue.add(it)
+//                }
+            }
+            distance[n - 1][n - 1]
+        }.toIntArray()
+    }
 }
 
 data class Node(val distance: Int, val index: Int)
 
+data class Node2(val distance: Int, val y: Int, val x: Int)
+
 class NodeComparator : Comparator<Node> {
     override fun compare(o1: Node, o2: Node): Int {
+        return o1.distance - o2.distance
+    }
+}
+
+class Node2Comparator : Comparator<Node2> {
+    override fun compare(o1: Node2, o2: Node2): Int {
         return o1.distance - o2.distance
     }
 }
