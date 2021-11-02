@@ -16,6 +16,11 @@ object GraphTheoryAlg {
         else x
     }
 
+    private fun advancedFindParent(parent: IntArray, x: Int): Int {
+        if (parent[x] != x) parent[x] = findParent(parent, parent[x])
+        return parent[x]
+    }
+
     private fun unionParent(parent: IntArray, a: Int, b: Int) {
         val aParent = findParent(parent, a)
         val bParent = findParent(parent, b)
@@ -23,10 +28,16 @@ object GraphTheoryAlg {
         else parent[a] = bParent
     }
 
+    private fun advancedUnionParent(parent: IntArray, a: Int, b: Int) {
+        val aParent = advancedFindParent(parent, a)
+        val bParent = advancedFindParent(parent, b)
+        if (aParent < bParent) parent[b] = aParent
+        else parent[a] = bParent
+    }
+
     fun _서로소집합자료구조(n: Int, pairs: List<IntArray>) {
         val parent = IntArray(n + 1) { it }
         pairs.forEach { unionParent(parent, it[0], it[1]) }
-        println(parent.joinToString())
 
         // 집합 찾기
         val groups = HashMap<Int, ArrayList<Int>>()
@@ -34,9 +45,18 @@ object GraphTheoryAlg {
             val root = findParent(parent, i)
             groups[root]?.add(i) ?: run { groups[root] = arrayListOf(i) }
         }
+        groups.forEach { (root, set) -> println("$root {${set.joinToString()}}") }
+    }
 
-        groups.forEach { (root, set) ->
-            println("$root {${set.joinToString()}}")
+    fun _개선된서로소집합자료구조(n: Int, pairs: List<IntArray>) {
+        val parent = IntArray(n + 1) { it }
+        pairs.forEach { advancedUnionParent(parent, it[0], it[1]) }
+
+        // 집합 찾기
+        val groups = HashMap<Int, ArrayList<Int>>()
+        for (i in 1..n) {
+            groups[parent[i]]?.add(i) ?: run { groups[parent[i]] = arrayListOf(i) }
         }
+        groups.forEach { (root, set) -> println("$root {${set.joinToString()}}") }
     }
 }
