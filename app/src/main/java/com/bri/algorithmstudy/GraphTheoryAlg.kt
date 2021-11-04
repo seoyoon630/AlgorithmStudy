@@ -157,4 +157,35 @@ object GraphTheoryAlg {
         }
         return answer
     }
+
+    fun _팀결성(n: Int, graph: Array<IntArray>): String {
+        // 0 이면 합치기
+        // 1이면 같은지 여부 확인
+        val answer = ArrayList<Boolean>()
+        val parent = IntArray(n + 1) { it }
+        graph.forEach {
+            val operator = it[0]
+            val a = it[1]
+            val b = it[2]
+            if (operator == 0) {
+                unionParent2(parent, a, b)
+            } else {
+                if (findParent2(parent, a) == findParent2(parent, b)) answer.add(true)
+                else answer.add(false)
+            }
+        }
+        return answer.joinToString("\n") { if (it) "YES" else "NO" }
+    }
+
+    private fun findParent2(parent: IntArray, a: Int): Int {
+        if (a != parent[a]) parent[a] = findParent2(parent, parent[a])
+        return parent[a]
+    }
+
+    private fun unionParent2(parent: IntArray, a: Int, b: Int) {
+        val aParent = findParent2(parent, a)
+        val bParent = findParent2(parent, b)
+        if (aParent < bParent) parent[bParent] = aParent
+        else parent[aParent] = bParent
+    }
 }

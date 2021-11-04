@@ -38,5 +38,33 @@ class GraphTheoryTest {
 //                )
 //            )
 //        }, intArrayOf(1, 2, 5, 3, 6, 4, 7), "위상정렬")
+//        assertThat({
+//            GraphTheoryAlg._팀결성(
+//                7, arrayOf(
+//                    intArrayOf(0, 1, 3),
+//                    intArrayOf(1, 1, 7),
+//                    intArrayOf(0, 7, 6),
+//                    intArrayOf(1, 7, 1),
+//                    intArrayOf(0, 3, 7),
+//                    intArrayOf(0, 4, 2),
+//                    intArrayOf(0, 1, 1),
+//                    intArrayOf(1, 1, 1)
+//                )
+//            )
+//        }, "NO\nNO\nYES", "팀결성")
+//        assertThat({
+//            GraphTheoryAlg._팀결성(
+//                7, arrayOf(
+//                    intArrayOf(0, 1, 3),
+//                    intArrayOf(1, 1, 7),
+//                    intArrayOf(0, 7, 6),
+//                    intArrayOf(0, 3, 7),
+//                    intArrayOf(1, 7, 1),
+//                    intArrayOf(0, 4, 2),
+//                    intArrayOf(0, 1, 1),
+//                    intArrayOf(1, 1, 1)
+//                )
+//            )
+//        }, "NO\nYES\nYES", "팀결성")
     }
 }
