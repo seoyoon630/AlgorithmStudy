@@ -30,49 +30,24 @@ object GraphTheoryAlg {
      *   2-2. 사이클이 발생하면 최소 신장 트리에서 제외
      *  3. 모든 간선에 대해 2번의 과정을 반복
      */
-//
-//    private fun findParent(parent: IntArray, x: Int): Int {
-//        return if (parent[x] != x) findParent(parent, parent[x])
-//        else x
-//    }
-//
-//    private fun unionParent(parent: IntArray, a: Int, b: Int) {
-//        val aParent = findParent(parent, a)
-//        val bParent = findParent(parent, b)
-//        if (aParent < bParent) parent[b] = a
-//        else parent[a] = b
-//    }
-//
-//    fun _서로소집합자료구조(n: Int, pairs: List<IntArray>) {
-//        val parent = IntArray(n + 1) { it }
-//        pairs.forEach { unionParent(parent, it[0], it[1]) }
-//
-//        // 집합 찾기
-//        val groups = HashMap<Int, ArrayList<Int>>()
-//        for (i in 1..n) {
-//            val root = findParent(parent, i)
-//            groups[root]?.add(i) ?: run { groups[root] = arrayListOf(i) }
-//        }
-//        groups.forEach { (root, set) -> println("$root {${set.joinToString()}}") }
-//    }
 
-    private fun advancedFindParent(parent: IntArray, x: Int): Int {
+    private fun findParent(parent: IntArray, x: Int): Int {
         if (parent[x] != x) {
-            parent[x] = advancedFindParent(parent, parent[x])
+            parent[x] = findParent(parent, parent[x])
         }
         return parent[x]
     }
 
-    private fun advancedUnionParent(parent: IntArray, a: Int, b: Int) {
-        val aParent = advancedFindParent(parent, a)
-        val bParent = advancedFindParent(parent, b)
+    private fun unionParent(parent: IntArray, a: Int, b: Int) {
+        val aParent = findParent(parent, a)
+        val bParent = findParent(parent, b)
         if (aParent < bParent) parent[bParent] = aParent
         else parent[aParent] = bParent
     }
 
-    fun _개선된서로소집합자료구조(n: Int, pairs: List<IntArray>) {
+    fun _서로소집합자료구조(n: Int, pairs: List<IntArray>) {
         val parent = IntArray(n + 1) { it }
-        pairs.forEach { advancedUnionParent(parent, it[0], it[1]) }
+        pairs.forEach { unionParent(parent, it[0], it[1]) }
 
         // 집합 찾기
         val groups = HashMap<Int, ArrayList<Int>>()
@@ -85,9 +60,9 @@ object GraphTheoryAlg {
     fun _서로소집합을활용한사이클판별(n: Int, pairs: List<IntArray>): Boolean {
         val parent = IntArray(n + 1) { it }
         pairs.forEach {
-            if (advancedFindParent(parent, it[0]) == advancedFindParent(parent, it[1])) {
+            if (findParent(parent, it[0]) == findParent(parent, it[1])) {
                 return true
-            } else advancedUnionParent(parent, it[0], it[1])
+            } else unionParent(parent, it[0], it[1])
         }
 
         return false
@@ -119,10 +94,10 @@ object GraphTheoryAlg {
             val b = it[1]
             val distance = it[2]
             // 사이클 발생 X
-            if (advancedFindParent(parent, a) != advancedFindParent(parent, b)) {
+            if (findParent(parent, a) != findParent(parent, b)) {
                 println("$a ---- $b 성공")
                 result.add(intArrayOf(a, b))
-                advancedUnionParent(parent, a, b)
+                unionParent(parent, a, b)
                 answer += distance
             } else {
                 println("$a ---- $b 실패")
