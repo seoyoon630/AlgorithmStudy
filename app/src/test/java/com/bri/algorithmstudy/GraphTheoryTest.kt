@@ -66,5 +66,23 @@ class GraphTheoryTest {
 //                )
 //            )
 //        }, "NO\nYES\nYES", "팀결성")
+//        assertThat({
+//            GraphTheoryAlg._도시분할계획(
+//                7, arrayOf(
+//                    intArrayOf(1, 2, 3),
+//                    intArrayOf(1, 3, 2),
+//                    intArrayOf(3, 2, 1),
+//                    intArrayOf(2, 5, 2),
+//                    intArrayOf(3, 4, 4),
+//                    intArrayOf(7, 3, 6),
+//                    intArrayOf(5, 1, 5),
+//                    intArrayOf(1, 6, 2),
+//                    intArrayOf(6, 4, 1),
+//                    intArrayOf(6, 5, 3),
+//                    intArrayOf(4, 5, 3),
+//                    intArrayOf(6, 7, 4),
+//                )
+//            )
+//        }, 8, "도시분할계획")
     }
 }

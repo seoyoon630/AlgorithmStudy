@@ -188,4 +188,25 @@ object GraphTheoryAlg {
         if (aParent < bParent) parent[bParent] = aParent
         else parent[aParent] = bParent
     }
+
+    fun _도시분할계획(n: Int, graph: Array<IntArray>): Int {
+        val parent = IntArray(n + 1) { it }
+        // 제일 비용이 큰 도로를 삭제하여 도시를 분할
+        var max = 0
+        var answer = 0
+        graph.sortBy { it[2] }
+
+        graph.forEach {
+            val a = it[0]
+            val b = it[1]
+            val cost = it[2]
+            // 최소신장트리 찾기 (크루스칼)
+            if (findParent(parent, a) != findParent(parent, b)) {
+                unionParent(parent, a, b)
+                if (max < cost) max = cost
+                answer += cost
+            }
+        }
+        return answer - max
+    }
 }
