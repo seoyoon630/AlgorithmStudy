@@ -2,6 +2,10 @@
 
 package com.bri.algorithmstudy
 
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+
 object GraphTheoryAlg {
     /**
      * 1. 서로소 집합 자료구조 (= 합치기 찾기 자료구조)
@@ -29,6 +33,17 @@ object GraphTheoryAlg {
      *   2-1. 사이클이 발생하지 않으면 최소 신장 트리에 포함
      *   2-2. 사이클이 발생하면 최소 신장 트리에서 제외
      *  3. 모든 간선에 대해 2번의 과정을 반복
+     *  5. 위상정렬
+     *  - 사이클이 없는 방향 그래프(DAG)의 모든 노드를 방향성에 거스르지 않도록 순서대로 정렬
+     *  - 모든 원소를 방문하기 전에 큐가 빈다면 사이클이 존재하는 것
+     *  ex)  선수 과목을 고려한 학습 순서 설정
+     *  - 진입차수(Indegree)  : 특정한 노드로 들어오는 간선의 개수
+     *  - 진출차수(Outdegree) : 특정한 노드에서 나가는 간선의 개수
+     *  - 동작 과정
+     *   1. 진입차수가 0인 모든 노드를 큐에 넣는다
+     *   2. 큐가 빌 때까지 다음의 과정을 반복한다.
+     *    2-1. 큐에서 원소를 꺼내 해당 노드에서 나가는 간선을 그래프에서 제거
+     *    2-2. 새롭게 진입차수가 0이 된 노드를 큐에 넣는다.
      */
 
     private fun findParent(parent: IntArray, x: Int): Int {
@@ -106,6 +121,40 @@ object GraphTheoryAlg {
 
         println("연결된 간선 ${result.size}개")
         println(result.joinToString(" | ") { it?.joinToString() ?: "" })
+        return answer
+    }
+
+    fun _위상정렬(n: Int, graph: Array<IntArray>): IntArray {
+        val answer = IntArray(n) { 0 }
+        val map = HashMap<Int, ArrayList<Int>>()
+        val indegrees = IntArray(n + 1) { 0 }
+        val queue: Queue<Int> = LinkedList()
+
+        // 초기화
+        repeat(n + 1) { map[it] = ArrayList() }
+        // 간선 정보 입력
+        graph.forEach {
+            val a = it[0]
+            val b = it[1]
+            indegrees[b]++
+            map[a]?.add(b)
+        }
+        // 진입차수가 0이면 queue에 추가
+        for (i in 1..n) {
+            if (indegrees[i] == 0) queue.offer(i)
+        }
+
+        var index = 0
+        while (queue.isNotEmpty()) {
+            val next = queue.poll() ?: break
+            answer[index++] = next
+            map[next]?.forEach {
+                // 진입차수 1 빼기
+                indegrees[it]--
+                // 진입차수 == 0 이면 queue에 추가
+                if (indegrees[it] == 0) queue.offer(it)
+            }
+        }
         return answer
     }
 }
