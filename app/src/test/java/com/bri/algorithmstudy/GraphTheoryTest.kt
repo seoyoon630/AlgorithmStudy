@@ -95,6 +95,16 @@ class GraphTheoryTest {
 //                )
 //            )
 //        }, intArrayOf(10, 20, 14, 18, 17), "커리큘럼")
-        assertTha/"여행계획")
+//        assertThat({
+//            GraphTheoryAlg._여행계획(
+//                5, arrayOf(
+//                    intArrayOf(1, 2),
+//                    intArrayOf(1, 4),
+//                    intArrayOf(1, 5),
+//                    intArrayOf(2, 3),
+//                    intArrayOf(2, 4)
+//                ), intArrayOf(2, 3, 4, 3)
+//            )
+//        }, "YES", "여행계획")
     }
 }
