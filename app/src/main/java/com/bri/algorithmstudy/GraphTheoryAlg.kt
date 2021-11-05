@@ -209,4 +209,43 @@ object GraphTheoryAlg {
         }
         return answer - max
     }
+
+    fun _커리큘럼(n: Int, graph: Array<ArrayList<Int>>): IntArray {
+        val answer = IntArray(n + 1) { 0 }
+        val cost = IntArray(n + 1) { 0 }
+        val indegrees = IntArray(n + 1) { 0 }
+        val map = Array<ArrayList<Int>>(n + 1) { arrayListOf() }
+        val queue: Queue<Int> = LinkedList()
+
+        graph.forEachIndexed { index, arrayList ->
+            cost[index + 1] = arrayList[0]
+            answer[index + 1] = cost[index + 1]
+            indegrees[index + 1] = arrayList.size - 1
+            // 선행 수업 목록 추가
+            if (arrayList.size > 1) {
+                for (i in 1..arrayList.lastIndex) {
+                    map[arrayList[i]].add(index + 1)
+                }
+            }
+        }
+
+        // 진입차수가 0이면 Queue에 삽입
+        for (i in 1..n) {
+            if (indegrees[i] == 0) {
+                queue.add(i)
+            }
+        }
+
+        while (queue.isNotEmpty()) {
+            val next = queue.poll() ?: break
+            map[next].forEach {
+                answer[it] = Math.max(answer[it], cost[it] + answer[next])
+                indegrees[it]--
+                if(indegrees[it] == 0) queue.add(it)
+            }
+        }
+        return answer.sliceArray(1..answer.lastIndex)
+    }
+
+
 }

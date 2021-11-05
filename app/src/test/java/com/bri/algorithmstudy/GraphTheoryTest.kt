@@ -84,5 +84,16 @@ class GraphTheoryTest {
 //                )
 //            )
 //        }, 8, "도시분할계획")
+//        assertThat({
+//            GraphTheoryAlg._커리큘럼(
+//                5, arrayOf(
+//                    arrayListOf(10),
+//                    arrayListOf(10, 1),
+//                    arrayListOf(4, 1),
+//                    arrayListOf(4, 3, 1),
+//                    arrayListOf(3, 3),
+//                )
+//            )
+//        }, intArrayOf(10, 20, 14, 18, 17), "커리큘럼")
     }
 }
