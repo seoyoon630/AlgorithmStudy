@@ -95,5 +95,6 @@ class GraphTheoryTest {
 //                )
 //            )
 //        }, intArrayOf(10, 20, 14, 18, 17), "커리큘럼")
+        assertTha/"여행계획")
     }
 }

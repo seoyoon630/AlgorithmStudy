@@ -241,11 +241,33 @@ object GraphTheoryAlg {
             map[next].forEach {
                 answer[it] = Math.max(answer[it], cost[it] + answer[next])
                 indegrees[it]--
-                if(indegrees[it] == 0) queue.add(it)
+                if (indegrees[it] == 0) queue.add(it)
             }
         }
         return answer.sliceArray(1..answer.lastIndex)
     }
 
+    fun _여행계획(n: Int, graph: Array<IntArray>, route: IntArray): String {
+        val parent = IntArray(n + 1) { it }
+        // 간선 정보에 따라 부모 정보 확인
+        graph.forEach {
+            val a = it[0]
+            val b = it[1]
+            if (findParent(parent, a) != findParent(parent, b)) {
+                unionParent(parent, a, b)
+            }
+        }
+        val set = hashSetOf<Int>()
+        set.addAll(route.toList())
+
+        // 한 명이라도 부모노드가 다르면 여행할 수 없음
+        var firstParent = 0
+        set.forEach {
+            val cParent = findParent(parent, it)
+            if (firstParent == 0) firstParent = cParent
+            else if (firstParent != cParent) return "NO"
+        }
+        return "YES"
+    }
 
 }
