@@ -3,6 +3,7 @@
 package com.bri.algorithmstudy
 
 import org.junit.Test
+import kotlin.random.Random
 
 class GraphTheoryTest {
     @Test
@@ -125,5 +126,25 @@ class GraphTheoryTest {
 //                )
 //            )
 //        }, 51, "어두운길")
+//        assertThat({
+//            GraphTheoryAlg._행성터널(
+//                35, arrayOf(
+//                    intArrayOf(11, -15, -15),
+//                    intArrayOf(14, -5, -15),
+//                    intArrayOf(-1, -1, -5),
+//                    intArrayOf(10, -4, -1),
+//                    intArrayOf(19, -4, 19)
+//                )
+//            )
+////        }, 4, "행성터널")
+//        }, Unit, "행성터널")
+//        val max = 100
+//        val testData = Array(max) { createTestData(3, 10000000, -10000000) }
+//        assertThat({ GraphTheoryAlg._행성터널(max, testData) }, Unit, "행성터널")
+    }
+
+    fun createTestData(n: Int, max: Int, min: Int = 0): IntArray {
+        val answer = IntArray(n) { Random.nextInt(min, max) }
+        return answer
     }
 }

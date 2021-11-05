@@ -2,9 +2,12 @@
 
 package com.bri.algorithmstudy
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.absoluteValue
 
 object GraphTheoryAlg {
     /**
@@ -300,7 +303,7 @@ object GraphTheoryAlg {
             val a = it[0]
             val b = it[1]
             val distance = it[2]
-            if(findParent(parent, a) != findParent(parent, b)){
+            if (findParent(parent, a) != findParent(parent, b)) {
                 unionParent(parent, a, b)
             } else {
                 answer += distance
@@ -308,5 +311,42 @@ object GraphTheoryAlg {
         }
 
         return answer
+    }
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun _행성터널(n: Int, graph: Array<IntArray>) {
+        var answer = 0
+        val queue = PriorityQueue<IntArray> { o1, o2 -> o1[0] - o2[0] }
+        val parent = IntArray(n) { it }
+        // 모든 행성 간선 구하기
+        // PriorityQueue에 삽입
+        graph.forEachIndexed { y, a ->
+            for (x in y + 1 until graph.size) {
+                val b = graph[x]
+                val dx = (a[0] - b[0]).absoluteValue
+                val dy = (a[1] - b[1]).absoluteValue
+                val dz = (a[2] - b[2]).absoluteValue
+                val distance = listOf(dx, dy, dz).minOrNull() ?: -1
+                queue.add(intArrayOf(distance, y, x))
+            }
+        }
+
+        while (queue.isNotEmpty()) {
+            val node = queue.poll() ?: break
+            val distance = node[0]
+            val a = node[1]
+            val b = node[2]
+            val aParent = findParent(parent, a)
+            val bParent = findParent2(parent, b)
+            if (aParent != bParent) {
+                if (aParent < bParent) {
+                    parent[bParent] = aParent
+                } else {
+                    parent[aParent] = bParent
+                }
+                answer += distance
+            }
+        }
+
+        println(answer)
     }
 }
