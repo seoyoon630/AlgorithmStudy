@@ -106,5 +106,7 @@ class GraphTheoryTest {
 //                ), intArrayOf(2, 3, 4, 3)
 //            )
 //        }, "YES", "여행계획")
+//        assertThat({ GraphTheoryAlg._탑승구(4, intArrayOf(4, 1, 1)) }, 2, "탑승구")
+//        assertThat({ GraphTheoryAlg._탑승구(4, intArrayOf(2, 2, 3, 3, 4, 4)) }, 3, "탑승구")
     }
 }

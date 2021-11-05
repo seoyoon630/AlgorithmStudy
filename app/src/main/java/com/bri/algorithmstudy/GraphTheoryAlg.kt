@@ -270,4 +270,21 @@ object GraphTheoryAlg {
         return "YES"
     }
 
+    fun _탑승구(n: Int, array: IntArray): Int {
+        val isBlank = BooleanArray(n + 1) { true }
+        isBlank[0] = false
+        var answer = 0
+        array.forEach {
+            for (i in it downTo 0) {
+                if (isBlank[i]) {
+                    println("$it -> $i")
+                    isBlank[i] = false
+                    answer++
+                    break
+                }
+                if (i == 0) return answer
+            }
+        }
+        return answer
+    }
 }
