@@ -287,4 +287,26 @@ object GraphTheoryAlg {
         }
         return answer
     }
+
+    fun _어두운길(n: Int, graph: Array<IntArray>): Int {
+        val parent = IntArray(n) { it }
+        // 오름차순 정렬
+        graph.sortBy { it[2] }
+
+        var answer = 0
+
+        // 크루스칼 알고리즘
+        graph.forEach {
+            val a = it[0]
+            val b = it[1]
+            val distance = it[2]
+            if(findParent(parent, a) != findParent(parent, b)){
+                unionParent(parent, a, b)
+            } else {
+                answer += distance
+            }
+        }
+
+        return answer
+    }
 }
