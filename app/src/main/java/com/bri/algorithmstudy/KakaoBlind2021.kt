@@ -1,5 +1,8 @@
 package com.bri.algorithmstudy
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+
 object KakaoBlind2021 {
     fun _순위검색(info: Array<String>, query: Array<String>): IntArray {
         val answer = IntArray(query.size) { 0 }
@@ -61,4 +64,43 @@ object KakaoBlind2021 {
         }
         return answer
     }
+
+    //======================================================================
+
+    // 최단거리 알고리즘
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun _택시합승요금(n: Int, s: Int, a: Int, b: Int, fares: Array<IntArray>): Int {
+        val cost = Array(n + 1) { y ->
+            IntArray(n + 1) { x ->
+                if (x == y) 0 else 200 * 100000
+            }
+        }
+
+        fares.forEach {
+            val n1 = it[0]
+            val n2 = it[1]
+            val fare = it[2]
+            cost[n1][n2] = fare
+            cost[n2][n1] = fare
+        }
+
+        // Floyd-Warshall
+        for (i in 1..n) {
+            for (j in 1..n) {
+                if (i == j) continue
+                for (k in 1..n) {
+                    if (i == k) continue
+                    if (j == k) continue
+                    val distance = cost[j][i] + cost[i][k]
+                    if (cost[j][k] > distance) {
+                        cost[j][k] = distance
+                    }
+                }
+            }
+        }
+
+        return (1..n).map { cost[s][it] + cost[it][a] + cost[it][b] }
+            .minOrNull() ?: -1
+    }
+
 }

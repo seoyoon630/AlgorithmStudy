@@ -24,5 +24,55 @@ class KakaoBlind2021Test {
 //                )
 //            )
 //        }, intArrayOf(1, 1, 1, 1, 2, 4), "순위검색")
+//
+//        assertThat(
+//            {
+//                KakaoBlind2021._택시합승요금(
+//                    6, 4, 6, 2,
+//                    arrayOf(
+//                        intArrayOf(4, 1, 10),
+//                        intArrayOf(3, 5, 24),
+//                        intArrayOf(5, 6, 2),
+//                        intArrayOf(3, 1, 41),
+//                        intArrayOf(5, 1, 24),
+//                        intArrayOf(4, 6, 50),
+//                        intArrayOf(2, 4, 66),
+//                        intArrayOf(2, 3, 22),
+//                        intArrayOf(1, 6, 25)
+//                    )
+//                )
+//            }, 82, "합승택시요금"
+//        )
+//        assertThat(
+//            {
+//                KakaoBlind2021._택시합승요금(
+//                    7, 3, 4, 1,
+//                    arrayOf(
+//                        intArrayOf(5, 7, 9),
+//                        intArrayOf(4, 6, 4),
+//                        intArrayOf(3, 6, 1),
+//                        intArrayOf(3, 2, 3),
+//                        intArrayOf(2, 1, 6)
+//                    )
+//                )
+//            }, 14, "합승택시요금"
+//        )
+//        assertThat(
+//            {
+//                KakaoBlind2021._택시합승요금(
+//                    6, 4, 5, 6,
+//                    arrayOf(
+//                        intArrayOf(2, 6, 6),
+//                        intArrayOf(6, 3, 7),
+//                        intArrayOf(4, 6, 7),
+//                        intArrayOf(6, 5, 11),
+//                        intArrayOf(2, 5, 12),
+//                        intArrayOf(5, 3, 20),
+//                        intArrayOf(2, 4, 8),
+//                        intArrayOf(4, 3, 9)
+//                    )
+//                )
+//            }, 18, "합승택시요금"
+//        )
     }
 }
