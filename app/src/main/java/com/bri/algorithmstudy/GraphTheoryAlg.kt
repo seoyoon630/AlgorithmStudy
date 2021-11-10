@@ -349,4 +349,27 @@ object GraphTheoryAlg {
 
         println(answer)
     }
+
+    fun _최종순위(count: Int, n: IntArray, old: Array<IntArray>, case: Array<Array<IntArray>>): String {
+        val sb = StringBuilder()
+        repeat(count) {
+            val sortedOld = IntArray(n[it] + 1) { 0 }
+            val parent = IntArray(n[it]) { n -> old[it][n] }
+            old[it].forEachIndexed { index, num -> sortedOld[index + 1] = num }
+            case[it].forEach {
+                val a = it[0]
+                val b = it[1]
+                val parentA = findParent(parent, sortedOld[a])
+                val parentB = findParent(parent, sortedOld[b])
+                if (parentA < parentB) {
+                    parent[parentB] = parent[parentA]
+                }
+            }
+            println(case[it].joinToString("|") { it.joinToString() })
+            println(sortedOld.joinToString())
+            println(parent.joinToString())
+            drawLine()
+        }
+        return sb.toString()
+    }
 }

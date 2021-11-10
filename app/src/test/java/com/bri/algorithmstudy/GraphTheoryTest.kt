@@ -141,6 +141,23 @@ class GraphTheoryTest {
 //        val max = 100
 //        val testData = Array(max) { createTestData(3, 10000000, -10000000) }
 //        assertThat({ GraphTheoryAlg._행성터널(max, testData) }, Unit, "행성터널")
+        assertThat(
+            {
+                GraphTheoryAlg._최종순위(
+                    3,
+                    intArrayOf(5, 3, 4),
+                    arrayOf(intArrayOf(5, 4, 3, 2, 1), intArrayOf(2, 3, 1), intArrayOf(1, 2, 3, 4)),
+                    arrayOf(
+                        arrayOf(intArrayOf(2, 4), intArrayOf(3, 4)),
+                        arrayOf(),
+                        arrayOf(intArrayOf(1, 2), intArrayOf(3, 4), intArrayOf(2, 3))
+                    )
+                )
+            }, """5 3 2 4 1
+                |2 3 1
+                |IMPOSSIBLE
+            """.trimMargin(), "최종순위"
+        )
     }
 
     fun createTestData(n: Int, max: Int, min: Int = 0): IntArray {
