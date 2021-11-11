@@ -358,7 +358,6 @@ object GraphTheoryAlg {
             val list = ArrayList<Int>()
             list.add(0)
             list.addAll(before.toList())
-            println(list.joinToString())
             val indegree = IntArray(size) { 0 }
             val graph = Array(size) { BooleanArray(size) { false } }
             for (i in 1 until size) {
@@ -367,10 +366,6 @@ object GraphTheoryAlg {
                     indegree[list[j]]++
                 }
             }
-            drawLine()
-            println(indegree.joinToString())
-            println(graph.joinToString("\n") { it.joinToString { if (it) "1" else "0" } })
-            drawLine()
             case[it].forEach {
                 val a = it[0]
                 val b = it[1]
@@ -386,10 +381,6 @@ object GraphTheoryAlg {
                     indegree[b]++
                 }
             }
-            println(indegree.joinToString())
-            println(graph.joinToString("\n") { it.joinToString { if (it) "1" else "0" } })
-            drawLine()
-            drawLine()
 
             val queue: Queue<Int> = LinkedList()
             val result = ArrayList<Int>()
@@ -399,7 +390,7 @@ object GraphTheoryAlg {
 
             var certain = true
             var cycle = false
-            for (i in 0 until size) {
+            for (i in 0 until size - 1) {
                 if (queue.size == 0) {
                     cycle = true
                     break
@@ -421,13 +412,13 @@ object GraphTheoryAlg {
             }
             when {
                 cycle -> sb.append("IMPOSSIBLE ")
-                certain -> sb.append("? ")
+                !certain -> sb.append("? ")
                 else -> {
                     sb.append(result.joinToString(" "))
                 }
             }
             sb.append("\n")
         }
-        return sb.toString()
+        return sb.toString().trim()
     }
 }
