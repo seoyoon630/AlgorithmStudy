@@ -353,22 +353,80 @@ object GraphTheoryAlg {
     fun _최종순위(count: Int, n: IntArray, old: Array<IntArray>, case: Array<Array<IntArray>>): String {
         val sb = StringBuilder()
         repeat(count) {
-            val sortedOld = IntArray(n[it] + 1) { 0 }
-            val parent = IntArray(n[it]) { n -> old[it][n] }
-            old[it].forEachIndexed { index, num -> sortedOld[index + 1] = num }
+            val size = n[it] + 1
+            val before = old[it]
+            val list = ArrayList<Int>()
+            list.add(0)
+            list.addAll(before.toList())
+            println(list.joinToString())
+            val indegree = IntArray(size) { 0 }
+            val graph = Array(size) { BooleanArray(size) { false } }
+            for (i in 1 until size) {
+                for (j in i + 1 until size) {
+                    graph[list[i]][list[j]] = true
+                    indegree[list[j]]++
+                }
+            }
+            drawLine()
+            println(indegree.joinToString())
+            println(graph.joinToString("\n") { it.joinToString { if (it) "1" else "0" } })
+            drawLine()
             case[it].forEach {
                 val a = it[0]
                 val b = it[1]
-                val parentA = findParent(parent, sortedOld[a])
-                val parentB = findParent(parent, sortedOld[b])
-                if (parentA < parentB) {
-                    parent[parentB] = parent[parentA]
+                if (graph[a][b]) {
+                    graph[a][b] = false
+                    graph[b][a] = true
+                    indegree[a]++
+                    indegree[b]--
+                } else {
+                    graph[a][b] = true
+                    graph[b][a] = false
+                    indegree[a]--
+                    indegree[b]++
                 }
             }
-            println(case[it].joinToString("|") { it.joinToString() })
-            println(sortedOld.joinToString())
-            println(parent.joinToString())
+            println(indegree.joinToString())
+            println(graph.joinToString("\n") { it.joinToString { if (it) "1" else "0" } })
             drawLine()
+            drawLine()
+
+            val queue: Queue<Int> = LinkedList()
+            val result = ArrayList<Int>()
+            (1 until size).filter { indegree[it] == 0 }.forEach {
+                queue.offer(it)
+            }
+
+            var certain = true
+            var cycle = false
+            for (i in 0 until size) {
+                if (queue.size == 0) {
+                    cycle = true
+                    break
+                }
+                if (queue.size > 1) {
+                    certain = false
+                    break
+                }
+
+                val node = queue.poll() ?: break
+                result.add(node)
+                for (k in 0 until size) {
+                    if (graph[node][k]) {
+                        if (--indegree[k] == 0) {
+                            queue.offer(k)
+                        }
+                    }
+                }
+            }
+            when {
+                cycle -> sb.append("IMPOSSIBLE ")
+                certain -> sb.append("? ")
+                else -> {
+                    sb.append(result.joinToString(" "))
+                }
+            }
+            sb.append("\n")
         }
         return sb.toString()
     }
