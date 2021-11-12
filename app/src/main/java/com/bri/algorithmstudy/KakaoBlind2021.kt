@@ -2,8 +2,12 @@ package com.bri.algorithmstudy
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 object KakaoBlind2021 {
+    // 이진탐색 알고리즘
     fun _순위검색(info: Array<String>, query: Array<String>): IntArray {
         val answer = IntArray(query.size) { 0 }
         val infos = HashMap<String, ArrayList<Int>>()
@@ -67,7 +71,7 @@ object KakaoBlind2021 {
 
     //======================================================================
 
-    // 최단거리 알고리즘
+    // 플로이드-워셜 알고리즘
     @RequiresApi(Build.VERSION_CODES.N)
     fun _택시합승요금(n: Int, s: Int, a: Int, b: Int, fares: Array<IntArray>): Int {
         val cost = Array(n + 1) { y ->
@@ -102,5 +106,57 @@ object KakaoBlind2021 {
         return (1..n).map { cost[s][it] + cost[it][a] + cost[it][b] }
             .minOrNull() ?: -1
     }
+
+    //======================================================================
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun _광고삽입(play_time: String, adv_time: String, logs: Array<String>): String {
+        val totalTime = convertToInt(play_time) + 1
+        val advTime = convertToInt(adv_time)
+        val times = LongArray(totalTime + 1) { 0 }
+        logs.forEach {
+            val start = convertToInt(it.split("-")[0]) + 1
+            val end = convertToInt(it.split("-")[1]) + 1
+            times[start]++
+            times[end]--
+        }
+        for (i in 1..times.lastIndex) {
+            times[i] += times[i - 1]
+        }
+        for (i in 1..times.lastIndex) {
+            times[i] += times[i - 1]
+        }
+        var max : Long = 0
+        var result = 0
+        for (i in 0 until totalTime - advTime) {
+            val current = times[i + advTime] - times[i]
+            if (max < current) {
+                max = current
+                result = i
+            }
+        }
+
+        return convertToString(result)
+    }
+
+    private fun convertToInt(s: String): Int {
+        return s.split(":")
+            .mapIndexed { index, time ->
+                Math.pow(60.toDouble(), (2 - index).toDouble()).toInt() * time.toInt()
+            }.sum()
+    }
+
+    private fun convertToString(t: Int): String {
+        val hour = t / (60 * 60)
+        val min = t % (60 * 60) / 60
+        val second = t % (60)
+        return "${formatString(hour)}:${formatString(min)}:${formatString(second)}"
+    }
+
+    private fun formatString(s: Int): String {
+        return String.format(Locale.getDefault(), "%02d", s)
+    }
+
+    //======================================================================
 
 }
