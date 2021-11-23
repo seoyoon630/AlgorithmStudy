@@ -126,5 +126,77 @@ class KakaoBlind2021Test {
 //                )
 //            }, "00:00:00", "광고삽입"
 //        )
+//        assertThat({
+//            KakaoBlind2021._카드짝맞추기(
+//                arrayOf(
+//                    intArrayOf(1, 0, 0, 0),
+//                    intArrayOf(2, 0, 0, 0),
+//                    intArrayOf(0, 0, 0, 2),
+//                    intArrayOf(0, 0, 1, 0)
+//                ), 1, 0
+//            )
+//        }, 10, "카드짝맞추기")
+//        assertThat({
+//            KakaoBlind2021._카드짝맞추기2(
+//                arrayOf(
+//                    intArrayOf(1, 0, 0, 3),
+//                    intArrayOf(2, 0, 0, 0),
+//                    intArrayOf(0, 0, 0, 2),
+//                    intArrayOf(3, 0, 1, 0)
+//                ), 1, 0
+//            )
+//        }, 14, "카드짝맞추기2")
+//        assertThat({
+//            KakaoBlind2021._카드짝맞추기2(
+//                arrayOf(
+//                    intArrayOf(1, 4, 4, 3),
+//                    intArrayOf(2, 5, 5, 6),
+//                    intArrayOf(0, 7, 6, 2),
+//                    intArrayOf(3, 7, 1, 0)
+//                ), 1, 0
+//            )
+//        }, 14, "카드짝맞추기2")
+//        assertThat({
+//            KakaoBlind2021._카드짝맞추기(
+//                arrayOf(
+//                    intArrayOf(1, 0, 0, 3),
+//                    intArrayOf(2, 0, 0, 0),
+//                    intArrayOf(0, 0, 0, 2),
+//                    intArrayOf(3, 0, 1, 0)
+//                ), 1, 0
+//            )
+//        }, 14, "카드짝맞추기")
+//        assertThat({
+//            KakaoBlind2021._카드짝맞추기(
+//                arrayOf(
+//                    intArrayOf(3, 0, 0, 2),
+//                    intArrayOf(0, 0, 1, 0),
+//                    intArrayOf(0, 1, 0, 0),
+//                    intArrayOf(2, 0, 0, 3)
+//                ), 0, 1
+//            )
+//        }, 16, "카드짝맞추기")
+
+//        repeat(7) {
+//            val permutation = PermutationAlg.permutation(IntArray(it) { it })
+//            println(permutation.joinToString("\n") { it.joinToString() })
+//            println("총 개수 = ${permutation.size}")
+//            drawLine()
+//        }
+//        assertThat({ KakaoBlind2021._숫자문자열과영단어("one4seveneight") }, 1478, "숫자문자열과영단어")
+//        assertThat({ KakaoBlind2021._숫자문자열과영단어("23four5six7") }, 234567, "숫자문자열과영단어")
+//        assertThat({ KakaoBlind2021._숫자문자열과영단어("2three45sixseven") }, 234567, "숫자문자열과영단어")
+//        assertThat({ KakaoBlind2021._숫자문자열과영단어("123") }, 123, "숫자문자열과영단어")
+//        assertThat({
+//            KakaoBlind2021._거리두기확인하기(
+//                arrayOf(
+//                    arrayOf("POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"),
+//                    arrayOf("POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"),
+//                    arrayOf("PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"),
+//                    arrayOf("OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"),
+//                    arrayOf("PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP")
+//                )
+//            )
+//        }, intArrayOf(1, 0, 1, 1, 1), "거리두기확인하기")
     }
 }
