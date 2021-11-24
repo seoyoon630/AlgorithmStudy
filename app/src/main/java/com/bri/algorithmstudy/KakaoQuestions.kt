@@ -5,8 +5,9 @@ import androidx.annotation.RequiresApi
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.absoluteValue
 
-object KakaoBlind2021 {
+object KakaoQuestions {
     // 이진탐색 알고리즘
     fun _순위검색(info: Array<String>, query: Array<String>): IntArray {
         val answer = IntArray(query.size) { 0 }
@@ -537,6 +538,65 @@ object KakaoBlind2021 {
             sb.insert(test, "X")
         }
         return sb.toString()
+    }
+
+    fun _키패드누르기(numbers: IntArray, hand: String): String {
+        var left = intArrayOf(0, 3)
+        var right = intArrayOf(2, 3)
+        val priority = hand == "left"
+        return numbers.joinToString("") {
+            val number = if(it == 0) 11 else it
+            val x = (number-1) % 3
+            val y = (number-1) / 3
+            when (x) {
+                0 -> {
+                    left = intArrayOf(x, y)
+                    log(number, left, right)
+                    "L"
+                }
+                2 -> {
+                    right = intArrayOf(x, y)
+                    log(number, left, right)
+                    "R"
+                }
+                else -> {
+                    val ld = (left[0] - x).absoluteValue + (left[1] - y).absoluteValue
+                    val rd = (right[0] - x).absoluteValue + (right[1] - y).absoluteValue
+                    when {
+                        ld < rd -> {
+                            left = intArrayOf(x, y)
+                            log(number, left, right)
+                            "L"
+                        }
+                        ld > rd -> {
+                            right = intArrayOf(x, y)
+                            log(number, left, right)
+                            "R"
+                        }
+                        else -> {
+                            if (priority) {
+                                left = intArrayOf(x, y)
+                                log(number, left, right)
+                                "L"
+                            } else {
+                                right = intArrayOf(x, y)
+                                log(number, left, right)
+                                "R"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun log(number: Int, left: IntArray, right: IntArray) {
+        val board = Array(4) { y -> Array(3) { x -> "${(y * 3) + x + 1}" } }
+        board[left[1]][left[0]] = "L"
+        board[right[1]][right[0]] = "R"
+        println("$number 차례")
+        println(board.joinToString("\n") { it.joinToString("\t") })
+        drawLine()
     }
 }
 

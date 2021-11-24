@@ -2,11 +2,11 @@ package com.bri.algorithmstudy
 
 import org.junit.Test
 
-class KakaoBlind2021Test {
+class KakaoTest {
     @Test
     fun main() {
 //        assertThat({
-//            KakaoBlind2021._순위검색(
+//            KakaoQuestions._순위검색(
 //                arrayOf(
 //                    "java backend junior pizza 150",
 //                    "python frontend senior chicken 210",
@@ -27,7 +27,7 @@ class KakaoBlind2021Test {
 //
 //        assertThat(
 //            {
-//                KakaoBlind2021._택시합승요금(
+//                KakaoQuestions._택시합승요금(
 //                    6, 4, 6, 2,
 //                    arrayOf(
 //                        intArrayOf(4, 1, 10),
@@ -45,7 +45,7 @@ class KakaoBlind2021Test {
 //        )
 //        assertThat(
 //            {
-//                KakaoBlind2021._택시합승요금(
+//                KakaoQuestions._택시합승요금(
 //                    7, 3, 4, 1,
 //                    arrayOf(
 //                        intArrayOf(5, 7, 9),
@@ -59,7 +59,7 @@ class KakaoBlind2021Test {
 //        )
 //        assertThat(
 //            {
-//                KakaoBlind2021._택시합승요금(
+//                KakaoQuestions._택시합승요금(
 //                    6, 4, 5, 6,
 //                    arrayOf(
 //                        intArrayOf(2, 6, 6),
@@ -76,7 +76,7 @@ class KakaoBlind2021Test {
 //        )
 //        assertThat(
 //            {
-//                KakaoBlind2021._광고삽입(
+//                KakaoQuestions._광고삽입(
 //                    "00:00:10", "00:00:02",
 //                    arrayOf(
 //                        "00:00:01-00:00:03",
@@ -89,7 +89,7 @@ class KakaoBlind2021Test {
 //        )
 //        assertThat(
 //            {
-//                KakaoBlind2021._광고삽입(
+//                KakaoQuestions._광고삽입(
 //                    "02:03:55", "00:14:15",
 //                    arrayOf(
 //                        "01:20:15-01:45:14",
@@ -103,7 +103,7 @@ class KakaoBlind2021Test {
 //        )
 //        assertThat(
 //            {
-//                KakaoBlind2021._광고삽입(
+//                KakaoQuestions._광고삽입(
 //                    "99:59:59", "25:00:00",
 //                    arrayOf(
 //                        "69:59:59-89:59:59",
@@ -116,7 +116,7 @@ class KakaoBlind2021Test {
 //        )
 //        assertThat(
 //            {
-//                KakaoBlind2021._광고삽입(
+//                KakaoQuestions._광고삽입(
 //                    "50:00:00", "50:00:00",
 //                    arrayOf(
 //                        "15:36:51-38:21:49",
@@ -127,7 +127,7 @@ class KakaoBlind2021Test {
 //            }, "00:00:00", "광고삽입"
 //        )
 //        assertThat({
-//            KakaoBlind2021._카드짝맞추기(
+//            KakaoQuestions._카드짝맞추기(
 //                arrayOf(
 //                    intArrayOf(1, 0, 0, 0),
 //                    intArrayOf(2, 0, 0, 0),
@@ -137,7 +137,7 @@ class KakaoBlind2021Test {
 //            )
 //        }, 10, "카드짝맞추기")
 //        assertThat({
-//            KakaoBlind2021._카드짝맞추기2(
+//            KakaoQuestions._카드짝맞추기2(
 //                arrayOf(
 //                    intArrayOf(1, 0, 0, 3),
 //                    intArrayOf(2, 0, 0, 0),
@@ -147,7 +147,7 @@ class KakaoBlind2021Test {
 //            )
 //        }, 14, "카드짝맞추기2")
 //        assertThat({
-//            KakaoBlind2021._카드짝맞추기2(
+//            KakaoQuestions._카드짝맞추기2(
 //                arrayOf(
 //                    intArrayOf(1, 4, 4, 3),
 //                    intArrayOf(2, 5, 5, 6),
@@ -157,7 +157,7 @@ class KakaoBlind2021Test {
 //            )
 //        }, 14, "카드짝맞추기2")
 //        assertThat({
-//            KakaoBlind2021._카드짝맞추기(
+//            KakaoQuestions._카드짝맞추기(
 //                arrayOf(
 //                    intArrayOf(1, 0, 0, 3),
 //                    intArrayOf(2, 0, 0, 0),
@@ -167,7 +167,7 @@ class KakaoBlind2021Test {
 //            )
 //        }, 14, "카드짝맞추기")
 //        assertThat({
-//            KakaoBlind2021._카드짝맞추기(
+//            KakaoQuestions._카드짝맞추기(
 //                arrayOf(
 //                    intArrayOf(3, 0, 0, 2),
 //                    intArrayOf(0, 0, 1, 0),
@@ -183,12 +183,12 @@ class KakaoBlind2021Test {
 //            println("총 개수 = ${permutation.size}")
 //            drawLine()
 //        }
-//        assertThat({ KakaoBlind2021._숫자문자열과영단어("one4seveneight") }, 1478, "숫자문자열과영단어")
-//        assertThat({ KakaoBlind2021._숫자문자열과영단어("23four5six7") }, 234567, "숫자문자열과영단어")
-//        assertThat({ KakaoBlind2021._숫자문자열과영단어("2three45sixseven") }, 234567, "숫자문자열과영단어")
-//        assertThat({ KakaoBlind2021._숫자문자열과영단어("123") }, 123, "숫자문자열과영단어")
+//        assertThat({ KakaoQuestions._숫자문자열과영단어("one4seveneight") }, 1478, "숫자문자열과영단어")
+//        assertThat({ KakaoQuestions._숫자문자열과영단어("23four5six7") }, 234567, "숫자문자열과영단어")
+//        assertThat({ KakaoQuestions._숫자문자열과영단어("2three45sixseven") }, 234567, "숫자문자열과영단어")
+//        assertThat({ KakaoQuestions._숫자문자열과영단어("123") }, 123, "숫자문자열과영단어")
 //        assertThat({
-//            KakaoBlind2021._거리두기확인하기(
+//            KakaoQuestions._거리두기확인하기(
 //                arrayOf(
 //                    arrayOf("POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"),
 //                    arrayOf("POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"),
@@ -199,32 +199,47 @@ class KakaoBlind2021Test {
 //            )
 //        }, intArrayOf(1, 0, 1, 1, 1), "거리두기확인하기")
 //        assertThat({
-//            KakaoBlind2021._표편집2(
+//            KakaoQuestions._표편집2(
 //                8,
 //                0,
 //                arrayOf("C", "D 2", "C", "U 3", "C", "D 3", "C", "C", "U 2", "Z", "Z", "D 3", "C")
 //            )
 //        }, "XXOXOOXO", "표편집")
-        assertThat({
-            KakaoBlind2021._표편집3(
-                8,
-                0,
-                arrayOf("C", "D 2", "C", "U 3", "C", "D 3", "C", "C", "U 2", "Z", "Z", "D 3", "C")
-            )
-        }, "XXOXOOXO", "표편집")
-        assertThat({
-            KakaoBlind2021._표편집3(
-                8,
-                2,
-                arrayOf("D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z")
-            )
-        }, "OOOOXOOO", "표편집")
-        assertThat({
-            KakaoBlind2021._표편집3(
-                8,
-                2,
-                arrayOf("D 2","C","U 3","C","D 4","C","U 2","Z","Z","U 1","C")
-            )
-        }, "OOXOXOOO", "표편집")
+//        assertThat({
+//            KakaoQuestions._표편집3(
+//                8,
+//                0,
+//                arrayOf("C", "D 2", "C", "U 3", "C", "D 3", "C", "C", "U 2", "Z", "Z", "D 3", "C")
+//            )
+//        }, "XXOXOOXO", "표편집")
+//        assertThat({
+//            KakaoQuestions._표편집3(
+//                8,
+//                2,
+//                arrayOf("D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z")
+//            )
+//        }, "OOOOXOOO", "표편집")
+//        assertThat({
+//            KakaoQuestions._표편집3(
+//                8,
+//                2,
+//                arrayOf("D 2","C","U 3","C","D 4","C","U 2","Z","Z","U 1","C")
+//            )
+//        }, "OOXOXOOO", "표편집")
+        assertThat(
+            { KakaoQuestions._키패드누르기(intArrayOf(1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5), "right") },
+            "LRLLLRLLRRL",
+            "키패드누르기"
+        )
+        assertThat(
+            { KakaoQuestions._키패드누르기(intArrayOf(7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2), "left") },
+            "LRLLRRLLLRR",
+            "키패드누르기"
+        )
+        assertThat(
+            { KakaoQuestions._키패드누르기(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 0), "right") },
+            "LLRLLRLLRL",
+            "키패드누르기"
+        )
     }
 }
