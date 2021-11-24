@@ -198,5 +198,33 @@ class KakaoBlind2021Test {
 //                )
 //            )
 //        }, intArrayOf(1, 0, 1, 1, 1), "거리두기확인하기")
+//        assertThat({
+//            KakaoBlind2021._표편집2(
+//                8,
+//                0,
+//                arrayOf("C", "D 2", "C", "U 3", "C", "D 3", "C", "C", "U 2", "Z", "Z", "D 3", "C")
+//            )
+//        }, "XXOXOOXO", "표편집")
+        assertThat({
+            KakaoBlind2021._표편집3(
+                8,
+                0,
+                arrayOf("C", "D 2", "C", "U 3", "C", "D 3", "C", "C", "U 2", "Z", "Z", "D 3", "C")
+            )
+        }, "XXOXOOXO", "표편집")
+        assertThat({
+            KakaoBlind2021._표편집3(
+                8,
+                2,
+                arrayOf("D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z")
+            )
+        }, "OOOOXOOO", "표편집")
+        assertThat({
+            KakaoBlind2021._표편집3(
+                8,
+                2,
+                arrayOf("D 2","C","U 3","C","D 4","C","U 2","Z","Z","U 1","C")
+            )
+        }, "OOXOXOOO", "표편집")
     }
 }

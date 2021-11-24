@@ -384,4 +384,165 @@ object KakaoBlind2021 {
             result
         }.toIntArray()
     }
+
+    fun _표편집(n: Int, k: Int, cmd: Array<String>): String {
+        val stack = Stack<Int>()
+        val list = ArrayList<Node3>()
+        val isAliveList = BooleanArray(n) { true }
+        repeat(n) {
+            list.add(Node3(it, it - 1, it + 1))
+        }
+        var current = list[k]
+        cmd.forEach {
+            val splits = it.split(" ")
+            when (splits[0]) {
+                "U" -> {
+                    repeat(splits[1].toInt()) {
+                        if (current.parent < 0) return@repeat
+                        current = list[current.parent]
+                    }
+                }
+                "D" -> {
+                    repeat(splits[1].toInt()) {
+                        if (current.child > list.lastIndex) return@repeat
+                        current = list[current.child]
+                    }
+                }
+                "C" -> {
+                    stack.push(current.index)
+                    isAliveList[current.index] = false
+                    if (current.parent >= 0) list[current.parent].child = current.child
+                    if (current.child <= list.lastIndex) list[current.child].parent = current.parent
+                    current =
+                        if (current.child > list.lastIndex) list[current.parent]
+                        else list[current.child]
+                }
+                "Z" -> {
+                    val revoked = list[stack.pop()]
+                    isAliveList[revoked.index] = true
+                    var index = revoked.index
+                    while (--index > -1) {
+                        if (index == -1) {
+                            revoked.parent = -1
+                            index = revoked.index
+                            while (++index <= list.size) {
+                                if (index == list.size) {
+                                    revoked.child = list.size
+                                }
+                                if (isAliveList[index]) {
+                                    revoked.child = index
+                                    list[index].parent = revoked.index
+                                }
+                            }
+                        }
+                        if (isAliveList[index]) {
+                            revoked.parent = index
+                            revoked.child = list[index].child
+                            list[index].child = revoked.index
+                            if (revoked.child <= list.lastIndex) list[revoked.child].parent = index
+                            break
+                        }
+                    }
+                }
+            }
+            println(it)
+            println("현재 위치 ${current.index}")
+            println(isAliveList.joinToString("") { if (it) "O" else "X" })
+            drawLine()
+        }
+        return isAliveList.joinToString("") { if (it) "O" else "X" }
+    }
+
+    fun _표편집2(n: Int, k: Int, cmd: Array<String>): String {
+        val stack = Stack<Int>()
+        val list = ArrayList<Node4>()
+        val isAliveList = BooleanArray(n) { true }
+        list.add(Node4(0, null, null))
+        repeat(n - 1) {
+            list.add(Node4(it + 1, list[it], null))
+            list[it].child = list[it + 1]
+        }
+        var current = list[k]
+        cmd.forEach {
+            val splits = it.split(" ")
+            when (splits[0]) {
+                "U" -> repeat(splits[1].toInt()) { _ ->
+                    current.parent?.let { current = it } ?: return@repeat
+                }
+                "D" -> repeat(splits[1].toInt()) { _ ->
+                    current.child?.let { current = it } ?: return@repeat
+                }
+                "C" -> {
+                    // 연결 끊기
+                    isAliveList[current.index] = false
+                    stack.push(current.index)
+                    current.parent?.child = current.child
+                    current.child?.parent = current.parent
+                    // 위치 이동
+                    current = current.child ?: current.parent ?: current
+                }
+                "Z" -> {
+                    val next = stack.pop()
+                    isAliveList[next] = true
+                    (0 until next).lastOrNull { isAliveList[it] }?.let { pIndex ->
+                        // 부모 O
+                        val parent = list[pIndex]
+                        list[next].parent = parent
+                        list[next].child = parent.child
+                        parent.child = list[next]
+                        parent.child?.parent = list[next]
+                    } ?: run {
+                        // 부모 X, 자녀 O
+                        list[next].parent = null
+                        (next + 1..list.lastIndex).firstOrNull { isAliveList[it] }?.let { cIndex ->
+                            val child = list[cIndex]
+                            list[next].child = child
+                            child.parent = list[next]
+                        } ?: run {
+                            // 부모 X, 자녀 X
+                            list[next].child = null
+                        }
+                    }
+                }
+            }
+        }
+        return isAliveList.joinToString("") { if (it) "O" else "X" }
+    }
+
+    fun _표편집3(n: Int, k: Int, cmd: Array<String>): String {
+        val stack = Stack<Int>()
+        var cursor = k
+        var leftSize = n
+        cmd.forEach {
+            val splits = it.split(" ")
+            when (splits[0]) {
+                "U" -> cursor = Math.max(cursor - splits[1].toInt(), 0)
+                "D" -> cursor = Math.min(cursor + splits[1].toInt(), n)
+                "C" -> {
+                    stack.push(cursor)
+                    if (cursor == --leftSize) cursor--
+                }
+                "Z" -> {
+                    leftSize++
+                    if (stack.pop() <= cursor) {
+                        cursor++
+                    }
+                }
+            }
+        }
+        val sb = StringBuilder()
+        repeat(leftSize) { sb.append("O") }
+        while (stack.isNotEmpty()) {
+            val test = stack.pop()
+            sb.insert(test, "X")
+        }
+        return sb.toString()
+    }
+}
+
+data class Node3(val index: Int, var parent: Int, var child: Int)
+data class Node4(val index: Int, var parent: Node4?, var child: Node4?) {
+    override fun toString(): String {
+        return "Node index : $index parent : ${parent?.index ?: "null"} child : ${child?.index ?: "null"}"
+    }
 }
