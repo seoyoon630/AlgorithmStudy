@@ -716,6 +716,41 @@ object KakaoQuestions {
         }
         return Math.min(verticalCosts[size - 1][size - 1], horizontalCosts[size - 1][size - 1])
     }
+
+    fun _불량사용자(user_id: Array<String>, banned_id: Array<String>): Int {
+        val indices = banned_id.map {
+            val regex = it.replace('*', '.').toRegex()
+            user_id.filter { (regex.matches(it)) }
+        }
+        val set = hashSetOf<HashSet<String>>()
+        dfs(indices, 0, hashSetOf(), set)
+        return set.size
+    }
+
+    private fun dfs(
+        indices: List<List<String>>,
+        index: Int,
+        set: HashSet<String>,
+        sum: HashSet<HashSet<String>>
+    ) {
+        if (index == indices.size) {
+            if(!sum.contains(set)) {
+                val temp = hashSetOf<String>()
+                temp.addAll(set.toList())
+                sum.add(temp)
+                println(set.joinToString())
+            }
+            return
+        }
+        indices[index].forEach {
+            if (!set.contains(it)) {
+                set.add(it)
+                dfs(indices, index + 1, set, sum)
+                set.remove(it)
+            }
+        }
+        if (indices[index].isEmpty()) dfs(indices, index + 1, set, sum)
+    }
 }
 
 data class Node3(val index: Int, var parent: Int, var child: Int)
