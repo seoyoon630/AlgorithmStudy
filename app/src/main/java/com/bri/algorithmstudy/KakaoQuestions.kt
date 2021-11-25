@@ -664,6 +664,58 @@ object KakaoQuestions {
         }
         return intArrayOf(startIndex, startIndex + min)
     }
+
+    // 0,0 -> n,n 최소거리 구하기
+    // 코너 : 500+100 , 직선 : 100
+    // 현재 방향과 나아갈 방향의 비교 필요
+    // 2방향을 모두 고려해야 함
+    // 건설 가능한 가로방향 세로방향을 모두 고려
+    fun _경주로건설(board: Array<IntArray>): Int {
+        val dy = intArrayOf(-1, 0, 1, 0)
+        val dx = intArrayOf(0, -1, 0, 1)
+        val size = board.size
+        val maxCost = size * size * 500
+        // 0 : 세로방향 / 1 : 가로방향
+        val verticalCosts = Array(size) { IntArray(size) { maxCost } }
+        val horizontalCosts = Array(size) { IntArray(size) { maxCost } }
+        // 시작지점 거리 초기화
+        verticalCosts[0][0] = 0
+        horizontalCosts[0][0] = 0
+        val queue: Queue<Coord2> = LinkedList()
+        queue.offer(Coord2(0, 0, false))
+        queue.offer(Coord2(0, 0, true))
+        while (queue.isNotEmpty()) {
+            val node = queue.poll() ?: break
+            repeat(4) { n ->
+                val y = node.y + dy[n]
+                val x = node.x + dx[n]
+                if (y in 0 until size && x in 0 until size && board[y][x] == 0) {
+                    // 직선, 코너 구분
+                    val isVertical = n % 2 == 0
+                    val isStraight = node.isVertical == isVertical
+                    val add = if (isStraight) 100 else 500 + 100
+                    val prev =
+                        if (node.isVertical) verticalCosts[node.y][node.x]
+                        else horizontalCosts[node.y][node.x]
+                    when (isVertical) {
+                        true -> {
+                            if (prev + add < verticalCosts[y][x]) {
+                                queue.add(Coord2(y, x, isVertical))
+                                verticalCosts[y][x] = prev + add
+                            }
+                        }
+                        false -> {
+                            if (prev + add < horizontalCosts[y][x]) {
+                                queue.add(Coord2(y, x, isVertical))
+                                horizontalCosts[y][x] = prev + add
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return Math.min(verticalCosts[size - 1][size - 1], horizontalCosts[size - 1][size - 1])
+    }
 }
 
 data class Node3(val index: Int, var parent: Int, var child: Int)
@@ -672,3 +724,5 @@ data class Node4(val index: Int, var parent: Node4?, var child: Node4?) {
         return "Node index : $index parent : ${parent?.index ?: "null"} child : ${child?.index ?: "null"}"
     }
 }
+
+data class Coord2(val y: Int, val x: Int, val isVertical: Boolean)

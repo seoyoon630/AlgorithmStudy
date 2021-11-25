@@ -283,5 +283,6 @@ class KakaoTest {
 //        assertThat({
 //            KakaoQuestions._보석쇼핑(test.toTypedArray())
 //        }, intArrayOf(8, 10), "보석쇼핑")
+        assertThat/ "경주로건설")
     }
 }
