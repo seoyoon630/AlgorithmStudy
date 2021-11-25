@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 import kotlin.math.absoluteValue
 
 object KakaoQuestions {
@@ -597,6 +598,71 @@ object KakaoQuestions {
         println("$number 차례")
         println(board.joinToString("\n") { it.joinToString("\t") })
         drawLine()
+    }
+
+    fun _보석쇼핑(gems: Array<String>): IntArray {
+        val map = HashMap<String, Queue<Int>>()
+        gems.forEachIndexed { index, gem ->
+            if (!map.containsKey(gem)) map[gem] = LinkedList()
+            map[gem]?.offer(index + 1)
+        }
+        val values = map.values.toList()
+        var result = gems.size
+        var startIndex = 0
+        val emptyQueueIndices = hashSetOf<Int>()
+
+        val indices = values.map { queue -> queue.poll() }.toMutableList()
+        while (emptyQueueIndices.size != values.size) {
+            val sorted = indices.sorted()
+            val min = sorted.first() ?: 0
+            val max = sorted.last() ?: 0
+            val diff = max - min
+            if (diff < result) {
+                startIndex = min
+                result = diff
+                if(diff == map.size) break
+            } else if (emptyQueueIndices.size > 0) {
+                break
+            }
+            val ordered = indices.indices.sortedBy { indices[it] }
+            for (i in ordered) {
+                val next = values[i].poll()
+                if (next != null) {
+                    indices[i] = next
+                    break
+                } else {
+                    emptyQueueIndices.add(i)
+                }
+            }
+        }
+
+        return intArrayOf(startIndex, startIndex + result)
+    }
+
+    fun _보석쇼핑2(gems: Array<String>): IntArray {
+        val gemSet = HashSet<String>().apply { addAll(gems) }
+        var start = 0
+        var end = 0
+        var startIndex = 0
+        var min = gems.size
+        while (true) {
+            val targetSet = HashSet<String>().apply { addAll(gems.slice(start..end)) }
+            if (gemSet.size == targetSet.size) {
+                val size = end - start
+                if (size < min) {
+                    startIndex = start + 1
+                    min = end - start
+                    if (size == gemSet.size) break
+                }
+                start++
+            } else {
+                if (end < gems.lastIndex) {
+                    end++
+                } else start++
+            }
+            if (start > gems.lastIndex) break
+        }
+        return intArrayOf(startIndex, startIndex + min)
     }
 }
 

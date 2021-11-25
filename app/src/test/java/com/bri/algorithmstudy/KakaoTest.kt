@@ -226,20 +226,62 @@ class KakaoTest {
 //                arrayOf("D 2","C","U 3","C","D 4","C","U 2","Z","Z","U 1","C")
 //            )
 //        }, "OOXOXOOO", "표편집")
-        assertThat(
-            { KakaoQuestions._키패드누르기(intArrayOf(1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5), "right") },
-            "LRLLLRLLRRL",
-            "키패드누르기"
-        )
-        assertThat(
-            { KakaoQuestions._키패드누르기(intArrayOf(7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2), "left") },
-            "LRLLRRLLLRR",
-            "키패드누르기"
-        )
-        assertThat(
-            { KakaoQuestions._키패드누르기(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 0), "right") },
-            "LLRLLRLLRL",
-            "키패드누르기"
-        )
+//        assertThat(
+//            { KakaoQuestions._키패드누르기(intArrayOf(1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5), "right") },
+//            "LRLLLRLLRRL",
+//            "키패드누르기"
+//        )
+//        assertThat(
+//            { KakaoQuestions._키패드누르기(intArrayOf(7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2), "left") },
+//            "LRLLRRLLLRR",
+//            "키패드누르기"
+//        )
+//        assertThat(
+//            { KakaoQuestions._키패드누르기(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 0), "right") },
+//            "LLRLLRLLRL",
+//            "키패드누르기"
+//        )
+        assertThat({
+            KakaoQuestions._보석쇼핑(
+                arrayOf("DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA")
+            )
+        }, intArrayOf(3, 7), "보석쇼핑")
+        assertThat({
+            KakaoQuestions._보석쇼핑(
+                arrayOf("AA", "AB", "AC", "AA", "AC")
+            )
+        }, intArrayOf(1, 3), "보석쇼핑")
+        assertThat({
+            KakaoQuestions._보석쇼핑(
+                arrayOf("XYZ", "XYZ", "XYZ")
+            )
+        }, intArrayOf(1, 1), "보석쇼핑")
+        assertThat({
+            KakaoQuestions._보석쇼핑(
+                arrayOf("ZZZ", "YYY", "NNNN", "YYY", "BBB")
+            )
+        }, intArrayOf(1, 5), "보석쇼핑")
+        assertThat({
+            KakaoQuestions._보석쇼핑(
+                arrayOf("A", "A", "A", "B", "B")
+            )
+        }, intArrayOf(3, 4), "보석쇼핑")
+        assertThat({
+            KakaoQuestions._보석쇼핑(
+                arrayOf("A")
+            )
+        }, intArrayOf(1, 1), "보석쇼핑")
+        assertThat({
+            KakaoQuestions._보석쇼핑(
+                arrayOf("A", "B", "B", "B", "B", "B", "B", "C", "B", "A")
+            )
+        }, intArrayOf(8, 10), "보석쇼핑")
+        val test = arrayListOf<String>()
+        repeat(2) {
+            test.addAll(arrayOf("A", "B", "B", "B", "B", "B", "B", "C", "B", "A"))
+        }
+        assertThat({
+            KakaoQuestions._보석쇼핑(test.toTypedArray())
+        }, intArrayOf(8, 10), "보석쇼핑")
     }
 }
