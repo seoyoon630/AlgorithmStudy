@@ -241,47 +241,47 @@ class KakaoTest {
 //            "LLRLLRLLRL",
 //            "키패드누르기"
 //        )
-        assertThat({
-            KakaoQuestions._보석쇼핑(
-                arrayOf("DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA")
-            )
-        }, intArrayOf(3, 7), "보석쇼핑")
-        assertThat({
-            KakaoQuestions._보석쇼핑(
-                arrayOf("AA", "AB", "AC", "AA", "AC")
-            )
-        }, intArrayOf(1, 3), "보석쇼핑")
-        assertThat({
-            KakaoQuestions._보석쇼핑(
-                arrayOf("XYZ", "XYZ", "XYZ")
-            )
-        }, intArrayOf(1, 1), "보석쇼핑")
-        assertThat({
-            KakaoQuestions._보석쇼핑(
-                arrayOf("ZZZ", "YYY", "NNNN", "YYY", "BBB")
-            )
-        }, intArrayOf(1, 5), "보석쇼핑")
-        assertThat({
-            KakaoQuestions._보석쇼핑(
-                arrayOf("A", "A", "A", "B", "B")
-            )
-        }, intArrayOf(3, 4), "보석쇼핑")
-        assertThat({
-            KakaoQuestions._보석쇼핑(
-                arrayOf("A")
-            )
-        }, intArrayOf(1, 1), "보석쇼핑")
-        assertThat({
-            KakaoQuestions._보석쇼핑(
-                arrayOf("A", "B", "B", "B", "B", "B", "B", "C", "B", "A")
-            )
-        }, intArrayOf(8, 10), "보석쇼핑")
-        val test = arrayListOf<String>()
-        repeat(2) {
-            test.addAll(arrayOf("A", "B", "B", "B", "B", "B", "B", "C", "B", "A"))
-        }
-        assertThat({
-            KakaoQuestions._보석쇼핑(test.toTypedArray())
-        }, intArrayOf(8, 10), "보석쇼핑")
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(
+//                arrayOf("DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA")
+//            )
+//        }, intArrayOf(3, 7), "보석쇼핑")
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(
+//                arrayOf("AA", "AB", "AC", "AA", "AC")
+//            )
+//        }, intArrayOf(1, 3), "보석쇼핑")
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(
+//                arrayOf("XYZ", "XYZ", "XYZ")
+//            )
+//        }, intArrayOf(1, 1), "보석쇼핑")
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(
+//                arrayOf("ZZZ", "YYY", "NNNN", "YYY", "BBB")
+//            )
+//        }, intArrayOf(1, 5), "보석쇼핑")
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(
+//                arrayOf("A", "A", "A", "B", "B")
+//            )
+//        }, intArrayOf(3, 4), "보석쇼핑")
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(
+//                arrayOf("A")
+//            )
+//        }, intArrayOf(1, 1), "보석쇼핑")
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(
+//                arrayOf("A", "B", "B", "B", "B", "B", "B", "C", "B", "A")
+//            )
+//        }, intArrayOf(8, 10), "보석쇼핑")
+//        val test = arrayListOf<String>()
+//        repeat(2) {
+//            test.addAll(arrayOf("A", "B", "B", "B", "B", "B", "B", "C", "B", "A"))
+//        }
+//        assertThat({
+//            KakaoQuestions._보석쇼핑(test.toTypedArray())
+//        }, intArrayOf(8, 10), "보석쇼핑")
     }
 }
