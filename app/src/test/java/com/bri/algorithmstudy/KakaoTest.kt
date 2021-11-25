@@ -326,35 +326,35 @@ class KakaoTest {
 //                )
 //            }, 2, "불량사용자"
 //        )
-        assertThat({
-            KakaoQuestions._불량사용자(
-                arrayOf("frodo", "fradi", "crodo", "abc123", "frodoc"),
-                arrayOf("*rodo", "*rodo", "******")
-            )
-        }, 2, "불량사용자")
-        assertThat({
-            KakaoQuestions._불량사용자(
-                arrayOf("frodo", "fradi", "crodo", "abc123", "frodoc"),
-                arrayOf("fr*d*", "*rodo", "******", "******")
-            )
-        }, 3, "불량사용자")
-        assertThat({
-            KakaoQuestions._불량사용자(
-                arrayOf("12345", "12453", "aaaaa"),
-                arrayOf("*****", "*****")
-            )
-        }, 3, "불량사용자")
-        assertThat({
-            KakaoQuestions._불량사용자(
-                arrayOf("12345", "12453", "aaaaa"),
-                arrayOf("******", "*****")
-            )
-        }, 3, "불량사용자")
-        assertThat({
-            KakaoQuestions._불량사용자(
-                arrayOf("frodo", "fradi", "crodo", "abc123", "frodoc"),
-                arrayOf("**", "", "", "", "***")
-            )
-        }, 1, "불량사용자")
+//        assertThat({
+//            KakaoQuestions._불량사용자(
+//                arrayOf("frodo", "fradi", "crodo", "abc123", "frodoc"),
+//                arrayOf("*rodo", "*rodo", "******")
+//            )
+//        }, 2, "불량사용자")
+//        assertThat({
+//            KakaoQuestions._불량사용자(
+//                arrayOf("frodo", "fradi", "crodo", "abc123", "frodoc"),
+//                arrayOf("fr*d*", "*rodo", "******", "******")
+//            )
+//        }, 3, "불량사용자")
+//        assertThat({
+//            KakaoQuestions._불량사용자(
+//                arrayOf("12345", "12453", "aaaaa"),
+//                arrayOf("*****", "*****")
+//            )
+//        }, 3, "불량사용자")
+//        assertThat({
+//            KakaoQuestions._불량사용자(
+//                arrayOf("12345", "12453", "aaaaa"),
+//                arrayOf("******", "*****")
+//            )
+//        }, 3, "불량사용자")
+//        assertThat({
+//            KakaoQuestions._불량사용자(
+//                arrayOf("frodo", "fradi", "crodo", "abc123", "frodoc"),
+//                arrayOf("**", "", "", "", "***")
+//            )
+//        }, 1, "불량사용자")
     }
 }
