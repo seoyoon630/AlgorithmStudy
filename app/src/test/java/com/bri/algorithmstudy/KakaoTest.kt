@@ -283,6 +283,40 @@ class KakaoTest {
 //        assertThat({
 //            KakaoQuestions._보석쇼핑(test.toTypedArray())
 //        }, intArrayOf(8, 10), "보석쇼핑")
-        assertThat/ "경주로건설")
+//        assertThat(
+//            { KakaoQuestions._경주로건설(arrayOf(intArrayOf(0, 0, 0), intArrayOf(0, 0, 0), intArrayOf(0, 0, 0))) },
+//            900,
+//            "경주로건설"
+//        )
+//        assertThat({
+//            KakaoQuestions._경주로건설(arrayOf(
+//                intArrayOf(0, 0, 0, 0, 0, 0, 0, 1),
+//                intArrayOf(0, 0, 0, 0, 0, 0, 0, 0),
+//                intArrayOf(0, 0, 0, 0, 0, 1, 0, 0),
+//                intArrayOf(0, 0, 0, 0, 1, 0, 0, 0),
+//                intArrayOf(0, 0, 0, 1, 0, 0, 0, 1),
+//                intArrayOf(0, 0, 1, 0, 0, 0, 1, 0),
+//                intArrayOf(0, 1, 0, 0, 0, 1, 0, 0),
+//                intArrayOf(1, 0, 0, 0, 0, 0, 0, 0)
+//            ))
+//        }, 3800, "경주로건설")
+//        assertThat({
+//            KakaoQuestions._경주로건설(arrayOf(
+//                intArrayOf(0, 0, 1, 0),
+//                intArrayOf(0, 0, 0, 0),
+//                intArrayOf(0, 1, 0, 1),
+//                intArrayOf(1, 0, 0, 0)
+//            ))
+//        }, 2100, "경주로건설")
+//        assertThat({
+//            KakaoQuestions._경주로건설(arrayOf(
+//                intArrayOf(0, 0, 0, 0, 0, 0),
+//                intArrayOf(0, 1, 1, 1, 1, 0),
+//                intArrayOf(0, 0, 1, 0, 0, 0),
+//                intArrayOf(1, 0, 0, 1, 0, 1),
+//                intArrayOf(0, 1, 0, 0, 0, 1),
+//                intArrayOf(0, 0, 0, 0, 0, 0)
+//            ))
+//        }, 3200, "경주로건설")
     }
 }
