@@ -59,11 +59,58 @@ object Kakao2022 {
     }
 
     fun isPrime(n: Double): Boolean {
-        if(n == 1.0) return false
+        if (n == 1.0) return false
         val max = Math.sqrt(n)
         for (i in 2..max.toInt()) {
             if (n % i == 0.0) return false
         }
         return true
     }
+
+    fun 주차요금계산(fees: IntArray, records: Array<String>): IntArray {
+        val defaultMinute = fees[0]
+        val defaultFee = fees[1]
+        val unitMinute = fees[2]
+        val unitFee = fees[3]
+
+        val totalTimes = HashMap<Int, Int>()
+        val inTime = HashMap<Int, String>()
+        records.forEach { record ->
+            val splits = record.split(" ")
+            val time = splits[0]
+            val car = splits[1].toInt()
+            inTime[car]?.let {
+                inTime.remove(car)
+                totalTimes[car] = (totalTimes[car] ?: 0) + (convert(time) - convert(it))
+            } ?: run {
+                inTime[car] = time
+            }
+        }
+        inTime.forEach {
+            totalTimes[it.key] = (totalTimes[it.key] ?: 0) + +(convert("23:59") - convert(it.value))
+        }
+        return totalTimes.keys
+            .sorted()
+            .map { key ->
+                totalTimes[key]?.let {
+                    val additionalFee = when {
+                        it <= defaultMinute -> defaultFee
+                        else -> {
+                            val additionalTime = it - defaultMinute
+                            val unitTime =
+                                Math.ceil((additionalTime) / unitMinute.toDouble()).toInt()
+                            defaultFee + unitTime * unitFee
+                        }
+                    }
+                    additionalFee
+                } ?: defaultFee
+            }.toIntArray()
+    }
+
+    fun convert(time: String): Int =
+        time.split(":")
+            .mapIndexed { index, s ->
+                s.toInt() * (if (index == 0) 60 else 1)
+            }.sum()
+
 }
