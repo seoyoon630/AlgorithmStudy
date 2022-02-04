@@ -37,4 +37,33 @@ object Kakao2022 {
             .groupingBy { it }
             .eachCount()
             .run { id_list.map { getOrDefault(it, 0) } }.toIntArray()
+
+    fun k진수에서_소수개수구하기(n: Int, k: Int): Int {
+        val num = convert(n, k)
+        val nums = num.split(Regex("0+")).filter { it.isNotEmpty() }.map { it.toDouble() }
+        return nums.filter { isPrime(it) }.count()
+    }
+
+    fun convert(n: Int, k: Int): String {
+        if (k == 10) {
+            return n.toString()
+        }
+        val sb = StringBuilder()
+        var t = n
+        while (t >= k) {
+            sb.append(t % k)
+            t /= k
+        }
+        sb.append(t)
+        return sb.reverse().toString()
+    }
+
+    fun isPrime(n: Double): Boolean {
+        if(n == 1.0) return false
+        val max = Math.sqrt(n)
+        for (i in 2..max.toInt()) {
+            if (n % i == 0.0) return false
+        }
+        return true
+    }
 }
