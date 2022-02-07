@@ -197,4 +197,84 @@ object Kakao2022 {
             dfs(n, sheep, wolf, next, info, max)
         }
     }
+
+    var count: Double = 0.0
+    fun 파괴되지않은건물1(board: Array<IntArray>, skill: Array<IntArray>): Int {
+        count = 0.0
+        skill.forEach {
+            val type = it[0]
+            val degree = it[5]
+            val diff = if (type == 1) -degree else degree
+            for (y in it[1]..it[3]) {
+                for (x in it[2]..it[4]) {
+                    board[y][x] += diff
+                    count++
+                }
+            }
+        }
+        println("count = $count")
+        return board.map { it.count { it > 0 } }.sum()
+    }
+
+    fun 파괴되지않은건물2(board: Array<IntArray>, skill: Array<IntArray>): Int {
+        val list = Array(board.size) { HashMap<IntRange, Int>() }
+        skill.forEach {
+            val type = it[0]
+            val degree = it[5]
+            val diff = if (type == 1) -degree else degree
+            for (y in it[1]..it[3]) {
+                val xRange = (it[2]..it[4])
+                list[y][xRange] = (list[y][xRange] ?: 0) + diff
+            }
+        }
+
+        val width = board[0].size
+        val result = list.mapIndexed { index, hashMap ->
+            val diffs = IntArray(width) { board[index][it] }
+            hashMap.keys.forEach { range ->
+                range.forEach {
+                    diffs[it] += (hashMap[range] ?: 0)
+                }
+            }
+            diffs.count { it > 0 }
+        }.sum()
+        return result
+    }
+
+    fun 파괴되지않은건물(board: Array<IntArray>, skill: Array<IntArray>): Int {
+        val height = board.size + 1
+        val width = board[0].size + 1
+        val result = Array(height) { IntArray(width) { 0 } }
+        skill.forEach {
+            val type = it[0]
+            val degree = it[5]
+            val diff = if (type == 1) -degree else degree
+            // 누적합
+            result[it[1]][it[2]] += diff
+            result[it[1]][it[4] + 1] -= diff
+            result[it[3] + 1][it[2]] -= diff
+            result[it[3] + 1][it[4] + 1] += diff
+        }
+
+        (0 until height).forEach { y ->
+            // 가로 누적합
+            (0 until width - 1).forEach { x ->
+                result[y][x + 1] += result[y][x]
+            }
+            // 세로 누적합
+            if (y > 0) {
+                (0 until width - 1).forEach { x ->
+                    result[y][x] += result[y - 1][x]
+                }
+            }
+        }
+
+        // 기본 내구도 합
+        (0 until height - 1).forEach { y ->
+            (0 until width - 1).forEach { x ->
+                result[y][x] += board[y][x]
+            }
+        }
+        return result.map { it.count { v -> v > 0 } }.sum()
+    }
 }

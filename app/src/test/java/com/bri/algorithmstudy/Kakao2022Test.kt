@@ -90,40 +90,82 @@ class Kakao2022Test {
 //            intArrayOf(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2),
 //            "양궁대회"
 //        )
-        assertThat({
-            Kakao2022.양과늑대(
-                intArrayOf(0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1),
-                arrayOf(
-                    intArrayOf(0, 1),
-                    intArrayOf(1, 2),
-                    intArrayOf(1, 4),
-                    intArrayOf(0, 8),
-                    intArrayOf(8, 7),
-                    intArrayOf(9, 10),
-                    intArrayOf(9, 11),
-                    intArrayOf(4, 3),
-                    intArrayOf(6, 5),
-                    intArrayOf(4, 6),
-                    intArrayOf(8, 9)
-                )
-            )
-        }, 5, "양과늑대")
-        assertThat({
-            Kakao2022.양과늑대(
-                intArrayOf(0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0),
-                arrayOf(
-                    intArrayOf(0, 1),
-                    intArrayOf(0, 2),
-                    intArrayOf(1, 3),
-                    intArrayOf(1, 4),
-                    intArrayOf(2, 5),
-                    intArrayOf(2, 6),
-                    intArrayOf(3, 7),
-                    intArrayOf(4, 8),
-                    intArrayOf(6, 9),
-                    intArrayOf(9, 10)
-                )
-            )
-        }, 5, "양과늑대")
+//        assertThat({
+//            Kakao2022.양과늑대(
+//                intArrayOf(0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1),
+//                arrayOf(
+//                    intArrayOf(0, 1),
+//                    intArrayOf(1, 2),
+//                    intArrayOf(1, 4),
+//                    intArrayOf(0, 8),
+//                    intArrayOf(8, 7),
+//                    intArrayOf(9, 10),
+//                    intArrayOf(9, 11),
+//                    intArrayOf(4, 3),
+//                    intArrayOf(6, 5),
+//                    intArrayOf(4, 6),
+//                    intArrayOf(8, 9)
+//                )
+//            )
+//        }, 5, "양과늑대")
+//        assertThat({
+//            Kakao2022.양과늑대(
+//                intArrayOf(0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0),
+//                arrayOf(
+//                    intArrayOf(0, 1),
+//                    intArrayOf(0, 2),
+//                    intArrayOf(1, 3),
+//                    intArrayOf(1, 4),
+//                    intArrayOf(2, 5),
+//                    intArrayOf(2, 6),
+//                    intArrayOf(3, 7),
+//                    intArrayOf(4, 8),
+//                    intArrayOf(6, 9),
+//                    intArrayOf(9, 10)
+//                )
+//            )
+//        }, 5, "양과늑대")
+//        assertThat({
+//            Kakao2022.파괴되지않은건물1(
+//                Array(1000) { IntArray(1000) { 1000 } },
+//                Array(2500) { intArrayOf(1, 0, 0, 999, 999, 500) }
+//            )
+//        }, 0, "파괴되지 않은 건물1")
+//        assertThat({
+//            Kakao2022.파괴되지않은건물(
+//                Array(1000) { IntArray(1000) { 1000 } },
+//                Array(2500) { intArrayOf(1, 0, 0, 999, 999, 500) }
+//            )
+//        }, 0, "파괴되지 않은 건물")
+//        assertThat({
+//            Kakao2022.파괴되지않은건물(
+//                arrayOf(
+//                    intArrayOf(5, 5, 5, 5, 5),
+//                    intArrayOf(5, 5, 5, 5, 5),
+//                    intArrayOf(5, 5, 5, 5, 5),
+//                    intArrayOf(5, 5, 5, 5, 5)
+//                ),
+//                arrayOf(
+//                    intArrayOf(1, 0, 0, 3, 4, 4),
+//                    intArrayOf(1, 2, 0, 2, 3, 2),
+//                    intArrayOf(2, 1, 0, 3, 1, 2),
+//                    intArrayOf(1, 0, 1, 3, 3, 1)
+//                )
+//            )
+//        }, 10, "파괴되지 않은 건물")
+//        assertThat({
+//            Kakao2022.파괴되지않은건물(
+//                arrayOf(
+//                    intArrayOf(1, 2, 3),
+//                    intArrayOf(4, 5, 6),
+//                    intArrayOf(7, 8, 9)
+//                ),
+//                arrayOf(
+//                    intArrayOf(1, 1, 1, 2, 2, 4),
+//                    intArrayOf(1, 0, 0, 1, 1, 2),
+//                    intArrayOf(2, 2, 0, 2, 0, 100)
+//                )
+//            )
+//        }, 6, "파괴되지 않은 건물")
     }
 }   
