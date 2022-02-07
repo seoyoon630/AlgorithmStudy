@@ -113,4 +113,51 @@ object Kakao2022 {
                 s.toInt() * (if (index == 0) 60 else 1)
             }.sum()
 
+    fun 양궁대회(n: Int, info: IntArray): IntArray {
+        max = -55
+        result = IntArray(11) { 0 }
+        recursiveFunction(n, n, 0, 0, 0, result, info)
+        return if (max <= 0) intArrayOf(-1)
+        else result
+    }
+
+    var max = -55
+    var result = IntArray(11) { 0 }
+
+    fun recursiveFunction(
+        n: Int,
+        left: Int,
+        myScore: Int,
+        rivalScore: Int,
+        index: Int,
+        current: IntArray,
+        info: IntArray
+    ) {
+        if (index == 10) {
+            val temp = current.clone()
+            temp[index] += left
+            if (max < myScore - rivalScore) {
+                max = myScore - rivalScore
+                result = temp
+            } else if (max == myScore - rivalScore) {
+                for (i in 10 downTo 0) {
+                    if (result[i] < temp[i]) result = temp
+                    else if (result[i] > temp[i]) break
+                }
+            }
+            return
+        }
+        val need = info[index] + 1
+        val score = 10 - index
+
+        if (left >= need) {
+            val myNextScore = myScore + score
+            current[index] += need
+            recursiveFunction(n, left - need, myNextScore, rivalScore, index + 1, current, info)
+            current[index] -= need
+        }
+
+        val rivalNextScore = if (info[index] == 0) rivalScore else rivalScore + score
+        recursiveFunction(n, left, myScore, rivalNextScore, index + 1, current, info)
+    }
 }
