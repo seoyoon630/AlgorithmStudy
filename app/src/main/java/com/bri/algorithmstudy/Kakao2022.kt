@@ -160,4 +160,41 @@ object Kakao2022 {
         val rivalNextScore = if (info[index] == 0) rivalScore else rivalScore + score
         recursiveFunction(n, left, myScore, rivalNextScore, index + 1, current, info)
     }
+
+    val nodes = HashMap<Int, ArrayList<Int>>()
+    var maxCountOfSheeps = 0
+    fun 양과늑대(info: IntArray, edges: Array<IntArray>): Int {
+        nodes.clear()
+        edges.forEach {
+            nodes[it[0]]?.add(it[1]) ?: run {
+                nodes[it[0]] = arrayListOf(it[1])
+            }
+        }
+
+        val list = ArrayList<Int>()
+        list.add(0)
+        dfs(0, 0, 0, list, info, info.count { it == 0 })
+        return maxCountOfSheeps
+    }
+
+    private fun dfs(index: Int, s: Int, w: Int, list: ArrayList<Int>, info: IntArray, max: Int) {
+        if (maxCountOfSheeps == max) return
+        var sheep = s
+        var wolf = w
+        when (info[index]) {
+            0 -> sheep++
+            else -> wolf++
+        }
+        if (sheep <= wolf) return
+
+        maxCountOfSheeps = Math.max(maxCountOfSheeps, sheep)
+
+        val next = ArrayList<Int>()
+        next.addAll(list)
+        next.remove(index)
+        nodes[index]?.let { children -> next.addAll(children) }
+        for (n in next) {
+            dfs(n, sheep, wolf, next, info, max)
+        }
+    }
 }
